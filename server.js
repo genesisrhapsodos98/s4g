@@ -12,4 +12,6 @@ app.post('/', function (req, res) {
   res.render('index');
 })
 
-app.listen(process.env.PORT || 5000);
+app.listen(process.env.PORT || 5000, function() {
+  console.log('Listening to Heroku\'s dynamic port and port 5000');
+})

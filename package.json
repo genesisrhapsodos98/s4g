@@ -1,0 +1,15 @@
+{
+  "name": "s4g-sanctuary-for-gamers",
+  "version": "1.0.0",
+  "description": "Initial setup",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ly Gia Lap, Tran Minh Kha, Dam Quang Khai, Pham Ba Son, Nguyen Le Tung Bach",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.4"
+  }
+}

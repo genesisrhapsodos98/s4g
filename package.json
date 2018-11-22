@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "Initial setup",
   "main": "index.js",
-  "repository" : {
-    "type" : "git",
-    "url" : "http://git.heroku.com/s4g-sanctuary-for-gamers.git"
+  "repository": {
+    "type": "git",
+    "url": "http://git.heroku.com/s4g-sanctuary-for-gamers.git"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,7 +14,8 @@
   "license": "ISC",
   "dependencies": {
     "ejs": "^2.6.1",
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "underscore": "^1.9.1"
   },
   "devDependencies": {
     "css-loader": "^1.0.1",

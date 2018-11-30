@@ -2,19 +2,35 @@
   "name": "s4g-sanctuary-for-gamers",
   "version": "1.0.0",
   "description": "Initial setup",
-  "main": "index.js",
+  "main": "server.js",
   "repository": {
     "type": "git",
     "url": "http://git.heroku.com/s4g-sanctuary-for-gamers.git"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "scss": "node-sass -w public/scss -o public/css"
   },
-  "author": "Ly Gia Lap, Tran Minh Kha, Dam Quang Khai, Pham Ba Son, Nguyen Le Tung Bach",
+  "author": "Ly Gia Lap",
+  "contributors": [
+    {
+      "name": "Tran Minh Kha"
+    },
+    {
+      "name": "Dam Quang Khai"
+    },
+    {
+      "name": "Pham Ba Son"
+    },
+    {
+      "name": "Nguyen Le Tung Bach"
+    }
+  ],
   "license": "ISC",
   "dependencies": {
     "ejs": "^2.6.1",
     "express": "^4.16.4",
+    "jquery": "^3.3.1",
     "underscore": "^1.9.1"
   },
   "devDependencies": {

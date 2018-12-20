@@ -261,7 +261,7 @@ i:before {
   font-size: 24px;
   font-family: "Poppins", sans-serif;
   font-weight: 600;
-  color: #000;
+  color: var(--primary-color);
   position: relative;
   padding-bottom: 20px;
   margin-bottom: 15px;
@@ -271,7 +271,7 @@ i:before {
   content: "";
   width: 50px;
   height: 2px;
-  background: #e5e5e5;
+  background: var(--primary-color-alt);
   position: absolute;
   left: 50%;
   bottom: 0px;
@@ -282,7 +282,7 @@ i:before {
 
 .contact_title p {
   font-size: 14px;
-  color: #999999;
+  color: var(--text-color-alt);
   font-family: "Poppins", sans-serif;
   line-height: 26px;
   max-width: 540px;
@@ -690,7 +690,6 @@ i:before {
 .shop_header_area .navbar {
   padding: 0px;
   background-color: transparent !important;
-  border-top: 2px solid #eeeeee;
   border-bottom: 2px solid #d91522;
 }
 
@@ -827,7 +826,8 @@ i:before {
     -ms-transform-origin: 50% 0;
     transform-origin: 50% 0;
     min-width: 250px;
-    background: #171717;
+    background: var(--bg-accent);
+    opacity: 0.8;
     border-radius: 0px;
     border: none;
     padding: 30px 0px 30px 0px;
@@ -889,15 +889,20 @@ i:before {
   display: inline-block;
 }
 
-.carousel_menu_inner .navbar .navbar-nav.justify-content-end li .search_form input {
+.carousel_menu_inner .navbar .navbar-nav.justify-content-end li.search-bar input {
   background: transparent;
-  border: 1px solid var(--text-color);
+  border: 1px solid var(--bg-accent);
   line-height: 48px;
   padding: 0px 20px;
 }
 
-.carousel_menu_inner .navbar .navbar-nav.justify-content-end li .search_form input:focus {
+.carousel_menu_inner .navbar .navbar-nav.justify-content-end li.search-bar input:hover {
+  border-color: var(--text-color);
+}
+
+.carousel_menu_inner .navbar .navbar-nav.justify-content-end li.search-bar input:focus {
   box-shadow: none;
+  border-color: var(--text-color);
   color: var(--text-color);
 }
 
@@ -928,6 +933,10 @@ i:before {
   margin-right: 10px;
 }
 
+.carousel_menu_inner .navbar .navbar-nav.justify-content-end li.search-bar {
+  width: 250px;
+}
+
 .carousel_menu_inner .navbar .navbar-nav.justify-content-end li a {
   font-size: 20px;
   border: 1px solid var(--bg-accent);
@@ -950,7 +959,7 @@ i:before {
 }
 
 .carousel_menu_inner .navbar .navbar-nav.justify-content-end li:hover a {
-  border-color: var(--primary-color);
+  border-color: var(--text-color);
   color: var(--bg-color);
   background-color: var(--text-color);
 }
@@ -1014,10 +1023,6 @@ i:before {
 
 .fullwidth_menu .carousel_menu_inner .navbar .navbar-nav.mr-auto li:first-child {
   margin-left: 0px;
-}
-
-.fullwidth_menu .carousel_menu_inner .navbar .navbar-nav.justify-content-end li a {
-  border-color: var(--text-color);
 }
 
 /* End Carousel Header css
@@ -1683,7 +1688,7 @@ i:before {
 /* Solid Banner Area css
 ============================================================================================ */
 .solid_banner_area {
-  background: #f3f3f3;
+  background: var(--bg-accent);
   text-align: center;
 }
 
@@ -1694,7 +1699,7 @@ i:before {
 .solid_banner_inner h3 {
   font-size: 24px;
   text-transform: uppercase;
-  color: #000;
+  color: var(--primary-color);
   font-family: "Poppins", sans-serif;
   font-weight: 600;
   letter-spacing: .60px;
@@ -1711,7 +1716,7 @@ i:before {
   font-family: "Poppins", sans-serif;
   font-weight: normal;
   letter-spacing: .35px;
-  color: #000;
+  color: var(--text-color);
   position: relative;
   display: inline-block;
 }
@@ -2678,15 +2683,15 @@ i:before {
 }
 
 .subs_btn {
-  background: #333333;
+  background: var(--primary-color-alt);
   text-transform: uppercase;
-  color: #fff;
+  color: var(--text-color);
   font-family: "Poppins", sans-serif;
   font-weight: 600;
   font-size: 14px;
   letter-spacing: .70px;
   border-radius: 0px;
-  border: 1px solid #333333;
+  border: 1px solid var(--bg-accent);
   padding: 0px 35px;
   line-height: 48px;
   -webkit-transition: all 400ms linear 0s;
@@ -2700,14 +2705,20 @@ i:before {
 
 .subs_btn:hover {
   background: transparent;
-  color: #333333;
+  color: var(--primary-color);
+}
+
+.subs_btn:focus {
+  background: transparent;
+  color: var(--primary-color);
+  border-color: var(--bg-accent);
 }
 
 .update_btn {
   background: transparent;
-  border: 1px solid #cccccc;
+  border: 1px solid var(--primary-color);
   border-radius: 0px;
-  color: #000;
+  color: var(--text-color);
   font-family: "Poppins", sans-serif;
   font-weight: 600;
   text-transform: uppercase;
@@ -2725,9 +2736,8 @@ i:before {
 }
 
 .update_btn:hover {
-  background: #333333;
-  border-color: #333333;
-  color: #fff;
+  background: var(--primary-color);
+  color: var(--text-color);
 }
 
 .checkout_btn {
@@ -4372,7 +4382,7 @@ i:before {
   line-height: 24px;
   font-size: 14px;
   font-family: "Poppins", sans-serif;
-  color: #fff;
+  color: var(--primary-color-alt);
   font-weight: normal;
 }
 
@@ -4387,13 +4397,13 @@ i:before {
 }
 
 .cart_totals_area {
-  background: #f3f3f3;
+  background: var(--bg-accent);
   padding: 35px 30px;
 }
 
 .cart_totals_area h4 {
   font-size: 24px;
-  color: #000;
+  color: var(--primary-color);
   font-family: "Poppins", sans-serif;
   font-weight: 600;
   padding-bottom: 30px;
@@ -4411,13 +4421,14 @@ i:before {
 
 .cart_totals_area .cart_t_list .media .d-flex h5 {
   font-size: 16px;
+  color: var(--primary-color-alt);
   font-family: "Poppins", sans-serif;
   font-weight: 600;
 }
 
 .cart_totals_area .cart_t_list .media .media-body h6 {
   font-size: 16px;
-  color: #666666;
+  color: var(--text-color);
   font-family: "Poppins", sans-serif;
   font-weight: normal;
 }
@@ -4427,7 +4438,7 @@ i:before {
   line-height: 24px;
   font-family: "Poppins", sans-serif;
   font-weight: normal;
-  color: #999999;
+  color:var(--text-color);
 }
 
 .cart_totals_area .cart_t_list .media .media-body .bootstrap-select {
@@ -4493,19 +4504,19 @@ i:before {
   font-size: 16px;
   font-family: "Poppins", sans-serif;
   font-weight: 600;
-  color: #000;
+  color: var(--primary-color-alt);
 }
 
 .cart_totals_area .total_amount .float-right {
   font-size: 16px;
   font-family: "Poppins", sans-serif;
   font-weight: 600;
-  color: #000;
+  color: var(--text-color);
 }
 
 .cart_items h3 {
   font-size: 24px;
-  color: #000;
+  color: var(--primary-color);
   font-family: "Poppins", sans-serif;
   font-weight: 600;
   padding-bottom: 47px;
@@ -4547,12 +4558,12 @@ i:before {
 .cart_items .table tbody tr td .media .media-body h4 {
   font-size: 14px;
   font-family: "Poppins", sans-serif;
-  color: #666666;
+  color: var(--text-color-alt);
   font-weight: 600;
 }
 
-.cart_items .table tbody tr td .red {
-  color: #d91522;
+.cart_items .table tbody tr td .green {
+  color: var(--primary-color);
   font-weight: 600;
   font-family: "Poppins", sans-serif;
   font-size: 14px;
@@ -4563,11 +4574,12 @@ i:before {
   font-weight: 600;
   font-family: "Poppins", sans-serif;
   font-size: 14px;
-  color: #000;
+  color: var(--text-color);
 }
 
 .cart_items .table tbody tr td .quantity {
-  border: 1px solid #cccccc;
+  border: 1px solid var(--bg-accent);
+  background-color: var(--bg-color);
   margin: 0px;
 }
 
@@ -4576,10 +4588,11 @@ i:before {
   font-size: 14px;
   font-family: "Poppins", sans-serif;
   font-weight: normal;
-  color: #666666;
+  color: var(--text-color-alt);
 }
 
 .cart_items .table tbody tr td .quantity button {
+  color: var(--text-color);
   top: 53%;
 }
 
@@ -4588,7 +4601,8 @@ i:before {
   width: 65px;
   font-size: 14px;
   font-family: "Poppins", sans-serif;
-  color: #000;
+  color: var(--text-color);
+  background-color: var(--bg-color);
   outline: none;
   -webkit-box-shadow: none;
   box-shadow: none;
@@ -4597,34 +4611,34 @@ i:before {
 .cart_items .table tbody tr td .quantity input.placeholder {
   font-size: 14px;
   font-family: "Poppins", sans-serif;
-  color: #000;
+  color: var(--text-color);
 }
 
 .cart_items .table tbody tr td .quantity input:-moz-placeholder {
   font-size: 14px;
   font-family: "Poppins", sans-serif;
-  color: #000;
+  color: var(--text-color);
 }
 
 .cart_items .table tbody tr td .quantity input::-moz-placeholder {
   font-size: 14px;
   font-family: "Poppins", sans-serif;
-  color: #000;
+  color:var(--text-color);
 }
 
 .cart_items .table tbody tr td .quantity input::-webkit-input-placeholder {
   font-size: 14px;
   font-family: "Poppins", sans-serif;
-  color: #000;
+  color: var(--text-color);
 }
 
 .cart_items .table tbody .last {
-  background: #f3f3f3;
+  background: var(--bg-accent);
   vertical-align: middle;
   -ms-flex-item-align: center;
   align-self: center;
-  border-top: 1px solid #cccccc;
-  border-bottom: 1px solid #cccccc;
+  border-top: 1px solid var(--bg-accent);
+  border-bottom: 1px solid var(--bg-accent);
   vertical-align: middle;
   align-self: center;
 }
@@ -4650,7 +4664,7 @@ i:before {
 
 .cart_items .table tbody .last td .media .d-flex h5 {
   font-size: 14px;
-  color: #999999;
+  color: var(--text-color);
   font-family: "Poppins", sans-serif;
   font-weight: normal;
 }
@@ -4665,44 +4679,44 @@ i:before {
   width: 118px;
   height: 30px;
   padding: 0px 10px;
-  border: 1px solid #e5e5e5;
+  border: 1px solid var(--text-color-alt);
   outline: none;
   -webkit-box-shadow: none;
   box-shadow: none;
   font-size: 12px;
   font-family: "Poppins", sans-serif;
-  color: #666666;
+  color: var(--text-color);
 }
 
 .cart_items .table tbody .last td .media .media-body input.placeholder {
   font-size: 12px;
   font-family: "Poppins", sans-serif;
-  color: #666666;
+  color:var(--text-color);
 }
 
 .cart_items .table tbody .last td .media .media-body input:-moz-placeholder {
   font-size: 12px;
   font-family: "Poppins", sans-serif;
-  color: #666666;
+  color:var(--text-color);
 }
 
 .cart_items .table tbody .last td .media .media-body input::-moz-placeholder {
   font-size: 12px;
   font-family: "Poppins", sans-serif;
-  color: #666666;
+  color:var(--text-color);
 }
 
 .cart_items .table tbody .last td .media .media-body input::-webkit-input-placeholder {
   font-size: 12px;
   font-family: "Poppins", sans-serif;
-  color: #666666;
+  color:var(--text-color);
 }
 
 .cart_items .table tbody .last td h3 {
   font-size: 14px;
   font-family: "Poppins", sans-serif;
   font-weight: 600;
-  color: #000;
+  color: var(--primary-color-alt);
   text-transform: uppercase;
   vertical-align: middle;
   -ms-flex-item-align: center;
@@ -6509,8 +6523,8 @@ i:before {
   height: 48px;
   width: 48px;
   border-radius: 50%;
-  background: #f3f6fa;
-  color: #000;
+  background: var(--bg-accent);
+  color: var(--primary-color);
   text-align: center;
   font-size: 22px;
   line-height: 48px;
@@ -6519,7 +6533,7 @@ i:before {
 .contact_details .media .media-body p {
   font-size: 14px;
   line-height: 26px;
-  color: #666666;
+  color: var(--text-color-alt);
   font-family: "Poppins", sans-serif;
 }
 
@@ -6534,7 +6548,7 @@ i:before {
   font-family: "Poppins", sans-serif;
   font-weight: 600;
   text-transform: uppercase;
-  color: #000;
+  color: var(--text-color);
   font-size: 18px;
   padding-bottom: 30px;
 }
@@ -6545,7 +6559,7 @@ i:before {
 
 .contact_us_form .form-group input {
   height: 50px;
-  border: 1px solid #cccccc;
+  border: 1px solid var(--text-color-alt);
   border-radius: 0px;
   -webkit-box-shadow: none;
   box-shadow: none;
@@ -6555,40 +6569,41 @@ i:before {
   line-height: 50px;
   font-size: 14px;
   font-family: "Poppins", sans-serif;
-  color: #999999;
+  color: var(--text-color);
+  background-color: var(--bg-accent);
 }
 
 .contact_us_form .form-group input.placeholder {
   font-size: 14px;
   font-family: "Poppins", sans-serif;
-  color: #999999;
+  color: var(--text-color-alt);
 }
 
 .contact_us_form .form-group input:-moz-placeholder {
   font-size: 14px;
   font-family: "Poppins", sans-serif;
-  color: #999999;
+  color: var(--text-color-alt);
 }
 
 .contact_us_form .form-group input::-moz-placeholder {
   font-size: 14px;
   font-family: "Poppins", sans-serif;
-  color: #999999;
+  color: var(--text-color-alt);
 }
 
 .contact_us_form .form-group input::-webkit-input-placeholder {
   font-size: 14px;
   font-family: "Poppins", sans-serif;
-  color: #999999;
+  color: var(--text-color-alt);
 }
 
 .contact_us_form .form-group input:focus {
-  border-color: #000;
+  border-color: var(--primary-color-alt);
 }
 
 .contact_us_form .form-group textarea {
   height: 230px;
-  border: 1px solid #cccccc;
+  border: 1px solid var(--text-color-alt);
   border-radius: 0px;
   -webkit-box-shadow: none;
   box-shadow: none;
@@ -6599,35 +6614,36 @@ i:before {
   resize: none;
   font-size: 14px;
   font-family: "Poppins", sans-serif;
-  color: #999999;
+  color: var(--text-color);
+  background-color: var(--bg-accent);
 }
 
 .contact_us_form .form-group textarea.placeholder {
   font-size: 14px;
   font-family: "Poppins", sans-serif;
-  color: #999999;
+  color: var(--text-color-alt);
 }
 
 .contact_us_form .form-group textarea:-moz-placeholder {
   font-size: 14px;
   font-family: "Poppins", sans-serif;
-  color: #999999;
+  color: var(--text-color-alt);
 }
 
 .contact_us_form .form-group textarea::-moz-placeholder {
   font-size: 14px;
   font-family: "Poppins", sans-serif;
-  color: #999999;
+  color: var(--text-color-alt);
 }
 
 .contact_us_form .form-group textarea::-webkit-input-placeholder {
   font-size: 14px;
   font-family: "Poppins", sans-serif;
-  color: #999999;
+  color: var(--text-color-alt);
 }
 
 .contact_us_form .form-group textarea:focus {
-  border-color: #000;
+  border-color: var(--primary-color-alt);
 }
 
 .contact_us_form .form-group .update_btn {
@@ -6696,8 +6712,8 @@ i:before {
 /* Footer Area css
 ============================================================================================ */
 .footer_widgets {
-  border-top: 1px solid #cccccc;
-  border-bottom: 1px solid #cccccc;
+  border-top: 1px solid var(--bg-accent);
+  border-bottom: 1px solid var(--bg-accent);
   padding-top: 60px;
   padding-bottom: 60px;
 }
@@ -6827,14 +6843,14 @@ i:before {
 }
 
 .footer_copyright h5 a {
-  color: #0b1033;
+  color: var(--primary-color);
   -webkit-transition: all 400ms linear 0s;
   -o-transition: all 400ms linear 0s;
   transition: all 400ms linear 0s;
 }
 
 .footer_copyright h5 a:hover {
-  color: #d91522;
+  color: var(--error-color);
 }
 
 /* End Footer Area css

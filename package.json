@@ -9,7 +9,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "scss": "node-sass -w public/scss -o public/css"
+    "scss": "node-sass -w public/scss -o public/css",
+    "start": "node ."
   },
   "author": "Ly Gia Lap",
   "contributors": [

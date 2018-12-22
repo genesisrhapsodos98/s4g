@@ -1,5 +1,5 @@
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 var routes = require('./routes/index');
 var category = require('./routes/category');
 

@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-const express = require('express');
-=======
 // Import dependencies
 const express = require('express')
->>>>>>> 8534bbf7325585bb1d85fef51f9a4e776d247ff6
 const app = express();
 var routes = require('./routes/index');
 var category = require('./routes/category');

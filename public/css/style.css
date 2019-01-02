@@ -2692,7 +2692,7 @@ i:before {
   font-size: 14px;
   letter-spacing: .70px;
   border-radius: 0px;
-  border: 1px solid var(--bg-accent);
+  border: 1px solid var(--primary-color-alt);
   padding: 0px 35px;
   line-height: 48px;
   -webkit-transition: all 400ms linear 0s;

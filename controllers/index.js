@@ -98,6 +98,13 @@ router.post('/create_account', function(req, res) {
   // TODO: SQL script to insert new user
 });
 
+// Forgot password
+router.get('/forgot_password', function(req, res) {
+  res.render('forgot_password', {
+    breadcrumb: [{"name": "Forgot password", "url": "#"}]
+  });
+})
+
 // Cart page and its helper function
 var cart_sessionChecker = (req, res, next) => {
   if (req.session.user && req.cookies.user_sid) {

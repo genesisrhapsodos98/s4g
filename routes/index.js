@@ -31,9 +31,9 @@ router.get('/blog', function (req, res) {
   res.render('blog');
 });
 
-router.get('/signup', function (req, res) {
-  res.render('signup');
-});
+router.get('/login', function (req, res) {
+  res.render('login');
+})
 
 router.get('/forgotpassword', function (req, res) {
   res.render('forgotpassword');

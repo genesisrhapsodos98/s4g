@@ -238,7 +238,7 @@ i:before {
   font-size: 18px;
   font-family: "Poppins", sans-serif;
   font-weight: bold;
-  color: #000;
+  color: var(--primary-color);
   text-transform: uppercase;
   letter-spacing: .45px;
   padding-bottom: 20px;
@@ -246,7 +246,7 @@ i:before {
 
 .login_title p {
   font-size: 14px;
-  color: #999999;
+  color: var(--text-color);
   font-family: "Poppins", sans-serif;
   line-height: 26px;
   letter-spacing: .35px;
@@ -2739,6 +2739,12 @@ i:before {
   background: var(--primary-color);
   color: var(--text-color);
 }
+
+.update_btn:focus {
+  background: var(--primary-color);
+  color: var(--text-color);
+}
+
 
 .checkout_btn {
   background: #d42421;

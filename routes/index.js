@@ -14,20 +14,28 @@ router.get('/', function(req, res) {
 });
 
 router.get('/products', function (req, res) {
-  res.render('products');
+  res.render('products', {
+    title: "Products"
+  });
 });
 
 router.get('/contact', function (req, res) {
-  res.render('contact');
+  res.render('contact', {
+    title: "Contact"
+  });
 });
 
 router.get('/blog', function (req, res) {
-  res.render('blog');
+  res.render('blog', {
+    title: "Blog"
+  });
 });
 
 var userInfo_sessionChecker = (req, res, next) => {
   if (req.session.user && req.cookies.user_sid) {
-    res.render('user-info');
+    res.render('user-info', {
+      title: "User info"
+    });
   } else {
     next();
   }
@@ -39,7 +47,10 @@ router.get('/user-info', userInfo_sessionChecker, function(req, res) {
 
 router.get('/login', function (req, res) {
   var _redirected = req.query.redirected;
-  res.render('login', { redirected: _redirected });
+  res.render('login', {
+    redirected: _redirected,
+    title: "Login"
+  });
 })
 
 router.get('/forgotpassword', function (req, res) {
@@ -48,18 +59,16 @@ router.get('/forgotpassword', function (req, res) {
 
 var cart_sessionChecker = (req, res, next) => {
   if (req.session.user && req.cookies.user_sid) {
-    res.render('cart');
+    res.render('cart', {
+      title: "Cart"
+    });
   } else {
     next();
   }
 }
 
-router.get('/cart', function(req, res) {
+router.get('/cart', cart_sessionChecker, function(req, res) {
   res.redirect('/login?redirected=true');
 });
-
-/*router.post('/', function (req, res) {
-  res.render('index');
-})*/
 
 module.exports = router;

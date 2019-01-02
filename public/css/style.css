@@ -778,6 +778,7 @@ i:before {
 
 .shop_header_area .navbar .navbar-nav li {
   margin-right: 40px;
+  margin-bottom: 0.5rem;
 }
 
 .shop_header_area .navbar .navbar-nav li a {
@@ -7017,4 +7018,23 @@ i:before {
   border-bottom: 1px solid var(--error-color) !important;
   border-right: 1px solid var(--error-color) !important;
   line-height: 60px;
+}
+
+.shop_header_area .navbar .navbar-nav li input {
+  background: transparent;
+  line-height: 50px;
+  border: none;
+  border-bottom: 1px solid var(--bg-accent);
+  border-radius: 0px;
+  padding: 0px;
+}
+
+.shop_header_area .navbar .navbar-nav li input:hover {
+  border-color: var(--text-color);
+}
+
+.shop_header_area .navbar .navbar-nav li input:focus {
+  box-shadow: none;
+  border-color: var(--text-color);
+  color: var(--text-color);
 }

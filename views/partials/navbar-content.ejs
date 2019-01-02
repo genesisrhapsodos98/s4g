@@ -13,6 +13,7 @@
                 Games <i class="fa fa-angle-down" aria-hidden="true"></i>
                 </a>
                 <ul class="dropdown-menu">
+                    <li class="nav-item"><a class="nav-link" href="/products">All</a></li>
                     <li class="nav-item"><a class="nav-link" href="/category/cat1">Category 1</a></li>
                     <li class="nav-item"><a class="nav-link" href="/category/cat2">Category 2</a></li>
                     <li class="nav-item"><a class="nav-link" href="/category/cat3">Category 3</a></li>
@@ -22,6 +23,12 @@
             </li>
             <li class="nav-item"><a class="nav-link" href="/blog">Blog</a></li>
             <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
+            <li class="nav-item d-lg-none"><a class="nav-link" href="/cart">Cart</a></li>
+            
+            <li class="nav-item d-lg-none"><a class="nav-link" href="/user-info">Login / Account information</a></li>
+            <li class="nav-item d-lg-none">
+                <input type="text" class="form-control" placeholder="Search" aria-label="Search" onkeydown="return searchEnter(event);" method="GET">
+            </li>
         </ul>                        
         <ul class="navbar-nav justify-content-end">
             <li class="search-bar">
@@ -34,9 +41,9 @@
 </nav>
 <script>
     function searchEnter(e) {
-        e = e || window.event;
-        e.preventDefault();
+        e = e || window.event;        
         if (e.keyCode === 13) { // Enter
+            e.preventDefault();
             // console.log('ENTER pressed on Search field');
             // Search
         }

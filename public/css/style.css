@@ -7009,6 +7009,7 @@ i:before {
   border-left: 1px solid var(--error-color) !important;
   text-align: center;
   line-height: 60px;
+  font-size: 20px;
 }
 
 .error-message-container .error-message {

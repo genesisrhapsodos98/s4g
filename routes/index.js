@@ -47,7 +47,7 @@ router.get('/user-info', userInfo_sessionChecker, function(req, res) {
 });
 
 router.get('/login', function (req, res) {
-  var _redirected = req.query.redirected;
+  var _redirected = req.query.redirected || false;
   res.render('login', {
     redirected: _redirected,
     title: "Login"
@@ -73,6 +73,6 @@ router.get('/cart', cart_sessionChecker, function(req, res) {
 });
 
 // RESTful
-router.post('/login/username',db.userLogin);
+router.post('/login', db.userLogin);
 
 module.exports = router;

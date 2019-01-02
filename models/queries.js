@@ -12,14 +12,14 @@ var db = pgp(connectionString);
 
 
 // QUERIES
-function userLogin(req,res,next){
-    console.log("Request body: ",[username,password]);
+function userLogin(req,res,next) {
     var username = req.body.username;
     var password = req.body.password;
+    console.log("Request body: ", [username,password]);    
 
-    db.oneOrNone('SELECT * FROM "USER" WHERE "Username" = $1 AND "Password" = $2',[username,password],)
-    .then(function(data){
-        console.log("got data ", data);
+    db.oneOrNone('SELECT * FROM "USER" WHERE "Username" = $1 AND "Password" = $2', [username,password], )
+    .then((data) => {
+        console.log("Retrieved: ", data);
         if(data === null){
             // res.status(200).json({
             //     status: 'failed',
@@ -29,7 +29,7 @@ function userLogin(req,res,next){
             // TODO: ADD WRONG LOGIN CREDENTIALS HANDLING
 
             res.redirect('/login');
-        } else{
+        } else {
             // res.status(200).json({
             //     status: 'success',
             //     data: data,

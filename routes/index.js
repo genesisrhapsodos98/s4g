@@ -3,6 +3,8 @@ var express = require('express');
 var session = require('express-session');
 var router = express.Router();
 
+var db = require('../models/queries');
+
 
 // Config router
 router.use(express.static(__dirname + '/public'));
@@ -68,5 +70,9 @@ router.get('/cart', function(req, res) {
 /*router.post('/', function (req, res) {
   res.render('index');
 })*/
+
+// RESTful
+router.post('/login/username',db.userLogin);
+
 
 module.exports = router;

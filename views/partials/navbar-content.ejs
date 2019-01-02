@@ -25,10 +25,19 @@
         </ul>                        
         <ul class="navbar-nav justify-content-end">
             <li class="search-bar">
-                <input type="text" class="form-control" placeholder="Search" aria-label="Search">
+                <input type="text" class="form-control" placeholder="Search" aria-label="Search" onkeydown="return searchEnter(event);" method="GET">
             </li>
-            <li class="user_icon"><a href="#"><i class="icon-user icons"></i></a></li>
+            <li class="user_icon"><a href="/user-info"><i class="icon-user icons"></i></a></li>
             <li class="cart_cart"><a href="/cart"><i class="icon-handbag icons"></i></a></li>
         </ul>
     </div>
 </nav>
+<script>
+    function searchEnter(e) {
+        e = e || window.event;
+        if (e.keyCode === 13) { // Enter
+            // console.log('ENTER pressed on Search field');
+            // Search
+        }
+    }
+</script>

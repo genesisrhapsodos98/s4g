@@ -1,6 +1,8 @@
 // Import dependencies
 var express = require('express');
+var session = require('express-session');
 var router = express.Router();
+
 
 // Config router
 router.use(express.static(__dirname + '/public'));
@@ -31,6 +33,18 @@ router.get('/blog', function (req, res) {
   res.render('blog');
 });
 
+var userInfo_sessionChecker = (req, res, next) => {
+  if (req.session.user && req.cookies.user_sid) {
+    res.render('user-info');
+  } else {
+    next();
+  }
+}
+
+router.get('/user-info', userInfo_sessionChecker, function(req, res) {
+  res.redirect('/login');
+});
+
 router.get('/login', function (req, res) {
   res.render('login');
 })
@@ -39,8 +53,16 @@ router.get('/forgotpassword', function (req, res) {
   res.render('forgotpassword');
 });
 
+var cart_sessionChecker = (req, res, next) => {
+  if (req.session.user && req.cookies.user_sid) {
+    res.render('cart');
+  } else {
+    next();
+  }
+}
+
 router.get('/cart', function(req, res) {
-  res.render('cart');
+  res.redirect('/login');
 });
 
 /*router.post('/', function (req, res) {

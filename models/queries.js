@@ -28,7 +28,7 @@ function userLogin(req,res,next) {
 
             // TODO: ADD WRONG LOGIN CREDENTIALS HANDLING
 
-            res.redirect('/login');
+            res.redirect('/login/failed');
         } else {
             // res.status(200).json({
             //     status: 'success',

@@ -12,7 +12,7 @@
         <!--================End Menu Area =================-->
 
         <!--================Error message area=============-->
-        <% if (redirected) { %>
+        <% if (status == 'redirected') { %>
         <div id="error_message_container" class="container error-message-container" style="margin-bottom:2rem;">
             <div class="row">
                 <div class="col-2 col-sm-1 error-icon">
@@ -20,6 +20,18 @@
                 </div>
                 <div class="col-10 col-sm-11 error-message">
                     <p>You need to be logged in to use this feature.</p>
+                </div>
+            </div>            
+        </div>
+        <% } %>
+        <% if (status == 'failed') { %>
+        <div id="error_message_container" class="container error-message-container" style="margin-bottom:2rem;">
+            <div class="row">
+                <div class="col-2 col-sm-1 error-icon">
+                    <i class="icon_info"></i>
+                </div>
+                <div class="col-10 col-sm-11 error-message">
+                    <p>Login failed. Please check your username and password.</p>
                 </div>
             </div>            
         </div>

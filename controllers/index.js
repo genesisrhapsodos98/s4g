@@ -81,10 +81,10 @@ router.get('/user-info', userInfo_sessionChecker, function(req, res) {
 });
 
 // Login page
-router.get('/login', function (req, res) {
-  var _redirected = req.query.redirected || false;
+router.get('/login/:status?', function (req, res) {
+  var status = req.params.status || 'normal';
   res.render('login', {
-    redirected: _redirected,
+    status: status,
     breadcrumb: [{"name": "Login", "url": "#"}]
   });
 })
@@ -110,7 +110,7 @@ var cart_sessionChecker = (req, res, next) => {
 }
 
 router.get('/cart', cart_sessionChecker, function(req, res) {
-  res.redirect('/login?redirected=true');
+  res.redirect('/login/redirected');
 });
 
 module.exports = router;

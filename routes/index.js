@@ -5,7 +5,6 @@ var router = express.Router();
 
 var db = require('../models/queries');
 
-
 // Config router
 router.use(express.static(__dirname + '/public'));
 router.use('images', express.static(__dirname + '/public/images'));
@@ -73,12 +72,7 @@ router.get('/cart', cart_sessionChecker, function(req, res) {
   res.redirect('/login?redirected=true');
 });
 
-/*router.post('/', function (req, res) {
-  res.render('index');
-})*/
-
 // RESTful
 router.post('/login/username',db.userLogin);
-
 
 module.exports = router;

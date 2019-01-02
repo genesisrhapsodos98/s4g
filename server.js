@@ -19,9 +19,11 @@ app.use(session({
   saveUninitialized: false,
   name: 's4g-cookie-id'
 }));
+
+
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 app.set('views', __dirname + "/views/pages");
 app.use(express.static(__dirname + '/public'));

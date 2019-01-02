@@ -1,43 +1,106 @@
-var BaseController = require("./Base")/*,
-	View = require("../views/Base"),
-	model = new (require("../models/ContentModel"))*/;
+// Import dependencies
+var express = require('express');
+var session = require('express-session');
+var router = express.Router();
 
-module.exports = BaseController.extend({ 
-	name: "Home",
-	content: null,
-	run: function(req, res, next) {
-		/*model.setDB(req.db);
-		var self = this;
-		this.getContent(function() {
-			var v = new View(res, 'home');
-			v.render(self.content);
-		})*/
-	},
-	getContent: function(callback) {
-		/*var self = this;
-		this.content = {};
-		model.getlist(function(err, records) {
-			if(records.length > 0) {
-				self.content.bannerTitle = records[0].title;
-				self.content.bannerText = records[0].text;
-			}
-			model.getlist(function(err, records) {
-				var blogArticles = '';
-				if(records.length > 0) {
-					var to = records.length < 5 ? records.length : 4;
-					for(var i=0; i<to; i++) {
-						var record = records[i];
-						blogArticles += '\
-							<div class="item">\
-	                            <img src="' + record.picture + '" alt="" />\
-	                            <a href="/blog/' + record.ID + '">' + record.title + '</a>\
-	                        </div>\
-						';
-					}
-				}
-				self.content.blogArticles = blogArticles;
-				callback();
-			}, { type: 'blog' });
-		}, { type: 'home' });*/
-	}
+var db = require('../models/queries');
+
+// Config router
+router.use(express.static(__dirname + '/public'));
+router.use('images', express.static(__dirname + '/public/images'));
+
+// Routing
+router.get('/', function(req, res) {
+    res.render('index');
 });
+
+router.get('/products', function (req, res) {
+  res.render('products', {
+    breadcrumb: [{"name": "Products", "url": "#"}]
+  });
+});
+
+router.get('/products/category/:category', function(req, res) {
+  var category = req.params.category;
+  // TODO: Query games from selected category
+
+  // Render page
+  res.render('products', {
+    breadcrumb: [
+      {"name": "Products", "url": "/products"},
+      {"name": "Category", "url": "#"},
+      {"name": category, "url": "#"}
+    ]
+  });
+});
+
+router.get('/products/search', function(req, res) {
+  var q = req.query.q;
+  // TODO: Query games from entered search key
+
+  // Render page
+  res.render('products', {
+    breadcrumb: [
+      {"name": "Products", "url": "/products"},
+      {"name": "Search", "url": "#"},
+      {"name": q, "url": "#"}
+    ]
+  });
+});
+
+router.get('/contact', function (req, res) {
+  res.render('contact', {
+    breadcrumb: [{"name": "Contact", "url": "#"}]
+  });
+});
+
+router.get('/blog', function (req, res) {
+  res.render('blog', {
+    breadcrumb: [{"name": "Blog", "url": "#"}]
+  });
+});
+
+var userInfo_sessionChecker = (req, res, next) => {
+  if (req.session.user && req.cookies.user_sid) {
+    res.render('user-info', {
+      breadcrumb: [{"name": "User info", "url": "#"}]
+    });
+  } else {
+    next();
+  }
+}
+
+router.get('/user-info', userInfo_sessionChecker, function(req, res) {
+  res.redirect('/login');
+});
+
+router.get('/login', function (req, res) {
+  var _redirected = req.query.redirected || false;
+  res.render('login', {
+    redirected: _redirected,
+    breadcrumb: [{"name": "Login", "url": "#"}]
+  });
+})
+
+router.get('/forgotpassword', function (req, res) {
+  res.render('forgotpassword');
+});
+
+var cart_sessionChecker = (req, res, next) => {
+  if (req.session.user && req.cookies.user_sid) {
+    res.render('cart', {
+      breadcrumb: [{"name": "Cart", "url": "#"}]
+    });
+  } else {
+    next();
+  }
+}
+
+router.get('/cart', cart_sessionChecker, function(req, res) {
+  res.redirect('/login?redirected=true');
+});
+
+// RESTful
+router.post('/login', db.userLogin);
+
+module.exports = router;

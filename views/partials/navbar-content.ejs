@@ -9,7 +9,7 @@
         <ul class="navbar-nav mr-auto">
             <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
             <li class="nav-item dropdown submenu">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="/products" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Games <i class="fa fa-angle-down" aria-hidden="true"></i>
                 </a>
                 <ul class="dropdown-menu">
@@ -35,6 +35,7 @@
 <script>
     function searchEnter(e) {
         e = e || window.event;
+        e.preventDefault();
         if (e.keyCode === 13) { // Enter
             // console.log('ENTER pressed on Search field');
             // Search

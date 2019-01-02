@@ -89,6 +89,15 @@ router.get('/login', function (req, res) {
   });
 })
 
+// RESTful
+router.post('/login', db.userLogin);
+
+// Create account
+router.post('/create_account', function(req, res) {
+  // TODO: Validate input
+  // TODO: SQL script to insert new user
+});
+
 // Cart page and its helper function
 var cart_sessionChecker = (req, res, next) => {
   if (req.session.user && req.cookies.user_sid) {
@@ -103,8 +112,5 @@ var cart_sessionChecker = (req, res, next) => {
 router.get('/cart', cart_sessionChecker, function(req, res) {
   res.redirect('/login?redirected=true');
 });
-
-// RESTful
-router.post('/login', db.userLogin);
 
 module.exports = router;

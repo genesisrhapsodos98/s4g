@@ -10,10 +10,13 @@ router.use(express.static(__dirname + '/public'));
 router.use('images', express.static(__dirname + '/public/images'));
 
 // Routing
+
+// Homepage
 router.get('/', function(req, res) {
     res.render('index');
 });
 
+// Product page and its sub-directories
 router.get('/products', function (req, res) {
   res.render('products', {
     breadcrumb: [{"name": "Products", "url": "#"}]
@@ -48,18 +51,21 @@ router.get('/products/search', function(req, res) {
   });
 });
 
+// Contact page
 router.get('/contact', function (req, res) {
   res.render('contact', {
     breadcrumb: [{"name": "Contact", "url": "#"}]
   });
 });
 
+// Blog page
 router.get('/blog', function (req, res) {
   res.render('blog', {
     breadcrumb: [{"name": "Blog", "url": "#"}]
   });
 });
 
+// User info page and its helper function
 var userInfo_sessionChecker = (req, res, next) => {
   if (req.session.user && req.cookies.user_sid) {
     res.render('user-info', {
@@ -74,6 +80,7 @@ router.get('/user-info', userInfo_sessionChecker, function(req, res) {
   res.redirect('/login');
 });
 
+// Login page
 router.get('/login', function (req, res) {
   var _redirected = req.query.redirected || false;
   res.render('login', {
@@ -82,10 +89,7 @@ router.get('/login', function (req, res) {
   });
 })
 
-router.get('/forgotpassword', function (req, res) {
-  res.render('forgotpassword');
-});
-
+// Cart page and its helper function
 var cart_sessionChecker = (req, res, next) => {
   if (req.session.user && req.cookies.user_sid) {
     res.render('cart', {

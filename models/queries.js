@@ -28,7 +28,7 @@ function userLogin(req,res,next){
 
             // TODO: ADD WRONG LOGIN CREDENTIALS HANDLING
 
-            res.render('login');
+            res.redirect('/login');
         } else{
             // res.status(200).json({
             //     status: 'success',
@@ -36,9 +36,9 @@ function userLogin(req,res,next){
             //     message: 'Found a matching user record. Logged in'
             // })
 
-            
+
             // TODO: EXTRACT INFO FROM DATA AND CREATE A SESSION OR SOMETHING ._.
-            res.render('index');
+            res.redirect('/');
         }
     })
     .catch(function(err){

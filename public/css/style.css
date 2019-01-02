@@ -6996,3 +6996,25 @@ i:before {
 /*---------------------------------------------------- */
 
 /*# sourceMappingURL=style.css.map */
+
+.error-message-container.hidden {
+  display: none;
+}
+
+.error-message-container .error-icon {
+  width: 10rem !important;
+  background-color: var(--error-color);
+  border-top: 1px solid var(--error-color) !important;
+  border-bottom: 1px solid var(--error-color) !important;
+  border-left: 1px solid var(--error-color) !important;
+  text-align: center;
+  line-height: 60px;
+  font-size: 20px;
+}
+
+.error-message-container .error-message {
+  border-top: 1px solid var(--error-color) !important;
+  border-bottom: 1px solid var(--error-color) !important;
+  border-right: 1px solid var(--error-color) !important;
+  line-height: 60px;
+}

@@ -10,6 +10,21 @@
             <%- include ../partials/navbar-small %>
         </header>
         <!--================End Menu Area =================-->
+
+        <!--================Error message area=============-->
+        <% if (redirected) { %>
+        <div id="error_message_container" class="container error-message-container" style="margin-bottom:2rem;">
+            <div class="row">
+                <div class="col-2 col-sm-1 error-icon">
+                    <i class="icon_info"></i>
+                </div>
+                <div class="col-10 col-sm-11 error-message">
+                    <p>You need to be logged in to use this feature.</p>
+                </div>
+            </div>            
+        </div>
+        <% } %>
+        <!--================End error message area=============-->
         
         <!--================Categories Banner Area =================-->
         <section class="solid_banner_area">

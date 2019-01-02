@@ -10,15 +10,7 @@ router.use('images', express.static(__dirname + '/public/images'));
 
 // Routing
 router.get('/', function(req, res) {
-    res.render('index', {title: 'Express'});
-});
-
-router.get('/', function (req, res) {
-  res.render('index', { onLogin : "onLogin();"});
-});
-
-router.post('/', function (req, res) {
-
+    res.render('index');
 });
 
 router.get('/products', function (req, res) {
@@ -46,7 +38,8 @@ router.get('/user-info', userInfo_sessionChecker, function(req, res) {
 });
 
 router.get('/login', function (req, res) {
-  res.render('login');
+  var _redirected = req.query.redirected;
+  res.render('login', { redirected: _redirected });
 })
 
 router.get('/forgotpassword', function (req, res) {
@@ -62,7 +55,7 @@ var cart_sessionChecker = (req, res, next) => {
 }
 
 router.get('/cart', function(req, res) {
-  res.redirect('/login');
+  res.redirect('/login?redirected=true');
 });
 
 /*router.post('/', function (req, res) {

@@ -5,7 +5,8 @@ const crypto = require('crypto');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const app = express();
-var routes = require('./controllers/index');
+var root = require('./controllers/index');
+var admin = require('./controllers/admin');
 
 // Config
 app.use(session({
@@ -25,7 +26,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 app.set('views', __dirname + "/views/pages");
 app.use(express.static(__dirname + '/public'));
-app.use('/', routes);
+app.use('/', root);
+app.use('/admin', admin);
 
 // This middleware will check if user's cookie is still saved in browser and user is not set, then automatically log the user out.
 // This usually happens when you stop your express server after login, your cookie still remains saved in the browser.

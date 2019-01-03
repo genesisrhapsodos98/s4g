@@ -5,6 +5,7 @@ const crypto = require('crypto');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const app = express();
+const steamAPIKey = '6C891DD6268C16383F1F819BEEA902AA';
 var root = require('./controllers/index');
 var admin = require('./controllers/admin');
 

@@ -40,7 +40,7 @@ app.use((req, res, next) => {
 
 
 // Start server
-app.listen(process.env.PORT || 5000, function() {
+app.listen(process.env.PORT || 5000, () => {
   console.log('Listening to Heroku\'s dynamic port and port 5000');
 })
 

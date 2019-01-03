@@ -10,7 +10,7 @@ router.use(express.static(__dirname + '/public'));
 router.use('images', express.static(__dirname + '/public/images'));
 
 // Routing
-router.get('/', function(req,res) {
+router.get('/', (req,res) => {
   res.render('index');
 });
 

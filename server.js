@@ -33,7 +33,7 @@ app.use('/admin', admin);
 // This usually happens when you stop your express server after login, your cookie still remains saved in the browser.
 app.use((req, res, next) => {
   if (req.cookies.s4g_session && !req.session.user) {
-      res.clearCookie('user_sid');        
+      res.clearCookie('s4g_session');        
   }
   next();
 });

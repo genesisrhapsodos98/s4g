@@ -84,8 +84,11 @@ router.get('/user-info', userInfo_sessionChecker, (req, res) => {
 // Login page
 router.get('/login/:status?', (req, res) => {
   var status = req.params.status || 'normal';
+  var redirectURL = req.query.url || '';
+
   res.render('login', {
     status: status,
+    url: redirectURL,
     breadcrumb: [{"name": "Login", "url": "#"}]
   });
 })
@@ -96,11 +99,15 @@ router.post('/login', async (req,res,next) => {
   console.log("In router: ",data);
   if(data === null) {
     // LOGIN FAILED
-    res.redirect('/login/failed');
+    redirectURL = '/login/failed?url=';
+    redirectURL += req.body.redirectURL;
+    res.redirect(redirectURL);
   } else {
     // TODO: LOGIN SUCCESSFULLY - CREATE SESSION
-    req.session.user = data;    
-    res.redirect('/');
+    req.session.user = data;
+    redirectURL = '/';
+    redirectURL += req.body.redirectURL;  
+    res.redirect(redirectURL);
   }
 })
 
@@ -129,7 +136,7 @@ var cart_sessionChecker = (req, res, next) => {
 }
 
 router.get('/cart', cart_sessionChecker, (req, res) => {
-  res.redirect('/login/redirected');
+  res.redirect('/login/redirect?url=cart');
 });
 
 module.exports = router;

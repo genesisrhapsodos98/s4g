@@ -9,6 +9,7 @@ const app = express();
 const steamAPIKey = '6C891DD6268C16383F1F819BEEA902AA';
 var root = require('./controllers/index');
 var admin = require('./controllers/admin');
+var user = require('./controllers/user');
 
 var steam = new SteamAPI(steamAPIKey);
 
@@ -32,6 +33,7 @@ app.set('views', __dirname + "/views/pages");
 app.use(express.static(__dirname + '/public'));
 app.use('/', root);
 app.use('/admin', admin);
+app.use('/user', user);
 
 // This middleware will check if user's cookie is still saved in browser and user is not set, then automatically log the user out.
 // This usually happens when you stop your express server after login, your cookie still remains saved in the browser.

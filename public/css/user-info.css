@@ -1,0 +1,63 @@
+:root {
+  --primary-color: #86C232;
+  --primary-color-alt: #61892F;
+  --bg-color: #222629;
+  --bg-accent: #474B4F;
+  --text-color: white;
+  --text-color-alt: #6B6E70;
+  --error-color: #E53935;
+}
+
+body {
+  background: var(--bg-color);
+}
+
+.page-wrapper {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.avatar {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.btn_avatar_change {
+  margin-top: 1rem;
+  width: 100%;
+  text-align: center;
+  vertical-align: middle;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  background: transparent;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  line-height: 48px;
+  -webkit-transition: all 400ms linear 0s;
+  -o-transition: all 400ms linear 0s;
+  transition: all 400ms linear 0s;
+}
+
+.btn_avatar_change:hover {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+}
+
+.user-nav li, .user-nav li a {
+  background-color: var(--bg-accent);
+  color: var(--text-color);
+  -webkit-transition: all 400ms linear 0s;
+  -o-transition: all 400ms linear 0s;
+  transition: all 400ms linear 0s;
+}
+
+.user-nav li a:hover {
+  color: var(--primary-color-alt);
+}
+
+.user-nav .user-nav-header {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+}

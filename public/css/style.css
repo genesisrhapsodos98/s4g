@@ -1720,9 +1720,17 @@ i:before {
   color: var(--text-color);
   position: relative;
   display: inline-block;
+  -webkit-transition: all 300ms linear !important;
+  -o-transition: all 300ms linear !important;
+  transition: all 300ms linear !important;
+}
+
+.solid_banner_inner ul li a:hover {
+  color: var(--primary-color-alt);
 }
 
 .solid_banner_inner ul li a:before {
+  color: var(--text-color);
   content: ">";
   position: absolute;
   right: -10px;

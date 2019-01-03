@@ -13,12 +13,15 @@ router.use('images', express.static(__dirname + '/public/images'));
 
 // Homepage
 router.get('/', (req, res) => {
-    res.render('index');
+    res.render('index', {
+      page: 'home'
+    });
 });
 
 // Product page and its sub-directories
 router.get('/products', (req, res) => {
   res.render('products', {
+    page: 'games',
     breadcrumb: [{"name": "Products", "url": "#"}]
   });
 });
@@ -29,6 +32,7 @@ router.get('/products/category/:category', (req, res) => {
 
   // Render page
   res.render('products', {
+    page: 'games',
     breadcrumb: [
       {"name": "Products", "url": "/products"},
       {"name": "Category", "url": "#"},
@@ -43,6 +47,7 @@ router.get('/products/search', (req, res) => {
 
   // Render page
   res.render('products', {
+    page: 'games',
     breadcrumb: [
       {"name": "Products", "url": "/products"},
       {"name": "Search", "url": "#"},
@@ -54,6 +59,7 @@ router.get('/products/search', (req, res) => {
 // Contact page
 router.get('/contact', (req, res) => {
   res.render('contact', {
+    page: 'contact',
     breadcrumb: [{"name": "Contact", "url": "#"}]
   });
 });
@@ -61,6 +67,7 @@ router.get('/contact', (req, res) => {
 // Blog page
 router.get('/blog', (req, res) => {
   res.render('blog', {
+    page: 'blog',
     breadcrumb: [{"name": "Blog", "url": "#"}]
   });
 });
@@ -69,7 +76,10 @@ router.get('/blog', (req, res) => {
 var userInfo_sessionChecker = (req, res, next) => {
   console.log("Session: ", req.session.user, "\nCookie: ", req.cookies.s4g_session);
   if (req.session.user && req.cookies.s4g_session) {
-    res.render('user-info', {
+    var url = 'user/';
+    //url += req.session.user.uuid;
+    res.render(url, {
+      page: 'user',
       breadcrumb: [{"name": "User info", "url": "#"}]
     });
   } else {
@@ -77,7 +87,7 @@ var userInfo_sessionChecker = (req, res, next) => {
   }
 }
 
-router.get('/user-info', userInfo_sessionChecker, (req, res) => {
+router.get('/user', userInfo_sessionChecker, (req, res) => {
   res.redirect('/login');
 });
 
@@ -87,6 +97,7 @@ router.get('/login/:status?', (req, res) => {
   var redirectURL = req.query.url || '';
 
   res.render('login', {
+    page: 'login',
     status: status,
     url: redirectURL,
     breadcrumb: [{"name": "Login", "url": "#"}]
@@ -126,9 +137,21 @@ router.post('/create_account', async function(req, res,next) {
   }
 });
 
+// Logout
+router.get('/logout', (req, res) => {
+  console.log("Attempt to log out of account: ", req.session.user, "\nCookie: ", req.cookies.s4g_session);
+  if (req.session.user && req.cookies.s4g_session) {
+    res.clearCookie('s4g_session');
+    res.redirect('/');
+  } else {
+      res.redirect('/login/redirect');
+  }
+})
+
 // Forgot password
 router.get('/forgot_password', (req, res) => {
   res.render('forgot_password', {
+    page: 'forgot_password',
     breadcrumb: [{"name": "Forgot password", "url": "#"}]
   });
 })
@@ -137,6 +160,7 @@ router.get('/forgot_password', (req, res) => {
 var cart_sessionChecker = (req, res, next) => {
   if (req.session.user && req.cookies.s4g_session) {
     res.render('cart', {
+      page: 'cart',
       breadcrumb: [{"name": "Cart", "url": "#"}]
     });
   } else {

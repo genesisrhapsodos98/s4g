@@ -17,14 +17,16 @@ async function userLogin(req,res,next) {
     var password = req.body.password;
     console.log("Request body: ", [username,password]);    
 
-    db.oneOrNone('SELECT * FROM "USER" WHERE "Username" = $1 AND "Password" = $2', [username,password], )
-    .then((data) => {
-        console.log(data);
-        return data;
-    })
-    .catch(function(err){
-        return next(err);
-    })
+    var result = await db.oneOrNone('SELECT * FROM "USER" WHERE "Username" = $1 AND "Password" = $2', [username,password], )
+    console.log("in queries: ",result);
+    return result;
+    // .then((data) => {
+    //     console.log(data);
+    //     return data;
+    // })
+    // .catch(function(err){
+    //     return next(err);
+    // })
 }
 // END OF QUERIES
 

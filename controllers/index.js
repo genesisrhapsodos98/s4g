@@ -12,18 +12,18 @@ router.use('images', express.static(__dirname + '/public/images'));
 // Routing
 
 // Homepage
-router.get('/', function(req, res) {
+router.get('/', (req, res) => {
     res.render('index');
 });
 
 // Product page and its sub-directories
-router.get('/products', function (req, res) {
+router.get('/products', (req, res) => {
   res.render('products', {
     breadcrumb: [{"name": "Products", "url": "#"}]
   });
 });
 
-router.get('/products/category/:category', function(req, res) {
+router.get('/products/category/:category', (req, res) => {
   var category = req.params.category;
   // TODO: Query games from selected category
 
@@ -37,7 +37,7 @@ router.get('/products/category/:category', function(req, res) {
   });
 });
 
-router.get('/products/search', function(req, res) {
+router.get('/products/search', (req, res) => {
   var q = req.query.q;
   // TODO: Query games from entered search key
 
@@ -52,14 +52,14 @@ router.get('/products/search', function(req, res) {
 });
 
 // Contact page
-router.get('/contact', function (req, res) {
+router.get('/contact', (req, res) => {
   res.render('contact', {
     breadcrumb: [{"name": "Contact", "url": "#"}]
   });
 });
 
 // Blog page
-router.get('/blog', function (req, res) {
+router.get('/blog', (req, res) => {
   res.render('blog', {
     breadcrumb: [{"name": "Blog", "url": "#"}]
   });
@@ -67,7 +67,8 @@ router.get('/blog', function (req, res) {
 
 // User info page and its helper function
 var userInfo_sessionChecker = (req, res, next) => {
-  if (req.session.user && req.cookies.user_sid) {
+  console.log("Session: ", req.session.user, "\nCookie: ", req.cookies.s4g_session);
+  if (req.session.user && req.cookies.s4g_session) {
     res.render('user-info', {
       breadcrumb: [{"name": "User info", "url": "#"}]
     });
@@ -76,29 +77,37 @@ var userInfo_sessionChecker = (req, res, next) => {
   }
 }
 
-router.get('/user-info', userInfo_sessionChecker, function(req, res) {
+router.get('/user-info', userInfo_sessionChecker, (req, res) => {
   res.redirect('/login');
 });
 
 // Login page
-router.get('/login/:status?', function (req, res) {
+router.get('/login/:status?', (req, res) => {
   var status = req.params.status || 'normal';
+  var redirectURL = req.query.url || '';
+
   res.render('login', {
     status: status,
+    url: redirectURL,
     breadcrumb: [{"name": "Login", "url": "#"}]
   });
 })
 
 // Login
-router.post('/login', async function(req,res,next){
+router.post('/login', async (req,res,next) => {
   const data = await db.userLogin(req,res,next);
   console.log("In router: ",data);
-  if(data === null){
+  if(data === null) {
     // LOGIN FAILED
-    res.redirect('/login/failed');
+    redirectURL = '/login/failed?url=';
+    redirectURL += req.body.redirectURL;
+    res.redirect(redirectURL);
   } else {
     // TODO: LOGIN SUCCESSFULLY - CREATE SESSION
-    res.redirect('/');
+    req.session.user = data;
+    redirectURL = '/';
+    redirectURL += req.body.redirectURL;  
+    res.redirect(redirectURL);
   }
 })
 
@@ -118,7 +127,7 @@ router.post('/create_account', async function(req, res,next) {
 });
 
 // Forgot password
-router.get('/forgot_password', function(req, res) {
+router.get('/forgot_password', (req, res) => {
   res.render('forgot_password', {
     breadcrumb: [{"name": "Forgot password", "url": "#"}]
   });
@@ -126,7 +135,7 @@ router.get('/forgot_password', function(req, res) {
 
 // Cart page and its helper function
 var cart_sessionChecker = (req, res, next) => {
-  if (req.session.user && req.cookies.user_sid) {
+  if (req.session.user && req.cookies.s4g_session) {
     res.render('cart', {
       breadcrumb: [{"name": "Cart", "url": "#"}]
     });
@@ -135,8 +144,8 @@ var cart_sessionChecker = (req, res, next) => {
   }
 }
 
-router.get('/cart', cart_sessionChecker, function(req, res) {
-  res.redirect('/login/redirected');
+router.get('/cart', cart_sessionChecker, (req, res) => {
+  res.redirect('/login/redirect?url=cart');
 });
 
 module.exports = router;

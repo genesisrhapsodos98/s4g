@@ -25,13 +25,24 @@ async function userLogin(req,res,next) {
 async function userCreate(req,res,next){
     var username = req.body.username;
     var password = req.body.password;
+    var result;
     
-    var result = await db.none('INSERT INTO "USER"("Username", "Password", "Role") VALUES($1, $2, $3) RETURNING *',[username,password,"MEMBER"]);
+    try{
+    var user = await db.oneOrNone('INSERT INTO "USER"("Username", "Password", "Role") VALUES($1, $2, $3) RETURNING *',[username,password,"MEMBER"]);
+    
+    result.user = user;
+    result.state = 'success';
     return result;
+    } catch(err){
+        result.state = 'failed';
+        result.err = err;
+        return result;
+    }
 }
 
 // END OF QUERIES
 
 module.exports = {
     userLogin: userLogin,
+    userCreate: userCreate,
 };

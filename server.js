@@ -9,14 +9,13 @@ var routes = require('./controllers/index');
 
 // Config
 app.use(session({
-  key: 'user_sid',
   genid: function(req) {
     return crypto.randomBytes(20).toString('hex');
   },
   secret: 's4g-website',
   resave: false,
   saveUninitialized: false,
-  name: 's4g-cookie-id'
+  name: 's4g_session'
 }));
 
 
@@ -31,7 +30,7 @@ app.use('/', routes);
 // This middleware will check if user's cookie is still saved in browser and user is not set, then automatically log the user out.
 // This usually happens when you stop your express server after login, your cookie still remains saved in the browser.
 app.use((req, res, next) => {
-  if (req.cookies.user_sid && !req.session.user) {
+  if (req.cookies.s4g_session && !req.session.user) {
       res.clearCookie('user_sid');        
   }
   next();

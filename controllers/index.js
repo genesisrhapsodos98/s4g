@@ -67,7 +67,8 @@ router.get('/blog', function (req, res) {
 
 // User info page and its helper function
 var userInfo_sessionChecker = (req, res, next) => {
-  if (req.session.user && req.cookies.user_sid) {
+  console.log("Session: ", req.session.user, "\nCookie: ", req.cookies.s4g_session);
+  if (req.session.user && req.cookies.s4g_session) {
     res.render('user-info', {
       breadcrumb: [{"name": "User info", "url": "#"}]
     });
@@ -93,19 +94,15 @@ router.get('/login/:status?', function (req, res) {
 router.post('/login', async function(req,res,next){
   const data = await db.userLogin(req,res,next);
   console.log("In router: ",data);
-  if(data === undefined){
+  if(data === null) {
     // LOGIN FAILED
     res.redirect('/login/failed');
   } else {
     // TODO: LOGIN SUCCESSFULLY - CREATE SESSION
+    req.session.user = data;    
     res.redirect('/');
   }
-<<<<<<< HEAD
-
-});
-=======
 })
->>>>>>> dcbf9d7582917c4a7a39cbe67eb87e0b5a792e6b
 
 // Create account
 router.post('/create_account', function(req, res) {
@@ -122,7 +119,7 @@ router.get('/forgot_password', function(req, res) {
 
 // Cart page and its helper function
 var cart_sessionChecker = (req, res, next) => {
-  if (req.session.user && req.cookies.user_sid) {
+  if (req.session.user && req.cookies.s4g_session) {
     res.render('cart', {
       breadcrumb: [{"name": "Cart", "url": "#"}]
     });

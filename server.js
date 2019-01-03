@@ -1,7 +1,7 @@
 // Import dependencies
 const express = require('express');
 const session = require('express-session');
-const crypto = require('crypto');
+const shortid = require('shortid');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const SteamAPI = require('steamapi');
@@ -16,7 +16,7 @@ var steam = new SteamAPI(steamAPIKey);
 // Config
 app.use(session({
   genid: function(req) {
-    return crypto.randomBytes(20).toString('hex');
+    return shortid.generate();
   },
   secret: 's4g-website',
   resave: false,

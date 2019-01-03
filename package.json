@@ -29,6 +29,7 @@
   ],
   "license": "ISC",
   "dependencies": {
+    "bluebird": "^3.5.3",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
     "jquery": "^3.3.1",

@@ -5,39 +5,6 @@ var options = {
 };
 
 var pgp = require('pg-promise')(options);
-<<<<<<< HEAD
-var connectionString = process.env.DATABASE_URL;
-var db = pgp(connectionString);
-
-// add query functions
-
-function getUser(req,res,next){
-    var username = req.params.username;
-    var password = req.params.password;
-    db
-    .oneOrNone('SELECT * FROM USER WHERE Username = $1 AND Password = $2 LIMIT 1',username,password)
-    .then(function(data){
-        if(data === undefined){
-            return false;
-        }
-        else{
-        res.status(200)
-        .json({
-            status: 'success',
-            data: data,
-            message: 'Found user'
-        })
-        return true;
-    }
-    })  
-}
-
-// add query functions
-
-module.exports = {
-
-};
-=======
 pgp.pg.defaults.ssl=true;
 
 var connectionString = process.env.DATABASE_URL || "postgres://hpwqgemtbmdcml:67134e246afe5b17a9b99a906f15f2a8718d784c648c11b8ba2faf867a4b9cdc@ec2-54-204-36-249.compute-1.amazonaws.com:5432/d33ugtjopia9n3";
@@ -45,34 +12,15 @@ var db = pgp(connectionString);
 
 
 // QUERIES
-function userLogin(req,res,next) {
+async function userLogin(req,res,next) {
     var username = req.body.username;
     var password = req.body.password;
     console.log("Request body: ", [username,password]);    
 
     db.oneOrNone('SELECT * FROM "USER" WHERE "Username" = $1 AND "Password" = $2', [username,password], )
     .then((data) => {
-        console.log("Retrieved: ", data);
-        if(data === null){
-            // res.status(200).json({
-            //     status: 'failed',
-            //     message: 'User not found. Try again or create a new account mayb ? :)',
-            // })
-
-            // TODO: ADD WRONG LOGIN CREDENTIALS HANDLING
-
-            res.redirect('/login/failed');
-        } else {
-            // res.status(200).json({
-            //     status: 'success',
-            //     data: data,
-            //     message: 'Found a matching user record. Logged in'
-            // })
-
-
-            // TODO: EXTRACT INFO FROM DATA AND CREATE A SESSION OR SOMETHING ._.
-            res.redirect('/');
-        }
+        console.log(data);
+        return data;
     })
     .catch(function(err){
         return next(err);
@@ -83,4 +31,3 @@ function userLogin(req,res,next) {
 module.exports = {
     userLogin: userLogin,
 };
->>>>>>> ed6575248a96e5ecd9a8fe59dcf252aeb7d3cd16

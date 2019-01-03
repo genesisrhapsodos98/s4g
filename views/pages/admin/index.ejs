@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <%- include ../partials/head %>
+    <%- include ../../partials/head %>
+    <link href="/css/admin-panel.css" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
   </head>
   <body>
-    <!--================Menu Area =================-->
-    <header class="shop_header_area carousel_menu_area">            
-      <%- include ../partials/navbar-small %>
-    </header>
-    <!--================End Menu Area =================-->
-    
-    <!--================Breadcrumb Area =================-->
-    <%- include ../partials/breadcrumbs %>
-    <!--================End Breadcrumb Area =================-->    
-    
-    <h2>Admin panel</h2>
-    
-    <!--================Footer Area =================-->
-    <footer class="footer_area">
-      <%- include ../partials/footer %>
-    </footer>
-    <!--================End Footer Area =================-->
+    <!-- Page wrapper -->
+    <div class="page-wrapper chiller-theme toggled">
+      <%- include ../../partials/admin-sidebar %>
+      <!-- page-content" -->
+      <main class="page-content">
+        <div class="container-fluid">
+          <h2>Content goes here</h2>
+          <footer class="footer_area">
+            <%- include ../../partials/footer %>
+          </footer>
+        </div>
+      </main>
+    </div>
 
-    
-    <%- include ../partials/scripts %>
+    <!--================Scripts=========================-->
+    <%- include ../../partials/scripts %>
+    <%- include ../../partials/admin-scripts %>
+    <!--================End scripts=========================-->
   </body>
 </html>

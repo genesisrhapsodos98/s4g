@@ -11,7 +11,7 @@ router.use('images', express.static(__dirname + '/public/images'));
 
 // Routing
 router.get('/', (req,res) => {
-  res.render('index');
+  res.render('admin/index');
 });
 
 module.exports = router;

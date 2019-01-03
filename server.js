@@ -4,10 +4,13 @@ const session = require('express-session');
 const crypto = require('crypto');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const SteamAPI = require('steamapi');
 const app = express();
 const steamAPIKey = '6C891DD6268C16383F1F819BEEA902AA';
 var root = require('./controllers/index');
 var admin = require('./controllers/admin');
+
+var steam = new SteamAPI(steamAPIKey);
 
 // Config
 app.use(session({

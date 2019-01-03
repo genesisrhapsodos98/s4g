@@ -91,9 +91,8 @@ router.get('/login/:status?', function (req, res) {
 
 // Login
 router.post('/login', async function(req,res,next){
-  var data = await db.userLogin(req,res,next);
-
-  console.log(data);
+   
+  console.log("In router: ", data);
   if(data === undefined){
     // LOGIN FAILED
     res.redirect('/login/failed');
@@ -101,6 +100,7 @@ router.post('/login', async function(req,res,next){
     // TODO: LOGIN SUCCESSFULLY - CREATE SESSION
     res.redirect('/');
   }
+
 });
 
 // Create account

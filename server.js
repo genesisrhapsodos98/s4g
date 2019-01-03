@@ -2,6 +2,7 @@
 const express = require('express');
 const session = require('express-session');
 const shortid = require('shortid');
+const bcrypt = require('bcryptjs');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const SteamAPI = require('steamapi');

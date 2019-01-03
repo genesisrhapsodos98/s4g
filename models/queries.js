@@ -18,7 +18,15 @@ async function userLogin(req,res,next) {
     console.log("Request body: ", [username,password]);    
 
     var result = await db.oneOrNone('SELECT * FROM "USER" WHERE "Username" = $1 AND "Password" = $2', [username,password], )
-    console.log("In async function: ", result);
+    console.log("in queries: ",result);
+    return result;
+    // .then((data) => {
+    //     console.log(data);
+    //     return data;
+    // })
+    // .catch(function(err){
+    //     return next(err);
+    // })
 }
 // END OF QUERIES
 

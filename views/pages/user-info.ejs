@@ -1,22 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <%- include ../../partials/head %>
+    <%- include ../partials/head %>
   </head>
   <body>
     <!--================Menu Area =================-->
     <header class="shop_header_area carousel_menu_area">            
-      <%- include ../../partials/navbar-small %>
+      <%- include ../partials/navbar-small %>
     </header>
     <!--================End Menu Area =================-->
-    <h2>Category 1</h2>
+    
+    <!--================Breadcrumb Area =================-->
+    <%- include ../partials/breadcrumbs %>
+    <!--================End Breadcrumb Area =================-->    
+    
+    <h2>User info</h2>
+    
     <!--================Footer Area =================-->
     <footer class="footer_area">
       <%- include ../partials/footer %>
     </footer>
     <!--================End Footer Area =================-->
 
-
-    <%- include ../../partials/scripts %>
+    
+    <%- include ../partials/scripts %>
   </body>
 </html>

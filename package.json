@@ -30,8 +30,14 @@
   "license": "ISC",
   "dependencies": {
     "bluebird": "^3.5.3",
+<<<<<<< HEAD
+=======
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+>>>>>>> ed6575248a96e5ecd9a8fe59dcf252aeb7d3cd16
     "ejs": "^2.6.1",
     "express": "^4.16.4",
+    "express-session": "^1.15.6",
     "jquery": "^3.3.1",
     "pg": "^7.7.1",
     "pg-promise": "^8.5.4",

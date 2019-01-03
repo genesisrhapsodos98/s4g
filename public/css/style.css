@@ -778,6 +778,7 @@ i:before {
 
 .shop_header_area .navbar .navbar-nav li {
   margin-right: 40px;
+  margin-bottom: 0.5rem;
 }
 
 .shop_header_area .navbar .navbar-nav li a {
@@ -2691,7 +2692,7 @@ i:before {
   font-size: 14px;
   letter-spacing: .70px;
   border-radius: 0px;
-  border: 1px solid var(--bg-accent);
+  border: 1px solid var(--primary-color-alt);
   padding: 0px 35px;
   line-height: 48px;
   -webkit-transition: all 400ms linear 0s;
@@ -5317,14 +5318,14 @@ i:before {
   position: relative;
   font-weight: 300;
   font-size: 1.35em;
-  padding: 0px 0px 0px 35px;
+  padding: 0px 0px 0px 22px;
   height: 15px;
   margin: 0px;
-  top: -25px;
+  top: -24px;
   z-index: 9;
   cursor: pointer;
   -webkit-transition: all 0.25s linear;
-  color: #666666;
+  color: var(--primary-color-alt);
   font-size: 13px;
   letter-spacing: .25px;
   font-weight: 500;
@@ -5465,7 +5466,7 @@ i:before {
 
 .login_form .form-group input {
   height: 50px;
-  border: 1px solid #cccccc;
+  border: 1px solid var(--text-color-alt);
   border-radius: 0px;
   -webkit-box-shadow: none;
   box-shadow: none;
@@ -5478,25 +5479,25 @@ i:before {
 .login_form .form-group input.placeholder {
   font-size: 14px;
   font-family: "Poppins", sans-serif;
-  color: #666666;
+  color: var(--text-color-alt);
 }
 
 .login_form .form-group input:-moz-placeholder {
   font-size: 14px;
   font-family: "Poppins", sans-serif;
-  color: #666666;
+  color: var(--text-color-alt);
 }
 
 .login_form .form-group input::-moz-placeholder {
   font-size: 14px;
   font-family: "Poppins", sans-serif;
-  color: #666666;
+  color: var(--text-color-alt);
 }
 
 .login_form .form-group input::-webkit-input-placeholder {
   font-size: 14px;
   font-family: "Poppins", sans-serif;
-  color: #666666;
+  color: var(--text-color-alt);
 }
 
 .login_form .form-group .creat_account {
@@ -5513,13 +5514,13 @@ i:before {
 }
 
 .login_form .form-group .creat_account .check {
-  background: #fff;
+  background: var(--text-color);
 }
 
 .login_form .form-group h4 {
-  font-size: 12px;
+  font-size: 13px;
   font-family: "Poppins", sans-serif;
-  color: #d91522;
+  color: var(--error-color);
   font-weight: normal;
   letter-spacing: .30px;
   display: inline-block;
@@ -6996,3 +6997,55 @@ i:before {
 /*---------------------------------------------------- */
 
 /*# sourceMappingURL=style.css.map */
+
+.error-message-container.hidden {
+  display: none;
+}
+
+.error-message-container .error-icon {
+  width: 10rem !important;
+  background-color: var(--error-color);
+  border-top: 1px solid var(--error-color) !important;
+  border-bottom: 1px solid var(--error-color) !important;
+  border-left: 1px solid var(--error-color) !important;
+  text-align: center;
+  line-height: 60px;
+  font-size: 20px;
+}
+
+.error-message-container .error-message {
+  border-top: 1px solid var(--error-color) !important;
+  border-bottom: 1px solid var(--error-color) !important;
+  border-right: 1px solid var(--error-color) !important;
+  line-height: 60px;
+}
+
+.shop_header_area .navbar .navbar-nav li input {
+  background: transparent;
+  line-height: 50px;
+  border: none;
+  border-bottom: 1px solid var(--bg-accent);
+  border-radius: 0px;
+  padding: 0px;
+}
+
+.shop_header_area .navbar .navbar-nav li input:hover {
+  border-color: var(--text-color);
+}
+
+.shop_header_area .navbar .navbar-nav li input:focus {
+  box-shadow: none;
+  border-color: var(--text-color);
+  color: var(--text-color);
+}
+
+.login_inner .login-area,
+.login_inner .create-account-area {
+  padding: 2rem;
+  border-radius: 0.75rem;
+}
+
+.login_inner .login-area {
+  border: 2px solid var(--text-color-alt);
+  background: var(--bg-accent);
+}

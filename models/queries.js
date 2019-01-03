@@ -20,14 +20,16 @@ async function userLogin(req,res,next) {
     var result = await db.oneOrNone('SELECT * FROM "USER" WHERE "Username" = $1 AND "Password" = $2', [username,password], )
     console.log("in queries: ",result);
     return result;
-    // .then((data) => {
-    //     console.log(data);
-    //     return data;
-    // })
-    // .catch(function(err){
-    //     return next(err);
-    // })
 }
+
+async function userCreate(req,res,next){
+    var username = req.body.username;
+    var password = req.body.password;
+    
+    var result = await db.none('INSERT INTO "USER"("Username", "Password", "Role") VALUES($1, $2, $3) RETURNING *',[username,password,"MEMBER"]);
+    return result;
+}
+
 // END OF QUERIES
 
 module.exports = {

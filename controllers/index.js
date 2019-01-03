@@ -93,7 +93,7 @@ router.get('/login/:status?', function (req, res) {
 router.post('/login', async function(req,res,next){
   const data = await db.userLogin(req,res,next);
   console.log("In router: ",data);
-  if(data === undefined){
+  if(data === null){
     // LOGIN FAILED
     res.redirect('/login/failed');
   } else {
@@ -103,9 +103,18 @@ router.post('/login', async function(req,res,next){
 })
 
 // Create account
-router.post('/create_account', function(req, res) {
+router.post('/create_account', async function(req, res,next) {
   // TODO: Validate input
   // TODO: SQL script to insert new user
+  const data = await db.userCreate(req,res,next);
+  console.log("In router: ",data);
+  if(data.state === 'failed'){
+    // USER CREATION FAILED
+    res.redirect('/login/failed');
+  } else {
+    // TODO: USER CREATED SUCCESSFULLY - CREATE SESSION
+    res.redirect('/');
+  }
 });
 
 // Forgot password

@@ -9,8 +9,8 @@ var router = express.Router();
 var db = require('../models/queries');
 
 // Config router
-router.use(express.static(__dirname + '/public'));
-router.use('images', express.static(__dirname + '/public/images'));
+router.use(express.static(__dirname + '../public'));
+router.use('/images', express.static(__dirname + '../public/images'));
 
 // Helper functions
 function getRole(req) {
@@ -36,7 +36,7 @@ var userInfo_sessionChecker = (req, res, next) => {
   console.log("Session: ", req.session.user, "\nCookie: ", req.cookies.s4g_session);
   if (req.session.user && req.cookies.s4g_session) {
     var url;
-    switch (req.session.user.Role) {
+    switch (getRole(req)) {
       case 'MEMBER':
         url = '/user/';
         url += req.session.user.UID;
@@ -59,16 +59,19 @@ router.get('/', userInfo_sessionChecker, (req, res) => {
 });
 
 router.get('/:uuid', async (req,res) => {
+  var role = getRole(req);
   var uploadStatus = req.query.upload || null;
-  var currentUID = req.session.user.UID || null;
+  var currentUID = null;
+  if (role != "GUEST") {
+    currentUID = req.session.user.UID;
+  }
   var pageUID = req.params.uuid;
   var isOwner = currentUID == pageUID ? true : false;
-  var owner = await db.findUserWithID(pageUID); // TODO: !IMPORTANT: not expected behaviour
-  //TODO: = replace that ^ with findUserWithID(pageUID)*/
+  var owner = await db.findUserWithID(pageUID);
   console.log("/controllers/user.js: GET: /:uuid - owner = ",owner);
   console.log("Upload status:", uploadStatus);
   res.render('user/index', {
-    role: getRole(req),
+    role: role,
     uploadStatus: uploadStatus,
     uid: pageUID,
     isOwner: isOwner,
@@ -108,9 +111,10 @@ router.post('/change-avatar', async (req, res) => {
       file.pipe(fstream);
       fstream.on('close', async () => {
         console.log("File successfully saved.");
-        // Update USER to reflect the avatar change
-        db.editUserAvatar(uid, filepath);
-
+        // Use dynamic path to serve file
+        var dynamicpath = path.join('/images/avatar/', uid, filename);
+        await db.editUserAvatar(uid, dynamicpath);
+        console.log("File saved to database.");
         // Redirect user back to user panel
         var url = '/user/' + uid + '?upload=success';
         res.redirect(url);

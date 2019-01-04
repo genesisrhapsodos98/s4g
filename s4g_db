@@ -1,0 +1,590 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 11.1
+-- Dumped by pg_dump version 11.1
+
+-- Started on 2019-01-03 14:35:01
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 203 (class 1255 OID 24577)
+-- Name: cart_del(integer, integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.cart_del(d_uid integer, d_pid integer) RETURNS void
+    LANGUAGE sql
+    AS $_$
+DELETE FROM "CART"
+WHERE "UID" = $1 AND "PID" = $2;
+$_$;
+
+
+ALTER FUNCTION public.cart_del(d_uid integer, d_pid integer) OWNER TO postgres;
+
+--
+-- TOC entry 204 (class 1255 OID 24578)
+-- Name: cart_ins(integer, integer, integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.cart_ins(i_uid integer, i_pid integer, i_amount integer) RETURNS void
+    LANGUAGE sql
+    AS $_$
+INSERT INTO "CART"("UID", "PID", "Amount") VALUES($1, $2, $3);
+$_$;
+
+
+ALTER FUNCTION public.cart_ins(i_uid integer, i_pid integer, i_amount integer) OWNER TO postgres;
+
+--
+-- TOC entry 205 (class 1255 OID 24579)
+-- Name: check_duplicate_userid(integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.check_duplicate_userid(integer) RETURNS boolean
+    LANGUAGE plpgsql
+    AS $_$
+DECLARE Duplicate bool;
+BEGIN
+	SELECT ("UID" = $1) INTO Duplicate
+	FROM "USER";
+	
+	RETURN Duplicate;
+END;
+$_$;
+
+
+ALTER FUNCTION public.check_duplicate_userid(integer) OWNER TO postgres;
+
+--
+-- TOC entry 206 (class 1255 OID 24580)
+-- Name: check_duplicate_username(character varying); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.check_duplicate_username(character varying) RETURNS boolean
+    LANGUAGE plpgsql
+    AS $_$
+DECLARE Duplicate bool;
+BEGIN
+	SELECT ("Username" = $1) INTO Duplicate
+	FROM "USER";
+	
+	RETURN Duplicate;
+END
+$_$;
+
+
+ALTER FUNCTION public.check_duplicate_username(character varying) OWNER TO postgres;
+
+--
+-- TOC entry 207 (class 1255 OID 24581)
+-- Name: check_valid_user_input(integer, character varying); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.check_valid_user_input(integer, character varying) RETURNS boolean
+    LANGUAGE plpgsql
+    AS $_$
+DECLARE valid_user bool;
+BEGIN
+	SELECT check_valid_userid($1) AND check_valid_username($2)
+	INTO valid_user;
+	
+	RETURN valid_user;
+END
+$_$;
+
+
+ALTER FUNCTION public.check_valid_user_input(integer, character varying) OWNER TO postgres;
+
+--
+-- TOC entry 208 (class 1255 OID 24582)
+-- Name: detail_del(integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.detail_del(d_oid integer) RETURNS void
+    LANGUAGE sql
+    AS $_$
+DELETE FROM "ORDER_DETAIL"
+WHERE "OID" = $1;
+$_$;
+
+
+ALTER FUNCTION public.detail_del(d_oid integer) OWNER TO postgres;
+
+--
+-- TOC entry 209 (class 1255 OID 24583)
+-- Name: detail_ins(integer, integer, integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.detail_ins(i_oid integer, i_pid integer, i_amount integer) RETURNS void
+    LANGUAGE sql
+    AS $_$
+INSERT INTO "ORDER_DETAIL"("OID", "PID", "Amount") VALUES ($1, $2, $3);
+$_$;
+
+
+ALTER FUNCTION public.detail_ins(i_oid integer, i_pid integer, i_amount integer) OWNER TO postgres;
+
+--
+-- TOC entry 210 (class 1255 OID 24584)
+-- Name: oder_del(integer, integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.oder_del(d_oid integer, d_uid integer) RETURNS void
+    LANGUAGE sql
+    AS $_$
+DELETE FROM "ORDER"
+WHERE "OID" = $1 AND "UID" = $2;
+$_$;
+
+
+ALTER FUNCTION public.oder_del(d_oid integer, d_uid integer) OWNER TO postgres;
+
+--
+-- TOC entry 211 (class 1255 OID 24585)
+-- Name: order_ins(integer, integer, character varying, date, date, integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.order_ins(i_oid integer, i_uid integer, i_status character varying, i_cdate date, i_pdate date, i_total integer) RETURNS void
+    LANGUAGE sql
+    AS $_$
+INSERT INTO "ORDER"("OID", "UID", "Status", "Created_Date", "Processed_Date", "Total")
+VALUES ($1, $2, $3, $4, $5, $6);
+$_$;
+
+
+ALTER FUNCTION public.order_ins(i_oid integer, i_uid integer, i_status character varying, i_cdate date, i_pdate date, i_total integer) OWNER TO postgres;
+
+--
+-- TOC entry 212 (class 1255 OID 24586)
+-- Name: product_del(integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.product_del(d_pid integer) RETURNS void
+    LANGUAGE sql
+    AS $_$
+DELETE FROM "PRODUCT"
+WHERE "PID" = $1;
+$_$;
+
+
+ALTER FUNCTION public.product_del(d_pid integer) OWNER TO postgres;
+
+--
+-- TOC entry 213 (class 1255 OID 24587)
+-- Name: product_ins(integer, character varying, integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.product_ins(i_steam integer, i_name character varying, price integer) RETURNS integer
+    LANGUAGE sql
+    AS $_$
+INSERT INTO "PRODUCT"("STEAMID", "Name", "Price") VALUES($1, $2, $3)
+RETURNING "PID";
+$_$;
+
+
+ALTER FUNCTION public.product_ins(i_steam integer, i_name character varying, price integer) OWNER TO postgres;
+
+--
+-- TOC entry 214 (class 1255 OID 24588)
+-- Name: product_ins(integer, integer, character varying, integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.product_ins(i_pid integer, i_steam integer, i_name character varying, price integer) RETURNS void
+    LANGUAGE sql
+    AS $_$
+INSERT INTO "PRODUCT"("PID", "STEAMID", "Name", "Price") VALUES($1, $2, $3, $4);
+$_$;
+
+
+ALTER FUNCTION public.product_ins(i_pid integer, i_steam integer, i_name character varying, price integer) OWNER TO postgres;
+
+--
+-- TOC entry 215 (class 1255 OID 24589)
+-- Name: user_del(integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.user_del(i_uid integer) RETURNS void
+    LANGUAGE sql
+    AS $_$
+DELETE FROM "USER"
+WHERE "UID" = $1;
+$_$;
+
+
+ALTER FUNCTION public.user_del(i_uid integer) OWNER TO postgres;
+
+--
+-- TOC entry 228 (class 1255 OID 24681)
+-- Name: user_ins(character varying, character varying, character varying); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.user_ins(i_uid character varying, i_username character varying, i_password character varying) RETURNS character varying
+    LANGUAGE plpgsql
+    AS $_$
+BEGIN
+	IF (SELECT check_duplicate_username($2)) = true
+	THEN RETURN 'FAIL: USERNAME EXISTED.';
+
+	ELSE 
+	INSERT INTO "USER"("Username", "Password", "Role") VALUES($1, $2, $3,'MEMBER') RETURNING 'SUCCESS' ;
+	END IF;
+END							
+$_$;
+
+
+ALTER FUNCTION public.user_ins(i_uid character varying, i_username character varying, i_password character varying) OWNER TO postgres;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 196 (class 1259 OID 24591)
+-- Name: CART; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."CART" (
+    "UID" integer,
+    "PID" integer,
+    "Amount" integer
+);
+
+
+ALTER TABLE public."CART" OWNER TO postgres;
+
+--
+-- TOC entry 197 (class 1259 OID 24594)
+-- Name: ORDER; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."ORDER" (
+    "OID" integer NOT NULL,
+    "UID" integer NOT NULL,
+    "Status" character varying NOT NULL,
+    "Created_Date" date NOT NULL,
+    "Processed_Date" date,
+    "Total" integer NOT NULL
+);
+
+
+ALTER TABLE public."ORDER" OWNER TO postgres;
+
+--
+-- TOC entry 198 (class 1259 OID 24600)
+-- Name: ORDER_DETAIL; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."ORDER_DETAIL" (
+    "OID" integer,
+    "PID" integer,
+    "Amount" integer NOT NULL
+);
+
+
+ALTER TABLE public."ORDER_DETAIL" OWNER TO postgres;
+
+--
+-- TOC entry 199 (class 1259 OID 24603)
+-- Name: PRODUCT; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."PRODUCT" (
+    "PID" integer NOT NULL,
+    "STEAMID" integer NOT NULL,
+    "Name" character varying NOT NULL,
+    "Price" integer NOT NULL
+);
+
+
+ALTER TABLE public."PRODUCT" OWNER TO postgres;
+
+--
+-- TOC entry 202 (class 1259 OID 24662)
+-- Name: UID_sequence; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public."UID_sequence"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."UID_sequence" OWNER TO postgres;
+
+--
+-- TOC entry 201 (class 1259 OID 24650)
+-- Name: uid_sequence; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.uid_sequence
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.uid_sequence OWNER TO postgres;
+
+--
+-- TOC entry 200 (class 1259 OID 24609)
+-- Name: USER; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."USER" (
+    "Username" character varying NOT NULL,
+    "Password" character varying NOT NULL,
+    "Role" character varying NOT NULL,
+    "UID" integer DEFAULT nextval('public.uid_sequence'::regclass) NOT NULL,
+    CONSTRAINT "User_Role_check" CHECK (((("Role")::text = 'ADMIN'::text) OR (("Role")::text = 'MEMBER'::text)))
+);
+
+
+ALTER TABLE public."USER" OWNER TO postgres;
+
+--
+-- TOC entry 2866 (class 0 OID 24591)
+-- Dependencies: 196
+-- Data for Name: CART; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public."CART" ("UID", "PID", "Amount") FROM stdin;
+\.
+
+
+--
+-- TOC entry 2867 (class 0 OID 24594)
+-- Dependencies: 197
+-- Data for Name: ORDER; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public."ORDER" ("OID", "UID", "Status", "Created_Date", "Processed_Date", "Total") FROM stdin;
+\.
+
+
+--
+-- TOC entry 2868 (class 0 OID 24600)
+-- Dependencies: 198
+-- Data for Name: ORDER_DETAIL; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public."ORDER_DETAIL" ("OID", "PID", "Amount") FROM stdin;
+\.
+
+
+--
+-- TOC entry 2869 (class 0 OID 24603)
+-- Dependencies: 199
+-- Data for Name: PRODUCT; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public."PRODUCT" ("PID", "STEAMID", "Name", "Price") FROM stdin;
+\.
+
+
+--
+-- TOC entry 2870 (class 0 OID 24609)
+-- Dependencies: 200
+-- Data for Name: USER; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public."USER" ("Username", "Password", "Role", "UID") FROM stdin;
+\.
+
+
+--
+-- TOC entry 2878 (class 0 OID 0)
+-- Dependencies: 202
+-- Name: UID_sequence; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public."UID_sequence"', 1, false);
+
+
+--
+-- TOC entry 2879 (class 0 OID 0)
+-- Dependencies: 201
+-- Name: uid_sequence; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.uid_sequence', 1, false);
+
+
+--
+-- TOC entry 2732 (class 2606 OID 24616)
+-- Name: ORDER ORDER_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."ORDER"
+    ADD CONSTRAINT "ORDER_pkey" PRIMARY KEY ("OID");
+
+
+--
+-- TOC entry 2735 (class 2606 OID 24618)
+-- Name: PRODUCT PRODUCT_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."PRODUCT"
+    ADD CONSTRAINT "PRODUCT_pkey" PRIMARY KEY ("PID");
+
+
+--
+-- TOC entry 2741 (class 2606 OID 24667)
+-- Name: USER USER_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."USER"
+    ADD CONSTRAINT "USER_pkey" PRIMARY KEY ("Username");
+
+
+--
+-- TOC entry 2721 (class 2606 OID 24620)
+-- Name: ORDER check_existprocesseddate; Type: CHECK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public."ORDER"
+    ADD CONSTRAINT check_existprocesseddate CHECK (((("Status")::text <> 'DONE'::text) OR ("Processed_Date" IS NOT NULL))) NOT VALID;
+
+
+--
+-- TOC entry 2725 (class 2606 OID 24621)
+-- Name: PRODUCT check_positivePID; Type: CHECK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public."PRODUCT"
+    ADD CONSTRAINT "check_positivePID" CHECK (("PID" > 0)) NOT VALID;
+
+
+--
+-- TOC entry 2720 (class 2606 OID 24622)
+-- Name: CART check_positiveamount; Type: CHECK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public."CART"
+    ADD CONSTRAINT check_positiveamount CHECK (("Amount" > 0)) NOT VALID;
+
+
+--
+-- TOC entry 2724 (class 2606 OID 24623)
+-- Name: ORDER_DETAIL check_positiveamount; Type: CHECK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public."ORDER_DETAIL"
+    ADD CONSTRAINT check_positiveamount CHECK (("Amount" > 0)) NOT VALID;
+
+
+--
+-- TOC entry 2726 (class 2606 OID 24624)
+-- Name: PRODUCT check_positiveprice; Type: CHECK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public."PRODUCT"
+    ADD CONSTRAINT check_positiveprice CHECK (("Price" > 0)) NOT VALID;
+
+
+--
+-- TOC entry 2722 (class 2606 OID 24625)
+-- Name: ORDER check_status; Type: CHECK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public."ORDER"
+    ADD CONSTRAINT check_status CHECK (((("Status")::text = 'DONE'::text) OR (("Status")::text = 'PENDING'::text))) NOT VALID;
+
+
+--
+-- TOC entry 2723 (class 2606 OID 24626)
+-- Name: ORDER check_validtotal; Type: CHECK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public."ORDER"
+    ADD CONSTRAINT check_validtotal CHECK (("Total" >= 0)) NOT VALID;
+
+
+--
+-- TOC entry 2737 (class 2606 OID 24628)
+-- Name: PRODUCT unique_name; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."PRODUCT"
+    ADD CONSTRAINT unique_name UNIQUE ("Name");
+
+
+--
+-- TOC entry 2739 (class 2606 OID 24630)
+-- Name: PRODUCT unique_steamid; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."PRODUCT"
+    ADD CONSTRAINT unique_steamid UNIQUE ("STEAMID");
+
+
+--
+-- TOC entry 2733 (class 1259 OID 24631)
+-- Name: fki_fk_oid; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fki_fk_oid ON public."ORDER_DETAIL" USING btree ("OID");
+
+
+--
+-- TOC entry 2729 (class 1259 OID 24632)
+-- Name: fki_fk_pid; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fki_fk_pid ON public."CART" USING btree ("PID");
+
+
+--
+-- TOC entry 2730 (class 1259 OID 24633)
+-- Name: fki_fk_uid; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fki_fk_uid ON public."CART" USING btree ("UID");
+
+
+--
+-- TOC entry 2743 (class 2606 OID 24634)
+-- Name: ORDER_DETAIL fk_oid; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."ORDER_DETAIL"
+    ADD CONSTRAINT fk_oid FOREIGN KEY ("OID") REFERENCES public."ORDER"("OID");
+
+
+--
+-- TOC entry 2742 (class 2606 OID 24639)
+-- Name: CART fk_pid; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."CART"
+    ADD CONSTRAINT fk_pid FOREIGN KEY ("PID") REFERENCES public."PRODUCT"("PID");
+
+
+--
+-- TOC entry 2744 (class 2606 OID 24644)
+-- Name: ORDER_DETAIL fk_pid; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."ORDER_DETAIL"
+    ADD CONSTRAINT fk_pid FOREIGN KEY ("PID") REFERENCES public."PRODUCT"("PID");
+
+
+-- Completed on 2019-01-03 14:35:02
+
+--
+-- PostgreSQL database dump complete
+--
+

@@ -23,21 +23,13 @@ async function userLogin(req,res,next) {
 }
 
 async function userCreate(req,res,next){
+    var uid = req.body.uuid;
     var username = req.body.username;
     var password = req.body.password;
     var result;
-    
-    try{
-    var user = await db.oneOrNone('INSERT INTO "USER"("Username", "Password", "Role") VALUES($1, $2, $3) RETURNING *',[username,password,"MEMBER"]);
-    
-    result.user = user;
-    result.state = 'success';
+
+    var user = await db.one('SELECT user_ins($1,$2,$3)',[uid,username,password]);
     return result;
-    } catch(err){
-        result.state = 'failed';
-        result.err = err;
-        return result;
-    }
 }
 
 // END OF QUERIES

@@ -1,6 +1,7 @@
 // Import dependencies
 var express = require('express');
 var session = require('express-session');
+var crypto = require('crypto');
 var router = express.Router();
 
 var db = require('../models/queries');
@@ -115,13 +116,22 @@ router.post('/login', async (req,res,next) => {
 router.post('/create_account', async function(req, res,next) {
   // TODO: Validate input
   // TODO: SQL script to insert new user
+  req.body.uuid = crypto.randomBytes(40).toString('hex');
   const data = await db.userCreate(req,res,next);
+  
   console.log("In router: ",data);
-  if(data.state === 'failed'){
+  if(data.split(":")[0] === 'FAIL'){
     // USER CREATION FAILED
     res.redirect('/login/failed');
   } else {
     // TODO: USER CREATED SUCCESSFULLY - CREATE SESSION
+    var newUser = {
+      "UID": req.body.uuid,
+      "Username": req.body.username,
+      "Password": req.body.password,
+      "Role": 'MEMBER'
+    }
+    req.session.user = newUser;
     res.redirect('/');
   }
 });

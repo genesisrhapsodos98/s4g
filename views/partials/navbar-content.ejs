@@ -23,9 +23,18 @@
             </li>
             <li class="nav-item" id="blog"><a class="nav-link" href="/blog">Blog</a></li>
             <li class="nav-item" id="contact"><a class="nav-link" href="/contact">Contact</a></li>
-            <li class="nav-item d-lg-none"><a class="nav-link" href="/cart">Cart</a></li>
-            
-            <li class="nav-item d-lg-none"><a class="nav-link" href="/user-info">Login / Account information</a></li>
+            <% if (role != "ADMIN") { %>
+                <li class="nav-item d-lg-none"><a class="nav-link" href="/cart">Cart</a></li>
+            <% } %>
+            <li class="nav-item d-lg-none"><a class="nav-link" href="/user">
+                <% if (role == "GUEST") { %>
+                    Login
+                <% } else if (role == "MEMBER") { %>
+                    My account
+                <% } else if (role == "ADMIN") { %>
+                    Admin panel
+                <% } else {} %>
+            </a></li>
             <li class="nav-item d-lg-none">
                 <form action="/products/search" method="get">
                     <input name="q" type="text|submit" class="form-control" placeholder="Search" aria-label="Search">
@@ -38,8 +47,16 @@
                     <input name="q" type="text|submit" class="form-control" placeholder="Search" aria-label="Search">
                 </form>                
             </li>
-            <li class="user_icon"><a href="/user"><i class="icon-user icons"></i></a></li>
-            <li class="cart_cart"><a href="/cart"><i class="icon-handbag icons"></i></a></li>
+            <li class="user_icon"><a href="/user">
+                <% if (role != "ADMIN") { %>
+                    <i class="icon-user icons"></i>
+                <% } else { %>
+                    <i class="icon_tool icons"></i>
+                <% } %>
+            </a></li>
+            <% if (role != "ADMIN") { %>
+                <li class="cart_cart"><a href="/cart"><i class="icon-handbag icons"></i></a></li>
+            <% } %>
         </ul>
     </div>
 </nav>

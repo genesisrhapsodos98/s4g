@@ -5,6 +5,7 @@ const shortid = require('shortid');
 const bcrypt = require('bcryptjs');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+var busboy = require('connect-busboy');
 const SteamAPI = require('steamapi');
 const app = express();
 const steamAPIKey = '6C891DD6268C16383F1F819BEEA902AA';
@@ -29,6 +30,7 @@ app.use(session({
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(busboy());
 app.set('view engine', 'ejs');
 app.set('views', __dirname + "/views/pages");
 app.use(express.static(__dirname + '/public'));

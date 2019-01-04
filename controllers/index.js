@@ -2,6 +2,7 @@
 var express = require('express');
 var session = require('express-session');
 var crypto = require('crypto');
+var shortid = require('shortid');
 var router = express.Router();
 
 var db = require('../models/queries');
@@ -10,18 +11,40 @@ var db = require('../models/queries');
 router.use(express.static(__dirname + '/public'));
 router.use('images', express.static(__dirname + '/public/images'));
 
+// Helper functions
+function getRole(req) {
+  var role = "GUEST";
+  if (req.session.user && req.cookies.s4g_session) {
+    switch (req.session.user.Role) {
+      case "ADMIN":
+        role = "ADMIN";
+        break;
+      case "MEMBER":
+        role = "MEMBER";
+        break;
+      default:
+        role = "UNDEFINED";
+    }
+  }
+  return role;
+}
+
 // Routing
 
 // Homepage
 router.get('/', (req, res) => {
-    res.render('index', {
-      page: 'home'
-    });
+  role = getRole(req);
+  console.log("Role: ",role);
+  res.render('index', {
+    role: getRole(req),
+    page: 'home'
+  });
 });
 
 // Product page and its sub-directories
 router.get('/products', (req, res) => {
   res.render('products', {
+    role: getRole(req),
     page: 'games',
     breadcrumb: [{"name": "Products", "url": "#"}]
   });
@@ -33,6 +56,7 @@ router.get('/products/category/:category', (req, res) => {
 
   // Render page
   res.render('products', {
+    role: getRole(req),
     page: 'games',
     breadcrumb: [
       {"name": "Products", "url": "/products"},
@@ -48,6 +72,7 @@ router.get('/products/search', (req, res) => {
 
   // Render page
   res.render('products', {
+    role: getRole(req),
     page: 'games',
     breadcrumb: [
       {"name": "Products", "url": "/products"},
@@ -60,6 +85,7 @@ router.get('/products/search', (req, res) => {
 // Contact page
 router.get('/contact', (req, res) => {
   res.render('contact', {
+    role: getRole(req),
     page: 'contact',
     breadcrumb: [{"name": "Contact", "url": "#"}]
   });
@@ -68,28 +94,10 @@ router.get('/contact', (req, res) => {
 // Blog page
 router.get('/blog', (req, res) => {
   res.render('blog', {
+    role: getRole(req),
     page: 'blog',
     breadcrumb: [{"name": "Blog", "url": "#"}]
   });
-});
-
-// User info page and its helper function
-var userInfo_sessionChecker = (req, res, next) => {
-  console.log("Session: ", req.session.user, "\nCookie: ", req.cookies.s4g_session);
-  if (req.session.user && req.cookies.s4g_session) {
-    var url = 'user/';
-    //url += req.session.user.uuid;
-    res.render(url, {
-      page: 'user',
-      breadcrumb: [{"name": "User info", "url": "#"}]
-    });
-  } else {
-    next();
-  }
-}
-
-router.get('/user', userInfo_sessionChecker, (req, res) => {
-  res.redirect('/login');
 });
 
 // Login page
@@ -98,6 +106,7 @@ router.get('/login/:status?', (req, res) => {
   var redirectURL = req.query.url || '';
 
   res.render('login', {
+    role: getRole(req),
     page: 'login',
     status: status,
     url: redirectURL,
@@ -117,9 +126,14 @@ router.post('/login', async (req,res,next) => {
   } else {
     // TODO: LOGIN SUCCESSFULLY - CREATE SESSION
     req.session.user = data;
-    redirectURL = '/';
-    redirectURL += req.body.redirectURL;  
-    res.redirect(redirectURL);
+    if (req.session.user.Role == "ADMIN") {
+      res.redirect('/admin');
+    } else {
+      redirectURL = '/';
+      redirectURL += req.body.redirectURL;  
+      res.redirect(redirectURL);
+    }
+    
   }
 })
 
@@ -127,7 +141,7 @@ router.post('/login', async (req,res,next) => {
 router.post('/create_account', async function(req, res,next) {
   // TODO: Validate input
   // TODO: SQL script to insert new user
-  req.body.uuid = crypto.randomBytes(40).toString('hex');
+  req.body.uuid = shortid.generate();
   const data = await db.userCreate(req,res,next);
   
   console.log("In router: ",data);
@@ -154,13 +168,14 @@ router.get('/logout', (req, res) => {
     res.clearCookie('s4g_session');
     res.redirect('/');
   } else {
-      res.redirect('/login/redirect');
+    res.redirect('/login/redirect');
   }
 })
 
 // Forgot password
 router.get('/forgot_password', (req, res) => {
   res.render('forgot_password', {
+    role: getRole(req),
     page: 'forgot_password',
     breadcrumb: [{"name": "Forgot password", "url": "#"}]
   });
@@ -170,6 +185,7 @@ router.get('/forgot_password', (req, res) => {
 var cart_sessionChecker = (req, res, next) => {
   if (req.session.user && req.cookies.s4g_session) {
     res.render('cart', {
+      role: getRole(req),
       page: 'cart',
       breadcrumb: [{"name": "Cart", "url": "#"}]
     });

@@ -7028,6 +7028,28 @@ i:before {
   line-height: 60px;
 }
 
+.success-message-container.hidden {
+  display: none;
+}
+
+.success-message-container .success-icon {
+  width: 10rem !important;
+  background-color: var(--primary-color);
+  border-top: 1px solid var(--primary-color) !important;
+  border-bottom: 1px solid var(--primary-color) !important;
+  border-left: 1px solid var(--primary-color) !important;
+  text-align: center;
+  line-height: 60px;
+  font-size: 20px;
+}
+
+.success-message-container .success-message {
+  border-top: 1px solid var(--primary-color) !important;
+  border-bottom: 1px solid var(--primary-color) !important;
+  border-right: 1px solid var(--primary-color) !important;
+  line-height: 60px;
+}
+
 .shop_header_area .navbar .navbar-nav li input {
   background: transparent;
   line-height: 50px;

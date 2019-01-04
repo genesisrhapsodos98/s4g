@@ -67,6 +67,7 @@ async function findUserWithID(UID){
 
 async function editUserAvatar(UID,newPath){
     var result = await db.result('UPDATE "USER" SET "pathToAvatar"=$2 WHERE "UID"=$1',[UID,newPath]);
+    console.log(newPath);
     return result.rowCount; // number of row affected by UPDATE.
 }
 
@@ -81,4 +82,6 @@ module.exports = {
     userLogin: userLogin,
     userCreate: userCreate,
     findUserWithID: findUserWithID,
+    editUserAvatar: editUserAvatar,
+    removeUserWithID: removeUserWithID,
 };

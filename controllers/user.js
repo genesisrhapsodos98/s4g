@@ -110,7 +110,7 @@ router.post('/change-avatar', async (req, res) => {
         console.log("File successfully saved.");
         // TODO: update USER to reflect the avatar change
         // USER.pathToAvatar = filepath
-
+        db.editUserAvatar(uid,filepath);
         // Redirect user back to user panel
         var url = '/user/' + uid + '?upload=success';
         res.redirect(url);

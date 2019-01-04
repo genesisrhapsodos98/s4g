@@ -236,6 +236,10 @@ body {
   padding: 8px 30px 8px 20px;
 }
 
+.sidebar-wrapper .sidebar-menu ul li a.active {
+  color: var(--primary-color) !important;
+}
+
 .sidebar-wrapper .sidebar-menu ul li a i {
   margin-right: 10px;
   font-size: 12px;

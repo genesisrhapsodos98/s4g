@@ -43,6 +43,7 @@ router.get('/', (req, res) => {
     user: req.session.user,
     role: getRole(req),
     page: 'admin',
+    tab: 'dashboard',
     breadcrumb: [{"name": "Admin", "url": "#"}]
   });
 });
@@ -51,7 +52,8 @@ router.get('/change-avatar', (req, res) => {
   res.render('admin/change-avatar', {
     user: req.session.user,
     role: getRole(req),
-    page: 'admin',
+    page: 'admin-change-avatar',
+    tab: 'dashboard',
     breadcrumb: [
       {"name": "Admin", "url": "/admin"},
       {"name": "Change avatar", "url": "#"}
@@ -63,7 +65,8 @@ router.get('/change-password', (req, res) => {
   res.render('admin/change-password', {
     user: req.session.user,
     role: getRole(req),
-    page: 'admin',
+    page: 'admin-change-password',
+    tab: 'dashboard',
     breadcrumb: [
       {"name": "Admin", "url": "/admin"},
       {"name": "Change password", "url": "#"}
@@ -75,7 +78,8 @@ router.get('/products', (req, res) => {
   res.render('admin/products', {
     user: req.session.user,
     role: getRole(req),
-    page: 'admin',
+    page: 'admin-products',
+    tab: 'ecommerce',
     breadcrumb: [
       {"name": "Admin", "url": "/admin"},
       {"name": "Products", "url": "#"}
@@ -87,7 +91,8 @@ router.get('/orders', (req, res) => {
   res.render('admin/orders', {
     user: req.session.user,
     role: getRole(req),
-    page: 'admin',
+    page: 'admin-orders',
+    tab: 'ecommerce',
     breadcrumb: [
       {"name": "Admin", "url": "/admin"},
       {"name": "Orders", "url": "#"}

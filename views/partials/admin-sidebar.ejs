@@ -30,35 +30,35 @@
                 <li class="header-menu">
                     <span>General</span>
                 </li>
-                <li class="sidebar-dropdown active">
+                <li class="sidebar-dropdown" id="dashboard">
                     <a href="#">
                         <i class="fa fa-tachometer-alt"></i>
                         <span>Dashboard</span>
                     </a>
-                    <div class="sidebar-submenu" style="display:block;">
+                    <div class="sidebar-submenu" id="dashboard">
                         <ul>
                             <li>
-                                <a href="/admin/change-avatar">Change avatar</a>
+                                <a href="/admin/change-avatar" id="admin-change-avatar">Change avatar</a>
                             </li>
                             <li>
-                                <a href="/admin/change-password">Change password</a>
+                                <a href="/admin/change-password" id="admin-change-password">Change password</a>
                             </li>
                         </ul>
                     </div>
                 </li>
-                <li class="sidebar-dropdown">
+                <li class="sidebar-dropdown" id="ecommerce">
                     <a href="#">
                         <i class="fa fa-shopping-cart"></i>
                         <span>E-commerce</span>
                         <span class="badge badge-pill badge-danger">0</span>
                     </a>
-                    <div class="sidebar-submenu">
+                    <div class="sidebar-submenu" id="ecommerce">
                         <ul>
                             <li>
-                                <a href="/admin/products">Products</a>
+                                <a href="/admin/products" id="admin-products">Products</a>
                             </li>
                             <li>
-                                <a href="/admin/orders">Orders</a>
+                                <a href="/admin/orders" id="admin-orders">Orders</a>
                             </li>
                         </ul>
                     </div>
@@ -86,3 +86,20 @@
         <!-- sidebar-menu  -->
     </div>
 </nav>
+
+<script>
+    var page = document.getElementById("<%=page%>");
+    page.classList.add('active');
+
+    var tab = document.getElementById("<%=tab%>");
+    tab.classList.add('active');
+
+    var children = tab.childNodes;
+    var i = 0;
+    children.forEach((child) => {
+        console.log("Child #", ++i,": ", child);
+        if (child.id == "<%=tab%>") {
+            child.setAttribute("style", "display:block;");
+        }
+    });
+</script>

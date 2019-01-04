@@ -47,9 +47,9 @@ async function userCreate(req,res,next){
     var username = req.body.username;
     var password = req.body.password;
 
-    try{
+    try {
         password = await bcrypt.hash(password,10);
-    } catch(err){
+    } catch(err) {
         console.log("queries.js: userCreate - Error while hashing ",err);
         next(err);
     }

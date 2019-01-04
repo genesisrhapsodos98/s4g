@@ -20,7 +20,7 @@
             <div class="col-sm-3"><!--left col-->
                 <div class="text-center">
                     <h1><%= owner.Username %></h1>
-                    <img src="/images/avatar/default_avatar.png" class="avatar rounded-circle img-thumbnail" alt="avatar">
+                    <img src="<%= owner.pathToAvatar %>" class="avatar rounded-circle img-thumbnail" alt="avatar">
                     <% if (isOwner) { %>
                         <h6>Upload a different photo...</h6>
                         <form action="/user/change-avatar" method="post" enctype='multipart/form-data'>

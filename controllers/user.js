@@ -10,8 +10,8 @@ router.use(express.static(__dirname + '/public'));
 router.use('images', express.static(__dirname + '/public/images'));
 
 // Routing
-router.get('/', (req,res) => {
-  res.render('admin/index');
+router.get('/:uuid', (req,res) => {
+  res.render('user/index');
 });
 
 module.exports = router;

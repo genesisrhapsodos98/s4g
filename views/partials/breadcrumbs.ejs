@@ -1,11 +1,11 @@
 <section class="solid_banner_area">
   <div class="container">
     <div class="solid_banner_inner">
-      <h3><%=breadcrumb[breadcrumb.length-1].name%></h3>
+      <h3><%= breadcrumb[breadcrumb.length-1].name %></h3>
       <ul>
         <li><a href="/">Home</a></li>
         <% breadcrumb.forEach(item => { %>          
-          <li><a href="<%=item.url%>"><%=item.name%></a></li>
+          <li><a href="<%= item.url %>"><%= item.name %></a></li>
         <% }); %>
       </ul>
     </div>

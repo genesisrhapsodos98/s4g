@@ -7,22 +7,22 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-            <li class="nav-item dropdown submenu">
+            <li class="nav-item" id="home"><a class="nav-link" href="/">Home</a></li>
+            <li class="nav-item dropdown submenu" id="games">
                 <a class="nav-link dropdown-toggle" href="/products" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Games <i class="fa fa-angle-down" aria-hidden="true"></i>
                 </a>
                 <ul class="dropdown-menu">
-                    <li class="nav-item"><a class="nav-link" href="/products">All</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/products/category/cat1">Category 1</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/products/category/cat2">Category 2</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/products/category/cat3">Category 3</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/products/category/cat4">Category 4</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/products/category/cat5">Category 5</a></li>
+                    <li class="nav-item" id="category_all"><a class="nav-link" href="/products">All</a></li>
+                    <li class="nav-item" id="category_1"><a class="nav-link" href="/products/category/cat1">Category 1</a></li>
+                    <li class="nav-item" id="category_2"><a class="nav-link" href="/products/category/cat2">Category 2</a></li>
+                    <li class="nav-item" id="category_3"><a class="nav-link" href="/products/category/cat3">Category 3</a></li>
+                    <li class="nav-item" id="category_4"><a class="nav-link" href="/products/category/cat4">Category 4</a></li>
+                    <li class="nav-item" id="category_5"><a class="nav-link" href="/products/category/cat5">Category 5</a></li>
                 </ul>
             </li>
-            <li class="nav-item"><a class="nav-link" href="/blog">Blog</a></li>
-            <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
+            <li class="nav-item" id="blog"><a class="nav-link" href="/blog">Blog</a></li>
+            <li class="nav-item" id="contact"><a class="nav-link" href="/contact">Contact</a></li>
             <li class="nav-item d-lg-none"><a class="nav-link" href="/cart">Cart</a></li>
             
             <li class="nav-item d-lg-none"><a class="nav-link" href="/user-info">Login / Account information</a></li>
@@ -38,8 +38,13 @@
                     <input name="q" type="text|submit" class="form-control" placeholder="Search" aria-label="Search">
                 </form>                
             </li>
-            <li class="user_icon"><a href="/user-info"><i class="icon-user icons"></i></a></li>
+            <li class="user_icon"><a href="/user"><i class="icon-user icons"></i></a></li>
             <li class="cart_cart"><a href="/cart"><i class="icon-handbag icons"></i></a></li>
         </ul>
     </div>
 </nav>
+
+<script>
+    var page = document.getElementById("<%=page%>");
+    page.classList.add('active');
+</script>

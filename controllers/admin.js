@@ -59,4 +59,40 @@ router.get('/change-avatar', (req, res) => {
   });
 })
 
+router.get('/change-password', (req, res) => {
+  res.render('admin/change-password', {
+    user: req.session.user,
+    role: getRole(req),
+    page: 'admin',
+    breadcrumb: [
+      {"name": "Admin", "url": "/admin"},
+      {"name": "Change password", "url": "#"}
+    ]
+  });
+})
+
+router.get('/products', (req, res) => {
+  res.render('admin/products', {
+    user: req.session.user,
+    role: getRole(req),
+    page: 'admin',
+    breadcrumb: [
+      {"name": "Admin", "url": "/admin"},
+      {"name": "Products", "url": "#"}
+    ]
+  });
+})
+
+router.get('/orders', (req, res) => {
+  res.render('admin/orders', {
+    user: req.session.user,
+    role: getRole(req),
+    page: 'admin',
+    breadcrumb: [
+      {"name": "Admin", "url": "/admin"},
+      {"name": "Orders", "url": "#"}
+    ]
+  });
+})
+
 module.exports = router;

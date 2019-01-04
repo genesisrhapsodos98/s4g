@@ -65,7 +65,7 @@ async function findUserWithID(UID){
     return result;
 }
 
-async function editUserAvatar(UID,newPath){
+async function editUserAvatar(UID, newPath){
     var result = await db.result('UPDATE "USER" SET "pathToAvatar"=$2 WHERE "UID" = $1',[UID,newPath]);
     return result.rowCount; // number of row affected by UPDATE.
 }

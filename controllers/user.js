@@ -106,10 +106,10 @@ router.post('/change-avatar', async (req, res) => {
       var filepath = path.join(dir, filename);
       fstream = fs.createWriteStream(filepath);
       file.pipe(fstream);
-      fstream.on('close', () => {
+      fstream.on('close', async () => {
         console.log("File successfully saved.");
-        // TODO: update USER to reflect the avatar change
-        // USER.pathToAvatar = filepath
+        // Update USER to reflect the avatar change
+        db.editUserAvatar(uid, filepath);
 
         // Redirect user back to user panel
         var url = '/user/' + uid + '?upload=success';

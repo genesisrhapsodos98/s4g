@@ -121,7 +121,7 @@ router.post('/login', async (req,res,next) => {
   if(data === null) {
     // LOGIN FAILED
     redirectURL = '/login/failed?url=';
-    redirectURL += req.body.redirectURL;
+    redirectURL += req.body.URL;
     res.redirect(redirectURL);
   } else {
     // TODO: LOGIN SUCCESSFULLY - CREATE SESSION
@@ -173,7 +173,7 @@ router.get('/logout', (req, res) => {
     res.clearCookie('s4g_session');
     res.redirect('/');
   } else {
-    res.redirect('/login/redirect');
+    res.redirect('/');
   }
 })
 

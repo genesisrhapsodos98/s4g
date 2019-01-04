@@ -27,21 +27,36 @@ function getRole(req) {
   return role;
 }
 
-// Routing
 var admin_sessionChecker = (req, res, next) => {
-  if (req.session.user && req.cookies.s4g_session && req.session.user.Role == "ADMIN") {
-    res.render('admin/index', {
-      role: getRole(req),
-      page: 'admin',
-      breadcrumb: [{"name": "Cart", "url": "#"}]
-    });
+  if (!(req.session.user && req.cookies.s4g_session && req.session.user.Role == "ADMIN")) {
+    res.redirect('/login/redirect?url=admin');
   } else {
     next();
   }
 }
 
-router.get('/', admin_sessionChecker, (req, res) => {
-  res.redirect('/');
+// Routing
+router.all('*', admin_sessionChecker);
+
+router.get('/', (req, res) => {
+  res.render('admin/index', {
+    user: req.session.user,
+    role: getRole(req),
+    page: 'admin',
+    breadcrumb: [{"name": "Admin", "url": "#"}]
+  });
 });
+
+router.get('/change-avatar', (req, res) => {
+  res.render('admin/change-avatar', {
+    user: req.session.user,
+    role: getRole(req),
+    page: 'admin',
+    breadcrumb: [
+      {"name": "Admin", "url": "/admin"},
+      {"name": "Change avatar", "url": "#"}
+    ]
+  });
+})
 
 module.exports = router;

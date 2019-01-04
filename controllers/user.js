@@ -77,7 +77,10 @@ router.get('/:uuid', async (req,res) => {
     isOwner: isOwner,
     owner: owner,
     page: 'user',
-    breadcrumb: [{"name": "User info", "url": "#"}]
+    breadcrumb: [
+      {"name": "User", "url": "#"},
+      {"name": owner.Username, "url": "#"}
+    ]
   });
 });
 
@@ -122,5 +125,35 @@ router.post('/change-avatar', async (req, res) => {
     }    
   });
 })
+
+// Change password
+router.get('/:uuid/change-password', async (req, res) => {
+  var role = getRole(req);
+  var currentUID = null;
+  if (role != "GUEST") {
+    currentUID = req.session.user.UID;
+  }
+  var pageUID = req.params.uuid;
+  if (currentUID != pageUID) {
+    res.redirect('/user');
+  }
+  console.log("/user/:uuid/change-password - pageUID = ", pageUID);
+  var owner = await db.findUserWithID(pageUID);
+  var isOwner = currentUID == pageUID ? true : false;
+
+  res.render('user/change-password', {
+    role: role,
+    uid: pageUID,
+    isOwner: isOwner,
+    owner: owner,
+    page: 'user',
+    breadcrumb: [
+      {"name": "User", "url": "/user/" + pageUID },
+      {"name": owner.Username, "url": "/user/" + pageUID },
+      {"name": "Change password", "url": "#" }
+    ]
+  });
+})
+
 
 module.exports = router;

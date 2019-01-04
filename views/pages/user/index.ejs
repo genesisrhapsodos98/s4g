@@ -18,55 +18,33 @@
     <div class="container page-wrapper">
         <div class="row">
             <div class="col-sm-3"><!--left col-->
-                <div class="text-center">
-                    <h1 class="username-label"><%= owner.Username %></h1>
-                    <img src="<%= owner.pathToAvatar %>" class="avatar rounded-circle img-thumbnail" alt="avatar">
-                    <% if (isOwner) { %>
-                        <h6>Upload a different photo...</h6>
-                        <form action="/user/change-avatar" method="post" enctype='multipart/form-data'>
-                            <input type="file" name="avatar_upload" accept="image/*" class="text-center center-block file-upload">
-                            <button class="btn_avatar_change" type="submit" value="submit"> Change avatar</button>
-                        </form>
+                <%- include ../../partials/user-info %>
+                <div class="col-sm-9">
+                    <!-- Page content -->
+                    <% if (uploadStatus == 'failed') { %>
+                        <div id="error_message_container" class="container error-message-container" style="margin-bottom:2rem;">
+                            <div class="row">
+                                <div class="col-2 col-sm-1 error-icon">
+                                    <i class="icon_error-triangle"></i>
+                                </div>
+                                <div class="col-8 col-sm-11 error-message">
+                                    <p>Upload failed. Please make sure you are uploading an image.</p>
+                                </div>
+                            </div>            
+                        </div>
                     <% } %>
-                </div></hr><br>                
-                
-                <% if (isOwner) { %>
-                    <ul class="user-nav list-group">
-                        <li class="list-group-item user-nav-header">Control panel</li>
-                        <li class="list-group-item"><a href="#">Item 1</a></li>
-                        <li class="list-group-item"><a href="#">Item 2</a></li>
-                        <li class="list-group-item"><a href="#">Item 3</a></li>
-                        <li class="list-group-item"><a href="#">Item 4</a></li>
-                        <li class="list-group-item"><a href="/logout">Log out</a></li>
-                    </ul>      
-                <% } %>          
-            </div><!--/col-3-->
-            <div class="col-sm-9">
-                <!-- Page content -->
-                <% if (uploadStatus == 'failed') { %>
-                    <div id="error_message_container" class="container error-message-container" style="margin-bottom:2rem;">
-                        <div class="row">
-                            <div class="col-2 col-sm-1 error-icon">
-                                <i class="icon_error-triangle"></i>
-                            </div>
-                            <div class="col-8 col-sm-11 error-message">
-                                <p>Upload failed. Please make sure you are uploading an image.</p>
-                            </div>
-                        </div>            
-                    </div>
-                <% } %>
-                <% if (uploadStatus == 'success') { %>
-                    <div id="success_message_container" class="container success-message-container" style="margin-bottom:2rem;">
-                        <div class="row">
-                            <div class="col-2 col-sm-1 success-icon">
-                                <i class="icon_check_alt "></i>
-                            </div>
-                            <div class="col-8 col-sm-11 success-message">
-                                <p>Successfully changed avatar.</p>
-                            </div>
-                        </div>            
-                    </div>
-                <% } %>
+                    <% if (uploadStatus == 'success') { %>
+                        <div id="success_message_container" class="container success-message-container" style="margin-bottom:2rem;">
+                            <div class="row">
+                                <div class="col-2 col-sm-1 success-icon">
+                                    <i class="icon_check_alt "></i>
+                                </div>
+                                <div class="col-8 col-sm-11 success-message">
+                                    <p>Successfully changed avatar.</p>
+                                </div>
+                            </div>            
+                        </div>
+                    <% } %>
                 <h2>Page content goes here</h2>
             </div><!--/col-9-->          
         </div><!--/row-->

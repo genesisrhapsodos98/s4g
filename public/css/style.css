@@ -814,7 +814,7 @@ i:before {
   color: var(--primary-color) !important;
 }
 
-.shop_header_area .navbar .navbar-nav li.active a {
+.shop_header_area .navbar .navbar-nav li.active > a {
   color: var(--primary-color-alt);
 }
 
@@ -851,7 +851,7 @@ i:before {
 .shop_header_area .navbar .navbar-nav li.submenu .dropdown-menu li a {
   display: block;
   line-height: 38px;
-  color: #fff;
+  color: var(--text-color) !important;
   font-family: "Montserrat", sans-serif;
   letter-spacing: .48px;
   font-size: 14px;
@@ -865,7 +865,7 @@ i:before {
 }
 
 .shop_header_area .navbar .navbar-nav li.submenu .dropdown-menu li:hover a, .shop_header_area .navbar .navbar-nav li.submenu .dropdown-menu li.active a {
-  color: var(--primary-color-alt);
+  color: var(--primary-color-alt) !important;
 }
 
 @media (min-width: 992px) {

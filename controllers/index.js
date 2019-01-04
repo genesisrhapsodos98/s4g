@@ -60,7 +60,7 @@ router.get('/products/category/:category', (req, res) => {
     page: 'games',
     breadcrumb: [
       {"name": "Products", "url": "/products"},
-      {"name": "Category", "url": "#"},
+      {"name": "Category", "url": "/products"},
       {"name": category, "url": "#"}
     ]
   });

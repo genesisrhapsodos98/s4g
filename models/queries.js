@@ -66,11 +66,11 @@ async function findUserWithID(UID){
 }
 
 async function editUserAvatar(UID,newPath){
-    var result = await db.result('UPDATE "USER" SET "pathToAvatar"=$2 WHERE "UID" = $1',[UID,newPath]);
+    var result = await db.result('UPDATE "USER" SET "pathToAvatar"=$2 WHERE "UID"=$1',[UID,newPath]);
     return result.rowCount; // number of row affected by UPDATE.
 }
 
-async function removeUser(UID){
+async function removeUserWithID(UID){
     var result = await db.result('DELETE FROM "USER" WHERE "UID"=$1',[UID]);
     return result.rowCount; // number of row affected by DELETE.
 }

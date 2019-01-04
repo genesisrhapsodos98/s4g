@@ -68,7 +68,6 @@ router.get('/:uuid', async (req,res) => {
   var pageUID = req.params.uuid;
   var isOwner = currentUID == pageUID ? true : false;
   var owner = await db.findUserWithID(pageUID);
-  console.log("/controllers/user.js: GET: /:uuid - owner = ",owner);
   console.log("Upload status:", uploadStatus);
   res.render('user/index', {
     role: role,
@@ -117,6 +116,7 @@ router.post('/change-avatar', async (req, res) => {
         // Use dynamic path to serve file
         var dynamicpath = path.join('/images/avatar/', uid, filename);
         await db.editUserAvatar(uid, dynamicpath);
+        req.session.user.pathToAvatar = dynamicpath;
         console.log("File saved to database.");
         // Redirect user back to user panel
         var url = '/user/' + uid + '?upload=success';
@@ -146,7 +146,7 @@ router.get('/:uuid/change-password', async (req, res) => {
     uid: pageUID,
     isOwner: isOwner,
     owner: owner,
-    page: 'user',
+    page: 'user-change-password',
     breadcrumb: [
       {"name": "User", "url": "/user/" + pageUID },
       {"name": owner.Username, "url": "/user/" + pageUID },
@@ -154,6 +154,13 @@ router.get('/:uuid/change-password', async (req, res) => {
     ]
   });
 })
+
+router.post('/:uuid/change-password', async (req, res) => {
+  // TODO: Validate input
+
+  // TODO: Execute query to change password
+
+});
 
 
 module.exports = router;

@@ -117,7 +117,6 @@ router.get('/login/:status?', (req, res) => {
 // Login
 router.post('/login', async (req,res,next) => {
   const data = await db.userLogin(req,res,next);
-  console.log("In router: ",data);
   if(data === null) {
     // LOGIN FAILED
     redirectURL = '/login/failed?url=';
@@ -168,7 +167,6 @@ router.post('/create_account', async function(req, res,next) {
 
 // Logout
 router.get('/logout', (req, res) => {
-  console.log("Attempt to log out of account: ", req.session.user, "\nCookie: ", req.cookies.s4g_session);
   if (req.session.user && req.cookies.s4g_session) {
     res.clearCookie('s4g_session');
     res.redirect('/');

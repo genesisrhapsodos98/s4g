@@ -30,6 +30,7 @@ body {
   padding-left: 2rem;
   padding-right: 2rem;
   background: transparent;
+  outline: none !important;
   border: 1px solid var(--primary-color);
   color: var(--primary-color);
   font-weight: 600;
@@ -42,6 +43,7 @@ body {
 
 .btn_avatar_change:hover {
   background-color: var(--primary-color);
+  outline: none !important;
   color: var(--text-color);
 }
 
@@ -54,6 +56,10 @@ body {
 }
 
 .user-nav li a:hover {
+  color: var(--primary-color) !important;
+}
+
+.user-nav li a.active {
   color: var(--primary-color-alt);
 }
 

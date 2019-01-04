@@ -13,13 +13,56 @@
       <main class="page-content">
         <div class="container-fluid">
 
-          <h2>Content goes here</h2>
+          <div class="col mx-auto my-auto text-center" style="margin-bottom: 2rem;">
 
+            <% if (uploadStatus == 'failed') { %>
+              <div id="error_message_container" class="container error-message-container" style="margin-bottom:2rem;">
+                <div class="row">
+                  <div class="col-2 col-sm-1 error-icon">
+                    <i class="icon_error-triangle"></i>
+                  </div>
+                  <div class="col-8 col-sm-11 error-message">
+                    <p>Upload failed. Please make sure you are uploading an image.</p>
+                  </div>
+                </div>            
+              </div>
+            <% } %>
+            <% if (uploadStatus == 'success') { %>
+              <div id="success_message_container" class="container success-message-container" style="margin-bottom:2rem;">
+                <div class="row">
+                  <div class="col-2 col-sm-1 success-icon">
+                    <i class="icon_check_alt "></i>
+                  </div>
+                  <div class="col-8 col-sm-11 success-message">
+                    <p>Successfully changed avatar.</p>
+                  </div>
+                </div>            
+              </div>
+            <% } %>
+
+            <h2 class="text-center text-primary-color">Change avatar</h2>
+            <div class="row align-self-center" style="margin-bottom: 2rem;"></div>  
+            
+            <div class="row">
+              <div class="col-sm-8 col-lg-6 col-xl-4 offset-sm-2 offset-lg-3 offset-xl-4 align-self-center">
+                <img src="<%= owner.pathToAvatar %>" class="avatar rounded-circle img-thumbnail" alt="avatar">
+                <h6>Upload a different photo...</h6>
+                <form action="/admin/change-avatar" method="post" enctype='multipart/form-data'>
+                  <input type="file" name="avatar_upload" accept="image/*" class="text-center center-block file-upload">
+                  <button class="btn_avatar_change" type="submit" value="submit"> Change avatar</button>
+                </form>
+              </div>              
+            </div>
+            
+
+            
+          </div><!--/col-->
           
-          <footer class="footer_area">
-            <%- include ../../partials/footer %>
-          </footer>
+          
         </div>
+        <footer class="footer_area">
+          <%- include ../../partials/footer %>
+        </footer>
       </main>
     </div>
 

@@ -16,8 +16,7 @@ var db = pgp(connectionString);
 async function userLogin(req,res,next) {
     var username = req.body.username;
     var password = req.body.password;
-
-    console.log("queries.js: userLogin - Request body: ", [username,password]);   
+   
     var user = await db.oneOrNone('SELECT * FROM "USER" WHERE "Username" = $1', [username]);
 
     if(user === null){
@@ -31,8 +30,6 @@ async function userLogin(req,res,next) {
         console.log("queries.js: userLogin - Error while comparing password",err);
         next(err);
     };
-
-    console.log("in queries: ",result);
 
     if(result){
         return user;

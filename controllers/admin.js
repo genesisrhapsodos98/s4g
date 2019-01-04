@@ -1,6 +1,9 @@
 // Import dependencies
 var express = require('express');
 var session = require('express-session');
+var fs = require('fs');
+var path = require('path');
+var isImage = require('is-image');
 var router = express.Router();
 
 var db = require('../models/queries');
@@ -40,7 +43,7 @@ router.all('*', admin_sessionChecker);
 
 router.get('/', (req, res) => {
   res.render('admin/index', {
-    user: req.session.user,
+    owner: req.session.user,
     role: getRole(req),
     page: 'admin',
     tab: 'dashboard',
@@ -49,8 +52,10 @@ router.get('/', (req, res) => {
 });
 
 router.get('/change-avatar', (req, res) => {
+  var uploadStatus = req.query.upload || null;
   res.render('admin/change-avatar', {
-    user: req.session.user,
+    uploadStatus: uploadStatus,
+    owner: req.session.user,
     role: getRole(req),
     page: 'admin-change-avatar',
     tab: 'dashboard',
@@ -63,7 +68,7 @@ router.get('/change-avatar', (req, res) => {
 
 router.get('/change-password', (req, res) => {
   res.render('admin/change-password', {
-    user: req.session.user,
+    owner: req.session.user,
     role: getRole(req),
     page: 'admin-change-password',
     tab: 'dashboard',
@@ -76,7 +81,7 @@ router.get('/change-password', (req, res) => {
 
 router.get('/products', (req, res) => {
   res.render('admin/products', {
-    user: req.session.user,
+    owner: req.session.user,
     role: getRole(req),
     page: 'admin-products',
     tab: 'ecommerce',
@@ -89,7 +94,7 @@ router.get('/products', (req, res) => {
 
 router.get('/orders', (req, res) => {
   res.render('admin/orders', {
-    user: req.session.user,
+    owner: req.session.user,
     role: getRole(req),
     page: 'admin-orders',
     tab: 'ecommerce',
@@ -97,6 +102,50 @@ router.get('/orders', (req, res) => {
       {"name": "Admin", "url": "/admin"},
       {"name": "Orders", "url": "#"}
     ]
+  });
+})
+
+// Change avatar
+router.post('/change-avatar', async (req, res) => {
+  var uid = req.session.user.UID;
+
+  // Use connect-busboy middleware to handle multipart file upload
+  console.log("Preparing busboy and filestream.");
+  var fstream;  
+  req.pipe(req.busboy);
+  req.busboy.on('file', (fieldname, file, filename) => {
+    console.log("Received file upload, trying to save...");
+    // Validate that uploaded file is an image
+    var isImg = isImage(filename);
+    if (!isImg) {
+      res.redirect('?upload=failed');
+    } else {
+      // Save file to server
+      // First, make a directory for this user (if not exist)
+      var dir = path.join(__dirname, '../public/images/avatar/', uid);
+      fs.mkdir(dir, { recursive: true }, (err) => {
+        if (err) {
+          console.log("Error while making directory.");
+          throw err;
+        }
+      });
+
+      // Then, write the image to this directory
+      var filepath = path.join(dir, filename);
+      fstream = fs.createWriteStream(filepath);
+      file.pipe(fstream);
+      fstream.on('close', async () => {
+        console.log("File successfully saved.");
+        // Use dynamic path to serve file
+        var dynamicpath = path.join('/images/avatar/', uid, filename);
+        await db.editUserAvatar(uid, dynamicpath);
+        req.session.user.pathToAvatar = dynamicpath;
+        console.log("File saved to database.");
+        // Redirect user back to user panel
+        var url = '?upload=success';
+        res.redirect(url);
+      });
+    }    
   });
 })
 

@@ -479,3 +479,37 @@ body {
 .chiller-theme .sidebar-wrapper .sidebar-menu .header-menu span {
     color: var(--primary-color);
 }
+
+.text-primary-color {
+  color: var(--primary-color);
+}
+
+.avatar {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.btn_avatar_change {
+  outline: none !important;
+  margin-top: 1rem;
+  width: 100%;
+  text-align: center;
+  vertical-align: middle;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  background: transparent;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  line-height: 48px;
+  -webkit-transition: all 400ms linear 0s;
+  -o-transition: all 400ms linear 0s;
+  transition: all 400ms linear 0s;
+}
+
+.btn_avatar_change:hover {
+  outline: none !important;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+}

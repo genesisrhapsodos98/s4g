@@ -26,7 +26,7 @@ async function userLogin(req,res,next) {
     }
 
     try{
-    var result = await bcrypt.compare(password,user.password); 
+    var result = await bcrypt.compare(password,user.Password); 
     } catch(err){
         console.log("queries.js: userLogin - Error while comparing password",err);
         next(err);

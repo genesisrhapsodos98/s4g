@@ -132,7 +132,7 @@ router.post('/create_account', async function(req, res,next) {
   
   console.log("index.js: userCreate result: ", data);
 
-  if(data.split(":")[0] === 'FAIL'){
+  if(data.user_ins.split(":")[0] === 'FAIL'){
     // USER CREATION FAILED
     console.log("Creation failed: ",data);
     res.redirect('/login/failed');

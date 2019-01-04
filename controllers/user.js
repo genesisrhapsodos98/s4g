@@ -63,8 +63,9 @@ router.get('/:uuid', async (req,res) => {
   var currentUID = req.session.user.UID || null;
   var pageUID = req.params.uuid;
   var isOwner = currentUID == pageUID ? true : false;
-  var owner = req.session.user; // TODO: !IMPORTANT: not expected behaviour
+  var owner = await db.findUserWithID(pageUID); // TODO: !IMPORTANT: not expected behaviour
   //TODO: = replace that ^ with findUserWithID(pageUID)*/
+  console.log("/controllers/user.js: GET: /:uuid - owner = ",owner);
   console.log("Upload status:", uploadStatus);
   res.render('user/index', {
     role: getRole(req),

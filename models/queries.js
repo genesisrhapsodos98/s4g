@@ -56,7 +56,12 @@ async function userCreate(req,res,next){
 
     console.log("queries.js: userCreate - Adding user ", [uid,username,password]);
     var result = await db.one('SELECT user_ins($1,$2,$3,$4)',[uid,username,password,"/images/avatar/default_avatar.png"]);
-    console.log("queries.js: userCreate - Result: ",result);
+
+    return result;
+}
+
+async function findUserWithID(UID){
+    var result = await db.oneOrNone('SELECT "UID","Username","Role","pathToAvatar" FROM "USER" WHERE "UID"=$1',UID);
     return result;
 }
 
@@ -65,4 +70,5 @@ async function userCreate(req,res,next){
 module.exports = {
     userLogin: userLogin,
     userCreate: userCreate,
+    findUserWithID: findUserWithID,
 };

@@ -1,4 +1,5 @@
 var promise = require('bluebird');
+var bcrypt = require('bcryptjs');
 
 var options = {
     promiseLib: promise
@@ -15,20 +16,47 @@ var db = pgp(connectionString);
 async function userLogin(req,res,next) {
     var username = req.body.username;
     var password = req.body.password;
-    console.log("Request body: ", [username,password]);    
 
-    var result = await db.oneOrNone('SELECT * FROM "USER" WHERE "Username" = $1 AND "Password" = $2', [username,password], )
+    console.log("queries.js: userLogin - Request body: ", [username,password]);   
+    var user = await db.oneOrNone('SELECT * FROM "USER" WHERE "Username" = $1', [username]);
+
+    if(user === null){
+        console.log("queries.js: userLogin - Can't find any user with the specified username");
+        return null;
+    }
+
+    try{
+    var result = await bcrypt.compare(password,user.Password); 
+    } catch(err){
+        console.log("queries.js: userLogin - Error while comparing password",err);
+        next(err);
+    };
+
     console.log("in queries: ",result);
-    return result;
+
+    if(result){
+        return user;
+    } else {
+        console.log("queries.js: userLogin - Password doesnt match");
+        return null;
+    }
 }
 
 async function userCreate(req,res,next){
     var uid = req.body.uuid;
     var username = req.body.username;
     var password = req.body.password;
-    var result;
 
-    var user = await db.one('SELECT user_ins($1,$2,$3)',[uid,username,password]);
+    try{
+        password = await bcrypt.hash(password,10);
+    } catch(err){
+        console.log("queries.js: userCreate - Error while hashing ",err);
+        next(err);
+    }
+
+    console.log("queries.js: userCreate - Adding user ", [uid,username,password]);
+    var result = await db.one('SELECT user_ins($1,$2,$3,$4)',[uid,username,password,"/images/avatar/default_avatar.png"]);
+    console.log("queries.js: userCreate - Result: ",result);
     return result;
 }
 

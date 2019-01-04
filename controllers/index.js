@@ -144,18 +144,24 @@ router.post('/create_account', async function(req, res,next) {
   req.body.uuid = shortid.generate();
   const data = await db.userCreate(req,res,next);
   
-  console.log("In router: ",data);
-  if(data.split(":")[0] === 'FAIL'){
+  console.log("index.js: userCreate result: ", data);
+
+  if(data.user_ins.split(":")[0] === 'FAIL'){
     // USER CREATION FAILED
+    console.log("Creation failed: ",data);
     res.redirect('/login/failed');
   } else {
     // TODO: USER CREATED SUCCESSFULLY - CREATE SESSION
+
     var newUser = {
       "UID": req.body.uuid,
       "Username": req.body.username,
       "Password": req.body.password,
-      "Role": 'MEMBER'
+      "Role": 'MEMBER',
+      "pathToAvatar": "/images/avatar/default_avatar.png",
     }
+
+    console.log("Session: ",req.session);
     req.session.user = newUser;
     res.redirect('/');
   }

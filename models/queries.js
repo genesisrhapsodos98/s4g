@@ -73,6 +73,50 @@ async function removeUserWithID(UID){
     return result.rowCount; // number of row affected by DELETE.
 }
 
+async function addProduct(steamid, name, price, cat, isnew, ishot){
+    var result = await db.one('SELECT prod_ins($1, $2, $3, $4, $5, $6)', [steamid, name, price, cat, isnew, ishot]);
+
+    return result;
+}
+
+async function getAllCategory() {
+    var result = await db.oneOrMany('SELECT DISTINCT * FROM "CATEGORY"');
+
+    return result;
+}
+
+async function changePassword(Username, newPassword, oldPassword) {
+    var user = await db.oneOrNone('SELECT * FROM "USER" WHERE ("Username" = $1)', [Username]);
+
+    if (user = null) {
+        return null;
+    }
+
+    try {
+        var result = await bcrypt.compare(oldPassword,user.Password); 
+    } catch(err){
+        console.log("queries.js: userLogin - Error while comparing password",err);
+        next(err);
+    };
+
+    if (result) {
+        var change_pw = await db.result('UPDATE "USER" SET "Password"=$1 WHERE "Username"=$2',[newPassword, Username]);
+        return change_pw.rowCount;
+    }
+}
+
+async function removeProduct(SteamID) {
+    var result = await db.result('DELETE FROM "PRODUCT" WHERE "STEAMID"=$1', [SteamID]);
+
+    return result;
+}
+
+async function searchProduct(Key) {
+    var result = await db.result('SELECT * FROM "PRODUCT" WHERE "Name" LIKE $1', [Key]);
+
+    return result;
+}
+
 // END OF QUERIES
 
 module.exports = {
@@ -81,4 +125,9 @@ module.exports = {
     findUserWithID: findUserWithID,
     editUserAvatar: editUserAvatar,
     removeUserWithID: removeUserWithID,
+    searchProduct: searchProduct,
+    removeProduct: removeProduct,
+    changePassword: changePassword,
+    addProduct: addProduct,
+    getAllCategory: getAllCategory,
 };

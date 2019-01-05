@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include ../../partials/head %>
+    <link href="/css/admin-panel.css" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  </head>
+  <body>
+    <!-- Page wrapper -->
+    <div class="page-wrapper chiller-theme toggled">
+      <%- include ../../partials/admin-sidebar %>
+      <!-- page-content" -->
+      <main class="page-content">
+        <div class="container-fluid">
+
+        <div class="col mx-auto my-auto" style="margin-bottom: 2rem;">
+
+        <% if (status == 'failed') { %>
+          <div id="error_message_container" class="container error-message-container" style="margin-bottom:2rem;">
+            <div class="row">
+              <div class="col-2 col-sm-1 error-icon">
+                <i class="icon_error-triangle"></i>
+              </div>
+              <div class="col-8 col-sm-11 error-message">
+                <p>Steam ID not found. Please try again.</p>
+              </div>
+            </div>            
+          </div>
+        <% } %>
+
+        <h2 class="text-center text-primary-color">Add game using Steam ID</h2>
+        <div class="row" style="margin-bottom: 2rem;"></div>          
+
+        <form class="login_form row" action="/admin/products/add/s4g" method="get">
+          <div class="col-sm-10 col-md-8 col-lg-4 offset-sm-1 offset-md-2 offset-lg-4 form-group">
+            <input class="form-control" type="text" placeholder="Steam ID" name="steamid">
+          </div>
+          <div class="col-sm-10 col-md-8 col-lg-4 offset-sm-1 offset-md-2 offset-lg-4 form-group">
+            <button type="submit" value="submit" class="btn subs_btn form-control">Next</button>
+          </div>
+        </form>         
+      </div><!--/col-->         
+      
+
+          
+          
+        </div>
+        <footer class="footer_area">
+          <%- include ../../partials/footer %>
+        </footer>
+      </main>
+    </div>
+
+    <!--================Scripts=========================-->
+    <%- include ../../partials/scripts %>
+    <script src="/js/admin.js"></script>
+    <!--================End scripts=========================-->
+  </body>
+</html>

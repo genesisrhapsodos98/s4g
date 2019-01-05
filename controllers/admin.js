@@ -4,7 +4,12 @@ var session = require('express-session');
 var fs = require('fs');
 var path = require('path');
 var isImage = require('is-image');
+var SteamAPI = require('steamapi');
 var router = express.Router();
+
+const steamAPIKey = '6C891DD6268C16383F1F819BEEA902AA';
+var steam = new SteamAPI(steamAPIKey);
+
 
 var db = require('../models/queries');
 
@@ -64,10 +69,12 @@ router.get('/change-avatar', (req, res) => {
       {"name": "Change avatar", "url": "#"}
     ]
   });
-})
+});
 
 router.get('/change-password', (req, res) => {
+  var status = req.query.status || null;
   res.render('admin/change-password', {
+    status: status,
     owner: req.session.user,
     role: getRole(req),
     page: 'admin-change-password',
@@ -77,20 +84,90 @@ router.get('/change-password', (req, res) => {
       {"name": "Change password", "url": "#"}
     ]
   });
+});
+
+router.post('/change-password', async (req, res) => {
+  var oldPass = req.body.old_pass;
+  var newPass = req.body.new_pass;
+  var reNewPass = req.body.re_new_pass;
+  var uid = req.body.uid;
+  /* TODO:
+    Check if new pass == re new pass
+    If true, call query
+    If false, redirect to /admin/change-password?status=failed
+  */
+
+  // 
 })
 
-router.get('/products', (req, res) => {
-  res.render('admin/products', {
+router.get('/products/add/steamid', (req, res) => {
+  var status = req.query.status || null;
+  res.render('admin/add_products_steamid', {
+    status: status,
     owner: req.session.user,
     role: getRole(req),
-    page: 'admin-products',
+    page: 'admin-products-add',
     tab: 'ecommerce',
     breadcrumb: [
       {"name": "Admin", "url": "/admin"},
       {"name": "Products", "url": "#"}
     ]
   });
+});
+
+router.get('/products/add/s4g', async (req, res) => {
+  var steamid = req.query.steamid;
+  try {
+    var gameInfo = await steam.getGameDetails(steamid);
+  } catch (err) {
+    console.log('SteamID not found.');
+    res.redirect('/admin/products/add/steamid?status=failed');
+  }
+
+  res.render('admin/add_products_s4g', {
+    gameInfo: gameInfo,
+    owner: req.session.user,
+    role: getRole(req),
+    page: 'admin-products-add',
+    tab: 'ecommerce',
+    breadcrumb: [
+      {"name": "Admin", "url": "/admin"},
+      {"name": "Products", "url": "#"}
+    ]
+  });
+});
+
+router.post('/products/add/s4g', async(req, res) => {
+  // TODO: Get parameters from ejs
+
+  // TODO: Call function to add product to db
 })
+
+router.get('/products/edit', async (req, res) => {
+  res.render('admin/edit_products', {
+    owner: req.session.user,
+    role: getRole(req),
+    page: 'admin-products-edit',
+    tab: 'ecommerce',
+    breadcrumb: [
+      {"name": "Admin", "url": "/admin"},
+      {"name": "Products", "url": "#"}
+    ]
+  });
+});
+
+router.get('/products/remove', async (req, res) => {
+  res.render('admin/remove_products', {
+    owner: req.session.user,
+    role: getRole(req),
+    page: 'admin-products-remove',
+    tab: 'ecommerce',
+    breadcrumb: [
+      {"name": "Admin", "url": "/admin"},
+      {"name": "Products", "url": "#"}
+    ]
+  });
+});
 
 router.get('/orders', (req, res) => {
   res.render('admin/orders', {
@@ -103,7 +180,7 @@ router.get('/orders', (req, res) => {
       {"name": "Orders", "url": "#"}
     ]
   });
-})
+});
 
 // Change avatar
 router.post('/change-avatar', async (req, res) => {
@@ -147,6 +224,6 @@ router.post('/change-avatar', async (req, res) => {
       });
     }    
   });
-})
+});
 
 module.exports = router;

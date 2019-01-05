@@ -49,13 +49,15 @@ router.get('/products', (req, res) => {
   res.redirect('/products/category/all');
 });
 
-router.get('/products/category/:category', (req, res) => {
+router.get('/products/category/:category', async (req, res) => {
   var category = req.params.category;
   // TODO: Query games from selected category
+  // var products = queryFunction(category);
 
   // Render page
   res.render('products', {
-    category: category,
+    // products: products,
+    category: category.charAt(0).toUpperCase() + category.slice(1),
     role: getRole(req),
     page: 'games',
     breadcrumb: [
@@ -66,12 +68,14 @@ router.get('/products/category/:category', (req, res) => {
   });
 });
 
-router.get('/products/search', (req, res) => {
+router.get('/products/search', async (req, res) => {
   var q = req.query.q;
   // TODO: Query games from entered search key
+  // var products = queryFunction(q);
 
   // Render page
   res.render('products', {
+    // products: products,
     role: getRole(req),
     page: 'games',
     breadcrumb: [

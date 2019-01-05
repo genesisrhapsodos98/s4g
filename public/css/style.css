@@ -7098,3 +7098,16 @@ i:before {
   border: 2px solid var(--text-color-alt);
   background: var(--bg-accent);
 }
+
+.home-heading {
+  color: var(--primary-color);
+  margin-left: 2rem;
+  margin-bottom: 2rem !important;
+}
+
+.page-content {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}

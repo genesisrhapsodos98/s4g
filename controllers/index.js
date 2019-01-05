@@ -33,9 +33,12 @@ function getRole(req) {
 
 // Homepage
 router.get('/', (req, res) => {
-  role = getRole(req);
+  var role = getRole(req);
+  var categories; // = db.getAllCategories();
+  
   console.log("Role: ",role);
   res.render('index', {
+    categories: categories,
     role: getRole(req),
     page: 'home'
   });
@@ -43,11 +46,7 @@ router.get('/', (req, res) => {
 
 // Product page and its sub-directories
 router.get('/products', (req, res) => {
-  res.render('products', {
-    role: getRole(req),
-    page: 'games',
-    breadcrumb: [{"name": "Products", "url": "#"}]
-  });
+  res.redirect('/products/category/all');
 });
 
 router.get('/products/category/:category', (req, res) => {
@@ -56,6 +55,7 @@ router.get('/products/category/:category', (req, res) => {
 
   // Render page
   res.render('products', {
+    category: category,
     role: getRole(req),
     page: 'games',
     breadcrumb: [
@@ -88,15 +88,6 @@ router.get('/contact', (req, res) => {
     role: getRole(req),
     page: 'contact',
     breadcrumb: [{"name": "Contact", "url": "#"}]
-  });
-});
-
-// Blog page
-router.get('/blog', (req, res) => {
-  res.render('blog', {
-    role: getRole(req),
-    page: 'blog',
-    breadcrumb: [{"name": "Blog", "url": "#"}]
   });
 });
 

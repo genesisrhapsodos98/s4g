@@ -10,18 +10,38 @@ var db = require('../models/queries');
 router.use(express.static(__dirname + '/public'));
 router.use('images', express.static(__dirname + '/public/images'));
 
+// Helper functions
+function getRole(req) {
+  var role = "GUEST";
+  if (req.session.user && req.cookies.s4g_session) {
+    switch (req.session.user.Role) {
+      case "ADMIN":
+        role = "ADMIN";
+        break;
+      case "MEMBER":
+        role = "MEMBER";
+        break;
+      default:
+        role = "UNDEFINED";
+    }
+  }
+  return role;
+}
+
 // Routing
 
 // Homepage
 router.get('/', (req, res) => {
-    res.render('index');
+    var role = getRole(req);
+    res.render('index', {
+      role: role,
+      page: 'home'
+    });
 });
 
 // Product page and its sub-directories
 router.get('/products', (req, res) => {
-  res.render('products', {
-    breadcrumb: [{"name": "Products", "url": "#"}]
-  });
+  res.redirect('/products/category/all');
 });
 
 router.get('/products/category/:category', async (req, res) => {
@@ -32,6 +52,7 @@ router.get('/products/category/:category', async (req, res) => {
   // Render page
   res.render('products', {
     // products: products,
+    action: "categorize",
     category: category.charAt(0).toUpperCase() + category.slice(1),
     role: getRole(req),
     page: 'games',
@@ -51,6 +72,8 @@ router.get('/products/search', async (req, res) => {
   // Render page
   res.render('products', {
     // products: products,
+    action: "search",
+    q: q,
     role: getRole(req),
     page: 'games',
     breadcrumb: [
@@ -64,6 +87,8 @@ router.get('/products/search', async (req, res) => {
 // Contact page
 router.get('/contact', (req, res) => {
   res.render('contact', {
+    role: getRole(req),
+    page: 'contact',
     breadcrumb: [{"name": "Contact", "url": "#"}]
   });
 });
@@ -75,28 +100,14 @@ router.get('/blog', (req, res) => {
   });
 });
 
-// User info page and its helper function
-var userInfo_sessionChecker = (req, res, next) => {
-  console.log("Session: ", req.session.user, "\nCookie: ", req.cookies.s4g_session);
-  if (req.session.user && req.cookies.s4g_session) {
-    res.render('user-info', {
-      breadcrumb: [{"name": "User info", "url": "#"}]
-    });
-  } else {
-    next();
-  }
-}
-
-router.get('/user-info', userInfo_sessionChecker, (req, res) => {
-  res.redirect('/login');
-});
-
 // Login page
 router.get('/login/:status?', (req, res) => {
   var status = req.params.status || 'normal';
   var redirectURL = req.query.url || '';
 
   res.render('login', {
+    role: getRole(req),
+    page: "login",
     status: status,
     url: redirectURL,
     breadcrumb: [{"name": "Login", "url": "#"}]
@@ -115,9 +126,17 @@ router.post('/login', async (req,res,next) => {
   } else {
     // TODO: LOGIN SUCCESSFULLY - CREATE SESSION
     req.session.user = data;
-    redirectURL = '/';
-    redirectURL += req.body.redirectURL;  
-    res.redirect(redirectURL);
+    var role = req.session.user.Role;
+    if (role == "MEMBER") {
+      redirectURL = '/';
+      redirectURL += req.body.redirectURL;  
+      res.redirect(redirectURL);
+    } else if (role == "ADMIN") {
+      res.redirect('/admin');
+    } else { // UNDEFINED ROLE
+      res.redirect('/');
+    }
+    
   }
 })
 
@@ -155,7 +174,12 @@ router.get('/forgot_password', (req, res) => {
 // Cart page and its helper function
 var cart_sessionChecker = (req, res, next) => {
   if (req.session.user && req.cookies.s4g_session) {
-    res.render('cart', {
+    var cartUID = req.params.uuid;
+    var userUID = req.session.user.UID;
+    if (cartUID != user.UID) cartUID = userUID;
+    res.render('cart/' + cartUID, {
+      role: getRole(req),
+      page: "cart",
       breadcrumb: [{"name": "Cart", "url": "#"}]
     });
   } else {
@@ -163,7 +187,7 @@ var cart_sessionChecker = (req, res, next) => {
   }
 }
 
-router.get('/cart', cart_sessionChecker, (req, res) => {
+router.get('/cart/:uuid?', cart_sessionChecker, (req, res) => {
   res.redirect('/login/redirect?url=cart');
 });
 

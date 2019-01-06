@@ -68,9 +68,11 @@ router.get('/:uuid', async (req,res) => {
   var pageUID = req.params.uuid;
   var isOwner = currentUID == pageUID ? true : false;
   var owner = await db.findUserWithID(pageUID);
+  var categories = await db.getAllCategory();
   console.log("Upload status:", uploadStatus);
   res.render('user/index', {
     role: role,
+    categories: categories.rows,
     uploadStatus: uploadStatus,
     uid: pageUID,
     isOwner: isOwner,
@@ -142,7 +144,9 @@ router.get('/:uuid/change-password', async (req, res) => {
   var owner = await db.findUserWithID(pageUID);
   var isOwner = currentUID == pageUID ? true : false;
 
+  var categories = await db.getAllCategory();
   res.render('user/change-password', {
+    categories: categories.rows,
     status: status,
     role: role,
     uid: pageUID,

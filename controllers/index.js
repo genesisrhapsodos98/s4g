@@ -34,8 +34,20 @@ function getRole(req) {
 router.get('/', async (req, res) => {
     var role = getRole(req);
     var categories = await db.getAllCategory();
-    console.log("Categories: ",categories);
+    // TODO: fix these queries below, not intended
+    var newProducts = await db.getAllProduct();
+    var hotProducts = await db.getAllProduct();
+    if(newProducts.rowCount == 0){
+      newProducts.rows = null;
+    }
+    if(hotProducts.rowCount == 0) {
+      hotProducts.rows = null;
+    }
+
     res.render('index', {
+      newProducts: newProducts.rows,
+      hotProducts: hotProducts.rows,
+      user: req.session.user,
       role: role,
       categories: categories.rows,
       page: 'home'
@@ -58,16 +70,17 @@ router.get('/products/category/:category', async (req, res) => {
     var Products = await db.getProductfromCategory(category);
   }
 
-  console.log(Products);
+  console.log("CATEGORIZE: ", Products.rows);
 
   if(Products.rowCount == 0){
-    Products.rows = null;
+    Products.rows = null;w
   }
 
   var categories = await db.getAllCategory();
   // Render page
   res.render('products', {
     // products: products,
+    user: req.session.user,
     products: Products.rows,
     action: "categorize",
     categories: categories.rows,
@@ -233,7 +246,7 @@ router.get('/cart/:uuid/remove', async (req, res) => {
   // TODO: Remove product from cart
 });
 
-router.get('/logout', (req, res) {
+router.get('/logout', (req, res) => {
   if (req.session.user && req.cookies.s4g_session) {
     res.clearCookie('s4g_session');
     res.redirect('/');

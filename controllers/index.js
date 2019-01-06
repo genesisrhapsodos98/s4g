@@ -123,12 +123,12 @@ router.get('/contact', async (req, res) => {
 router.get('/login/:status?', async (req, res) => {
   var status = req.params.status || 'normal';
   var redirectURL = req.query.url || '';
-
+  var categories = await db.getAllCategory();
   res.render('login', {
     role: getRole(req),
     page: "login",
     status: status,
-    categories: await db.getAllCategory(),
+    categories: categories.rows,
     url: redirectURL,
     breadcrumb: [{"name": "Login", "url": "#"}]
   });
@@ -231,6 +231,15 @@ router.get('/cart/:uuid/remove', async (req, res) => {
   var uid = req.params.uuid;
   var pid = req.query.id;
   // TODO: Remove product from cart
+});
+
+router.get('/logout', (req, res) {
+  if (req.session.user && req.cookies.s4g_session) {
+    res.clearCookie('s4g_session');
+    res.redirect('/');
+  } else {
+    res.redirect('/login');
+  }
 });
 
 module.exports = router;

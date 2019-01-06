@@ -140,6 +140,7 @@ router.get('/products/add/s4g', async (req, res) => {
   }
 
   res.render('admin/add_products_s4g', {
+    steamid: steamid,
     categories: categories,
     gameInfo: gameInfo,
     owner: req.session.user,

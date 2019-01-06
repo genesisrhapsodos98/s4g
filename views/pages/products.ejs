@@ -24,24 +24,27 @@
 
       <div class="row product-area-container">
         
-        <!-- 1 product -->
-        <div class="product-container col-md-6 col-lg-4 col-xl-3">
-          <div class="fillter_product">
-            <div class="l_product_item">
-              <div class="l_p_img">
-                <img src="/images/home-slider/full-width-1.jpg" alt="">
-              </div>
-              <div class="l_p_text">
-                <ul>
-                  <li><a class="add_cart_btn" href="#">Add To Cart</a></li>
-                </ul>
-                <h4>Quay Invader Sunglasses</h4>
-                <h5>$85.50</h5>
+        <% products.forEach(product => { %>
+          <!-- 1 product -->
+          <div class="product-container col-md-6 col-lg-4 col-xl-3">
+            <div class="fillter_product">
+              <div class="l_product_item">
+                <div class="l_p_img">
+                  <img src="<%= product.header_image %>" alt="">
+                </div>
+                <div class="l_p_text">
+                  <ul>
+                    <li><a class="add_cart_btn" href="/cart/<%=req.session.user.UID%>/add?id=<%=product.STEAMID%>">Add To Cart</a></li>
+                  </ul>
+                  <h4><%=product.Name%></h4>
+                  <h5><%=product.Price%></h5>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <!-- 1 product -->
+          <!-- 1 product -->
+        <% }); %>
+        
 
       </div>
     </div>

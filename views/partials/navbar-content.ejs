@@ -14,11 +14,9 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li class="nav-item" id="category_all"><a class="nav-link" href="/products">All</a></li>
-                    <li class="nav-item" id="category_1"><a class="nav-link" href="/products/category/cat1">Category 1</a></li>
-                    <li class="nav-item" id="category_2"><a class="nav-link" href="/products/category/cat2">Category 2</a></li>
-                    <li class="nav-item" id="category_3"><a class="nav-link" href="/products/category/cat3">Category 3</a></li>
-                    <li class="nav-item" id="category_4"><a class="nav-link" href="/products/category/cat4">Category 4</a></li>
-                    <li class="nav-item" id="category_5"><a class="nav-link" href="/products/category/cat5">Category 5</a></li>
+                    <% categories.forEach(category => { %>
+                        <li class="nav-item" id="<%=category.Endpoint%>"><a class="nav-link" href="/products/category/<%=category.Endpoint%>"><%=category.Name%></a></li>
+                    <% }); %>
                 </ul>
             </li>
             <li class="nav-item" id="contact"><a class="nav-link" href="/contact">Contact</a></li>

@@ -1,7 +1,7 @@
 // Import dependencies
 var express = require('express');
 var session = require('express-session');
-var crypto = require('crypto');
+var shortid = require('shortid');
 var router = express.Router();
 
 var db = require('../models/queries');
@@ -31,10 +31,13 @@ function getRole(req) {
 // Routing
 
 // Homepage
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
     var role = getRole(req);
+    var categories = await db.getAllCategory();
+    console.log("Categories: ",categories);
     res.render('index', {
       role: role,
+      categories: categories.rows,
       page: 'home'
     });
 });
@@ -61,11 +64,13 @@ router.get('/products/category/:category', async (req, res) => {
     Products.rows = null;
   }
 
+  var categories = await db.getAllCategory();
   // Render page
   res.render('products', {
     // products: products,
     products: Products.rows,
     action: "categorize",
+    categories: categories.rows,
     category: category.charAt(0).toUpperCase() + category.slice(1),
     role: getRole(req),
     page: 'games',
@@ -86,11 +91,13 @@ router.get('/products/search', async (req, res) => {
   console.log(Product);
 
   // Render page
+  var categories = await db.getAllCategory();
   res.render('products', {
     // products: products,
     products: Product.rows,
     action: "search",
     q: q,
+    categories: categories.rows,
     role: getRole(req),
     page: 'games',
     breadcrumb: [
@@ -102,16 +109,18 @@ router.get('/products/search', async (req, res) => {
 });
 
 // Contact page
-router.get('/contact', (req, res) => {
+router.get('/contact', async (req, res) => {
+  var categories = await db.getAllCategory();
   res.render('contact', {
     role: getRole(req),
     page: 'contact',
+    categories: categories.rows,
     breadcrumb: [{"name": "Contact", "url": "#"}]
   });
 });
 
 // Login page
-router.get('/login/:status?', (req, res) => {
+router.get('/login/:status?', async (req, res) => {
   var status = req.params.status || 'normal';
   var redirectURL = req.query.url || '';
 
@@ -119,6 +128,7 @@ router.get('/login/:status?', (req, res) => {
     role: getRole(req),
     page: "login",
     status: status,
+    categories: await db.getAllCategory(),
     url: redirectURL,
     breadcrumb: [{"name": "Login", "url": "#"}]
   });
@@ -154,7 +164,7 @@ router.post('/login', async (req,res,next) => {
 router.post('/create_account', async function(req, res,next) {
   // TODO: Validate input
   // TODO: SQL script to insert new user
-  req.body.uuid = crypto.randomBytes(40).toString('hex');
+  req.body.uuid = shortid.generate();
   const data = await db.userCreate(req,res,next);
   
   console.log("In router: ",data);
@@ -175,12 +185,31 @@ router.post('/create_account', async function(req, res,next) {
 });
 
 // Cart page and its helper function
-var cart_sessionChecker = (req, res, next) => {
+var cart_sessionChecker = async (req, res, next) => {
   if (req.session.user && req.cookies.s4g_session) {
     var cartUID = req.params.uuid;
     var userUID = req.session.user.UID;
-    if (cartUID != user.UID) cartUID = userUID;
-    res.redirect('cart/' + cartUID);
+    console.log("Cart UID: ",cartUID,"\nUser UID: ",userUID);
+    if (cartUID != userUID) cartUID = userUID;
+    var cart; // TODO: = db.getUserCart(cartUID)
+    var products; 
+    cart.forEach(item => {
+      var product; // = TODO: = db.getProductByID(item.PID)
+      products.push(product);
+    });    
+
+    var categories = await db.getAllCategory();
+    res.render('cart', {
+      cart: cart,
+      products: products,
+      categories: categories.rows,
+      owner: req.session.user,
+      role: getRole(req),
+      page: 'cart',
+      breadcrumb: [
+        {"name": "Cart", "url": "#"}
+      ]
+    });
   } else {
     next();
   }

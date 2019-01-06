@@ -34,23 +34,27 @@
                 
                     <div class="row product-area-container">
                         
+                        <% if (newProducts) newProducts.forEach(newProduct => { %>
                         <!-- 1 product -->
                         <div class="product-container col-md-6 col-lg-4 col-xl-3">
                             <div class="fillter_product">
                                 <div class="l_product_item">
                                     <div class="l_p_img">
-                                        <img src="/images/home-slider/full-width-1.jpg" alt="">
+                                        <img src="<%=newProduct.header_image%>" alt="">
                                     </div>
                                     <div class="l_p_text">
                                         <ul>
-                                            <li><a class="add_cart_btn" href="#">Add To Cart</a></li>
+                                            <% var url = '/login?redirect?url=products'%>
+                                            <% if (role != "GUEST") url = '/cart/' + user.UID + '/add?id=' + newProduct.STEAMID; %>
+                                            <li><a class="add_cart_btn" href="<%=url%>">Add To Cart</a></li>
                                         </ul>
-                                        <h4>Quay Invader Sunglasses</h4>
-                                        <h5>$85.50</h5>
+                                        <h4><%=newProduct.name%></h4>
+                                        <h5><%=newProduct.Price%> VND</h5>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <% }); %>
                         <!-- 1 product -->
                     </div>
 
@@ -58,24 +62,28 @@
                         <h2>Popular games</h2>
                     </div>
                     
+                    <% if (hotProducts) hotProducts.forEach(hotProduct => { %>
                     <div class="row product-area-container">
                         <div class="product-container col-md-6 col-lg-4 col-xl-3">
                             <div class="fillter_product">
                                 <div class="l_product_item">
                                     <div class="l_p_img">
-                                        <img src="/images/banner/summer-banner.jpg" alt="">
+                                        <img src="<%=hotProduct.header_image%>" alt="">
                                     </div>
                                     <div class="l_p_text">
                                         <ul>
-                                            <li><a class="add_cart_btn" href="#">Add To Cart</a></li>
+                                            <% var url = '/login?redirect?url=products'%>
+                                            <% if (role != "GUEST") url = '/cart/' + user.UID + '/add?id=' + hotProduct.STEAMID; %>
+                                            <li><a class="add_cart_btn" href="<%=url%>">Add To Cart</a></li>
                                         </ul>
-                                        <h4>Quay Invader Sunglasses</h4>
-                                        <h5>$85.50</h5>
+                                        <h4><%=hotProduct.Name%></h4>
+                                        <h5><%=hotProduct.Price%> VND</h5>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <% }); %>
 
 
                 </div>

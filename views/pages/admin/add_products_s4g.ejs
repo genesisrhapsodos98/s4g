@@ -25,7 +25,7 @@
         </div>
 
         <form class="login_form row" action="/admin/products/add/s4g" method="post">
-          <input type="hidden" value="<%=req.query.steamid%>" name="steamid">
+          <input type="hidden" value="<%=steamid%>" name="steamid">
           <!--1 entry-->
           <div class="col-md-1 col-lg-2">
             <label for="product_name">Product name:</label>
@@ -103,7 +103,7 @@
             </div>
           </div>
           <!--1 entry-->
-          
+          <button type="submit" value="submit" class="btn subs_btn form-control">Add product</button>
         </form>         
       </div><!--/col-->
 

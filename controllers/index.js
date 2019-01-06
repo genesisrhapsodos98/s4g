@@ -215,9 +215,22 @@ var cart_sessionChecker = async (req, res, next) => {
   }
 }
 
-router.get('/cart/:uuid?', cart_sessionChecker, (req, res) => {
+router.all('/cart/*', cart_sessionChecker);
+
+router.get('/cart/:uuid?', (req, res) => {
   res.redirect('/login/redirect?url=cart');
 });
 
-router.get('/cart/:uuid?')
+router.get('/cart/:uuid/add', async (req, res) => {
+  var uid = req.params.uuid;
+  var pid = req.query.id;
+  // TODO: Add product to cart
+});
+
+router.get('/cart/:uuid/remove', async (req, res) => {
+  var uid = req.params.uuid;
+  var pid = req.query.id;
+  // TODO: Remove product from cart
+});
+
 module.exports = router;

@@ -107,6 +107,7 @@ router.get('/products/search', async (req, res) => {
   var categories = await db.getAllCategory();
   res.render('products', {
     // products: products,
+    user: req.session.user,
     products: Product.rows,
     action: "search",
     q: q,
@@ -132,7 +133,19 @@ router.get('/contact', async (req, res) => {
   });
 });
 
+var login_sessionChecker = async (req, res, next) => {
+  if (req.session.user && req.cookies.s4g_session) {
+    var redirectURL;
+    if (req.session.user.Role == "ADMIN") redirectURL = '/admin'
+    else redirectURL = '/user';
+  } else {
+    next();
+  }
+}
+
 // Login page
+router.get('/login*', login_sessionChecker);
+
 router.get('/login/:status?', async (req, res) => {
   var status = req.params.status || 'normal';
   var redirectURL = req.query.url || '';
@@ -249,7 +262,7 @@ router.get('/cart/:uuid/add', async (req, res) => {
 
   if(result.rowCount){
     res.redirect('/cart');
-  } else{
+  } else {
   };
 });
 

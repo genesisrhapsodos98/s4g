@@ -160,8 +160,12 @@ async function removeOrderDetail(OID) {
     return result.rowCount;
 }
 
-async function getProductfromCategory(Category){
-    var result = await db.result('SELECT * FROM "PRODUCT" WHERE "Category"=$1',Category);
+async function getProductfromCategory(Endpoint){
+    var category = await db.result('SELECT "Name" FROM "CATEGORY" WHERE "Enpoint" = $1',Endpoint);
+
+    if(category.rowCount)
+        var result = await db.result('SELECT * FROM "PRODUCT" WHERE "Category"=$1',category);
+    else return category;
 
     return result;
 }
@@ -207,6 +211,10 @@ async function addNewCategory(name,endpoint){
 
     var result = await db.result('INSERT INTO "CATEGORY" VALUES ($1,$2)',[name,endpoint]);
     return result;
+}
+
+async function createCart(UID){
+
 }
 
 

@@ -165,14 +165,16 @@ router.post('/create_account', async function(req, res,next) {
   // TODO: Validate input
   // TODO: SQL script to insert new user
   req.body.uuid = shortid.generate();
-  const data = await db.userCreate(req,res,next);
-  
+  var data = await db.userCreate(req,res,next);
+  data = data + '';
   console.log("In router: ",data);
   if(data.split(":")[0] === 'FAIL'){
     // USER CREATION FAILED
     res.redirect('/login/failed');
   } else {
     // TODO: USER CREATED SUCCESSFULLY - CREATE SESSION
+
+    var cart = db.create
     var newUser = {
       "UID": req.body.uuid,
       "Username": req.body.username,
@@ -233,7 +235,7 @@ router.get('/cart/:uuid/remove', async (req, res) => {
   // TODO: Remove product from cart
 });
 
-router.get('/logout', (req, res) {
+router.get('/logout', (req, res) => {
   if (req.session.user && req.cookies.s4g_session) {
     res.clearCookie('s4g_session');
     res.redirect('/');

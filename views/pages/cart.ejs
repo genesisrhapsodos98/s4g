@@ -25,60 +25,39 @@
                             <div class="table-responsive-md">
                                 <table class="table">
                                     <tbody>
-                                        <tr>
-                                            <th scope="row">
-                                                <img src="/images/icon/close-icon.png" alt="">
-                                            </th>
-                                            <td>
-                                                <div class="media">
-                                                    <div class="d-flex">
-                                                        <img src="images/product/cart-product/cart-3.jpg" alt="">
+                                        <% var i = 0; %>
+                                        <% cart.forEach(item => { %>
+                                            <% product = products[i]; %>
+                                            <tr>
+                                                <th scope="row">
+                                                    <a href="/cart/<%=owner.UID%>/remove?pid=<%item.PID%>"
+                                                        <img src="/images/icon/close-icon.png" alt="">
+                                                    </a>
+                                                </th>
+                                                <td>
+                                                    <div class="media">
+                                                        <div class="d-flex">
+                                                            <img src="<%=product.header_image%>" alt="">
+                                                        </div>
+                                                        <div class="media-body">
+                                                            <h4><%=product.Name%></h4>
+                                                        </div>
                                                     </div>
-                                                    <div class="media-body">
-                                                        <h4>Round Sunglasses</h4>
+                                                </td>
+                                                <td><p class="green"><%=product.Price%></p></td>
+                                                <td>
+                                                    <div class="quantity">
+                                                        <h6>Quantity</h6>
+                                                        <div class="custom">
+                                                            <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;" class="reduced items-count" type="button"><i class="icon_minus-06"></i></button>
+                                                            <input type="text" name="qty" id="sst" maxlength="12" value="<%=item.Amount%>" title="Quantity:" class="input-text qty">
+                                                            <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;" class="increase items-count" type="button"><i class="icon_plus"></i></button>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td><p class="green">$150</p></td>
-                                            <td>
-                                                <div class="quantity">
-                                                    <h6>Quantity</h6>
-                                                    <div class="custom">
-                                                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;" class="reduced items-count" type="button"><i class="icon_minus-06"></i></button>
-                                                        <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:" class="input-text qty">
-                                                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;" class="increase items-count" type="button"><i class="icon_plus"></i></button>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td><p>$150</p></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">
-                                                <img src="/images/icon/close-icon.png" alt="">
-                                            </th>
-                                            <td>
-                                                <div class="media">
-                                                    <div class="d-flex">
-                                                        <img src="/images/product/cart-product/cart-4.jpg" alt="">
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <h4>Adidas Trefoil Black </h4>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td><p class="green">$150</p></td>
-                                            <td>
-                                                <div class="quantity">
-                                                    <h6>Quantity</h6>
-                                                    <div class="custom">
-                                                        <button onclick="var result = document.getElementById('sst2'); var sst2 = result.value; if( !isNaN( sst2 ) &amp;&amp; sst2 > 0 ) result.value--;return false;" class="reduced items-count" type="button"><i class="icon_minus-06"></i></button>
-                                                        <input type="text" name="qty" id="sst2" maxlength="12" value="1" title="Quantity:" class="input-text qty">
-                                                        <button onclick="var result = document.getElementById('sst2'); var sst2 = result.value; if( !isNaN( sst2 )) result.value++;return false;" class="increase items-count" type="button"><i class="icon_plus"></i></button>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td><p>$250</p></td>
-                                        </tr>                                        
+                                                </td>
+                                                <td><p><%=product.Price%></p></td>
+                                            </tr>
+                                        <% ++i; }); %>                                                           
                                     </tbody>
                                 </table>
                             </div>

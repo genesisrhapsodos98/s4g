@@ -50,6 +50,7 @@
 }
 body {
   font-size: 0.9rem;
+  background-color: var(--bg-accent);
 }
 .page-wrapper .sidebar-wrapper,
 .sidebar-wrapper .sidebar-brand > a,
@@ -512,4 +513,8 @@ body {
   outline: none !important;
   background-color: var(--primary-color);
   color: var(--text-color);
+}
+
+.page-content {
+  background: var(--bg-accent);
 }

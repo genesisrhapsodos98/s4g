@@ -93,13 +93,6 @@ router.get('/contact', (req, res) => {
   });
 });
 
-// Blog page
-router.get('/blog', (req, res) => {
-  res.render('blog', {
-    breadcrumb: [{"name": "Blog", "url": "#"}]
-  });
-});
-
 // Login page
 router.get('/login/:status?', (req, res) => {
   var status = req.params.status || 'normal';
@@ -163,13 +156,6 @@ router.post('/create_account', async function(req, res,next) {
     res.redirect('/');
   }
 });
-
-// Forgot password
-router.get('/forgot_password', (req, res) => {
-  res.render('forgot_password', {
-    breadcrumb: [{"name": "Forgot password", "url": "#"}]
-  });
-})
 
 // Cart page and its helper function
 var cart_sessionChecker = (req, res, next) => {

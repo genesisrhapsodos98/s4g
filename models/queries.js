@@ -74,6 +74,7 @@ async function removeUserWithID(UID){
 }
 
 async function addProduct(steamid, name, price, cat, isnew, ishot,header_image){
+    console.log([steamid, name, price, cat, isnew, ishot, header_image]);
     var result = await db.result('SELECT prod_ins($1, $2, $3, $4, $5, $6,$7)', [steamid, name, price, cat, isnew, ishot, header_image]);
 
     return result;

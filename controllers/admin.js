@@ -162,6 +162,9 @@ router.post('/products/add/s4g', async(req, res) => {
   // TODO: Test if isHot and isNew are booleans
   var isHot = req.body.product_ishot;
   var isNew = req.body.product_isnew;
+
+  console.log([isHot,isNew]);
+
   try {
     var gameInfo = await steam.getGameDetails(steamid);
   } catch (err) {

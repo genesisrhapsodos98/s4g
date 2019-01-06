@@ -51,7 +51,7 @@
           <div class="col-md-11 col-lg-10 form-group">
             <select id="product_category" name="product_category" onchange="checkAdd()">
               <% categories.forEach(category => { %>
-                <option value="<%=category.Endpoint%>"><%=category.Name%></option>
+                <option value="<%=category.Name%>"><%=category.Name%></option>
               <% }); %>
               <option value="addnew">Add a new category</option>
             </select>
@@ -86,7 +86,7 @@
                 <label for="product_isnew">New:</label>
               </div>
               <div class="col-10 form-group">
-                <input class="form-control" type="checkbox" name="product_isnew" value="new">
+                <input class="form-control" type="checkbox" name="product_isnew" value=true>
               </div>  
             </div>
           </div>
@@ -98,7 +98,7 @@
                 <label for="product_ishot">Hot:</label>
               </div>
               <div class="col-10 form-group">
-                <input class="form-control" type="checkbox" name="product_hot" value="hot">
+                <input class="form-control" type="checkbox" name="product_hot" value=true>
               </div>  
             </div>
           </div>

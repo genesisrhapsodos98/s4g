@@ -72,6 +72,7 @@ router.get('/change-avatar', (req, res) => {
 
 router.get('/change-password', (req, res) => {
   var status = req.query.status || null;
+
   res.render('admin/change-password', {
     status: status,
     owner: req.session.user,
@@ -90,12 +91,25 @@ router.post('/change-password', async (req, res) => {
   var newPass = req.body.new_pass;
   var reNewPass = req.body.re_new_pass;
   var uid = req.body.uid;
+
+  console.log(uid,oldPass,newPass);
   /* TODO:
     Check if new pass == re new pass
     If true, call query
     If false, redirect to /admin/change-password?status=failed
   */
+ if(newPass != reNewPass) res.redirect('/admin/change-password?status=failed');
 
+  var result = await db.changePassword(uid,newPass,oldPass);
+  console.log(result);
+
+  if(result === null) res.redirect('/admin/change-password?status=failed');
+
+  if(result.rowCount){
+    res.redirect('/admin');
+  }else{
+    res.redirect('/admin/change-password?status=failed');
+  };
   // 
 })
 

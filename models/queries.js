@@ -196,12 +196,13 @@ async function getUserCart(UID){
 }
 
 async function addProducttoCart(UID, PID, Amount){
+    console.log([UID,PID,Amount]);
     var existed = await db.result('SELECT * FROM "CART" WHERE "UID"=$1 AND "PID" = $2',[UID,PID]);
 
     console.log(existed);
     if(existed.rowCount){
         if(Amount > 0)
-            var result = await db.result('UPDATE "CART" SET "Amount" = $3 WHERE "UID" = $1 AND "PID" = $2',[UID,PID,Amount]);
+            var result = await db.result('UPDATE "CART" SET "Amount" = "Amount" + $3 WHERE "UID" = $1 AND "PID" = $2',[UID,PID,Amount]);
         else{
             var result = await db.result('DELETE FROM "CART" WHERE "UID" = $1 AND "PID" = $2',[UID,PID]);
         }

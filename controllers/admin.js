@@ -134,6 +134,8 @@ router.get('/products/add/s4g', async (req, res) => {
   categories = categories.rows;
   try {
     var gameInfo = await steam.getGameDetails(steamid);
+    console.log("gameInfo.is_free: ",gameInfo.is_free);
+    console.log(gameInfo.is_free? "true" : "false");
   } catch (err) {
     console.log('SteamID not found.');
     res.redirect('/admin/products/add/steamid?status=failed');

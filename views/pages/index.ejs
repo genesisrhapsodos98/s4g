@@ -62,8 +62,9 @@
                         <h2>Popular games</h2>
                     </div>
                     
-                    <% if (hotProducts) hotProducts.forEach(hotProduct => { %>
+                    
                     <div class="row product-area-container">
+                    <% if (hotProducts) hotProducts.forEach(hotProduct => { %>
                         <div class="product-container col-md-6 col-lg-4 col-xl-3">
                             <div class="fillter_product">
                                 <div class="l_product_item">
@@ -82,8 +83,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
                     <% }); %>
+                    </div>
 
 
                 </div>

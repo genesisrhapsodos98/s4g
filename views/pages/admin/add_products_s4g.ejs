@@ -37,10 +37,10 @@
 
           <!--1 entry-->
           <div class="col-md-1 col-lg-2">
-            <label for="product_price">Price <% gameInfo.is_free ? "" : "(" + gameInfo.price_overview.currency + ")"%>:</label>
+            <label for="product_price">Price <%= gameInfo.is_free ? '' : '(' + gameInfo.price_overview.currency + ')' %>:</label>
           </div>
           <div class="col-md-11 col-lg-10 form-group">
-            <input class="form-control" type="text" name="product_price" value="<% gameInfo.is_free? 0 : gameInfo.price_overview.final/100%>">
+            <input class="form-control" type="text" name="product_price" value="<%= gameInfo.is_free? 0 : gameInfo.price_overview.final/100%>">
           </div>
           <!--1 entry-->
 

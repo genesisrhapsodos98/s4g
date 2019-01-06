@@ -73,8 +73,8 @@ async function removeUserWithID(UID){
     return result.rowCount; // number of row affected by DELETE.
 }
 
-async function addProduct(steamid, name, price, cat, isnew, ishot){
-    var result = await db.result('SELECT prod_ins($1, $2, $3, $4, $5, $6)', [steamid, name, price, cat, isnew, ishot]);
+async function addProduct(steamid, name, price, cat, isnew, ishot,header_image){
+    var result = await db.result('SELECT prod_ins($1, $2, $3, $4, $5, $6,$7)', [steamid, name, price, cat, isnew, ishot, header_image]);
 
     return result;
 }
@@ -84,23 +84,31 @@ async function getAllCategory() {
     return result;
 }
 
-async function changePassword(Username, newPassword, oldPassword) {
-    var user = await db.oneOrNone('SELECT * FROM "USER" WHERE ("Username" = $1)', [Username]);
+async function changePassword(UID, newPassword, oldPassword) {
+    var user = await db.oneOrNone('SELECT * FROM "USER" WHERE ("UID" = $1)', [UID]);
 
-    if (user = null) {
+    console.log(user);
+
+    if (user === null) {
         return null;
     }
 
     try {
-        var result = await bcrypt.compare(oldPassword,user.Password); 
+        var result = await bcrypt.compare(oldPassword,user.Password);
+        newPassword = await bcrypt.hash(newPassword,10); 
     } catch(err){
         console.log("queries.js: userLogin - Error while comparing password",err);
         next(err);
     };
 
+    console.log(result);
     if (result) {
-        var change_pw = await db.result('UPDATE "USER" SET "Password"=$1 WHERE "Username"=$2',[newPassword, Username]);
+        var change_pw = await db.result('UPDATE "USER" SET "Password"=$1 WHERE "UID"=$2',[newPassword, UID]);
+        console.log(change_pw);
         return change_pw;
+    }
+    else{
+        return null;
     }
 }
 
@@ -165,6 +173,34 @@ async function getAllProduct(){
     return result;
 }
 
+async function getProductfromID(PID){
+    var result = await db.result('SELECT * FROM "PRODUCT" WHERE "STEAMID"=$1',PID);
+
+    return result;
+}
+
+async function getUserCart(UID){
+    var result = await db.result('SELECT * FROM "CART" WHERE "UID"=$1',UID);
+
+    return result;
+}
+
+async function addProducttoCart(UID, PID, Amount){
+    var existed = await db.result('SELECT * FROM "CART" WHERE "UID"=$1 AND "PID" = $2',[UID,PID]);
+
+    if(existed){
+        if(Amount > 0)
+            var result = await db.result('UPDATE "CART" SET "Amount" = $3 WHERE "UID" = $1 AND "PID" = $2',[UID,PID,Amount]);
+        else{
+            var result = await db.result('DELETE FROM "CART" WHERE "UID" = $1 AND "PID" = $2',[UID,PID]);
+        }
+    }else{
+        var result = await db.result('INSERT INTO "CART" VALUES($1,$2,$3)',[UID,PID,Amount]);
+    }
+
+    return result;
+}
+
 // END OF QUERIES
 
 module.exports = {
@@ -185,4 +221,7 @@ module.exports = {
     updateOrder: updateOrder,
     getProductfromCategory: getProductfromCategory,
     getAllProduct: getAllProduct,
+    getProductfromID: getProductfromID,
+    getUserCart: getUserCart,
+    addProducttoCart: addProducttoCart,
 };

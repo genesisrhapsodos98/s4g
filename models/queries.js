@@ -161,10 +161,11 @@ async function removeOrderDetail(OID) {
 }
 
 async function getProductfromCategory(Endpoint){
-    var category = await db.result('SELECT "Name" FROM "CATEGORY" WHERE "Enpoint" = $1',Endpoint);
+    var category = await db.result('SELECT "Name" FROM "CATEGORY" WHERE "Endpoint"=$1',[Endpoint]);
 
+    console.log(category.rows[0].Name);
     if(category.rowCount)
-        var result = await db.result('SELECT * FROM "PRODUCT" WHERE "Category"=$1',category);
+        var result = await db.result('SELECT * FROM "PRODUCT" WHERE "Category"=$1',[category.rows[0].Name]);
     else return category;
 
     return result;

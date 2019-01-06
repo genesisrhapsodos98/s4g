@@ -174,13 +174,6 @@ router.post('/create_account', async function(req, res,next) {
   }
 });
 
-// Forgot password
-router.get('/forgot_password', (req, res) => {
-  res.render('forgot_password', {
-    breadcrumb: [{"name": "Forgot password", "url": "#"}]
-  });
-})
-
 // Cart page and its helper function
 var cart_sessionChecker = (req, res, next) => {
   if (req.session.user && req.cookies.s4g_session) {

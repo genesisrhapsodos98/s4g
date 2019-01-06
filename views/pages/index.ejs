@@ -46,7 +46,7 @@
                                         <ul>
                                             <% var url = '/login?redirect?url=products'; var btnText = 'Add to cart'%>
                                             <% if (role != "GUEST" && role != "ADMIN") url = '/cart/' + user.UID + '/add?id=' + newProduct.STEAMID; %>
-                                            <% if (role == "ADMIN") {url = '/products/edit?id=' + newProduct.STEAMID; btnText = 'Edit product'} %>
+                                            <% if (role == "ADMIN") {url = 'admin/products/edit?id=' + newProduct.STEAMID; btnText = 'Edit product'} %>
                                             <li><a class="add_cart_btn" href="<%=url%>"><%=btnText%></a></li>
                                         </ul>
                                         <h4><%=newProduct.Name%></h4>
@@ -76,7 +76,7 @@
                                         <ul>
                                             <% var url = '/login?redirect?url=products'; var btnText = 'Add to cart';%>
                                             <% if (role != "GUEST" && role != "ADMIN") url = '/cart/' + user.UID + '/add?id=' + hotProduct.STEAMID; %>
-                                            <% if (role == "ADMIN") {url = '/products/edit?id=' + hotProduct.STEAMID; btnText = 'Edit product';}%>
+                                            <% if (role == "ADMIN") {url = '/admin/products/edit?id=' + hotProduct.STEAMID; btnText = 'Edit product';}%>
                                             <li><a class="add_cart_btn" href="<%=url%>"><%=btnText%></a></li>
                                         </ul>
                                         <h4><%=hotProduct.Name%></h4>

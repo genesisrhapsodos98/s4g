@@ -35,8 +35,8 @@ router.get('/', async (req, res) => {
     var role = getRole(req);
     var categories = await db.getAllCategory();
     // TODO: fix these queries below, not intended
-    var newProducts = await db.getAllProduct();
-    var hotProducts = await db.getAllProduct();
+    var newProducts = await db.getNewProducts()
+    var hotProducts = await db.getHotProducts();
     if(newProducts.rowCount == 0){
       newProducts.rows = null;
     }

@@ -206,7 +206,9 @@ router.post('/products/add/s4g', async(req, res) => {
 });
 
 router.get('/products/edit', async (req, res) => {
+  var steamid = req.query.id;
   res.render('admin/edit_products', {
+    steamid: id,
     owner: req.session.user,
     role: getRole(req),
     page: 'admin-products-edit',
@@ -219,7 +221,12 @@ router.get('/products/edit', async (req, res) => {
 });
 
 router.get('/products/remove', async (req, res) => {
+  var products = await db.getAllProduct();
+  if(products.rowCount == 0){
+    products.rows = null;
+  }
   res.render('admin/remove_products', {
+    products: products.rows,
     owner: req.session.user,
     role: getRole(req),
     page: 'admin-products-remove',
@@ -229,6 +236,12 @@ router.get('/products/remove', async (req, res) => {
       {"name": "Products", "url": "#"}
     ]
   });
+});
+
+router.get('/product/removeItem', async (req, res) => {
+  var steamid = req.query.id;
+  await db.removeProduct(steamid);
+  res.redirect('/admin?remove=success');
 });
 
 router.get('/orders', (req, res) => {

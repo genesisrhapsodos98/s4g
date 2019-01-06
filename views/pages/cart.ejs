@@ -30,7 +30,7 @@
                                             <% if (products) product = products[i]; %>
                                             <tr class="row">
                                                 <th class="col-2 col-lg-1" scope="row">
-                                                    <a href="/cart/<%=owner.UID%>/remove?pid=<%item.PID%>"
+                                                    <a href="/cart/<%=owner.UID%>/remove?pid=<%=item.PID%>">
                                                         <img src="/images/icon/close-icon.png" alt="">
                                                     </a>
                                                 </th>
@@ -49,9 +49,7 @@
                                                     <div class="quantity">
                                                         <h6>Quantity</h6>
                                                         <div class="custom">
-                                                            <button onclick="var result = document.getElementById('sst-<%=item.PID%>'); var total = document.getElementById('itemTotal-<%=item.PID%>'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) {result.value--;total.value=result.value*<%=product.Price%>;}return false;" class="reduced items-count" type="button"><i class="icon_minus-06"></i></button>
                                                             <input type="text" name="qty" id="sst-<%=item.PID%>" maxlength="12" value="<%=item.Amount%>" title="Quantity:" class="input-text qty">
-                                                            <button onclick="var result = document.getElementById('sst-<%=item.PID%>'); var total = document.getElementById('itemTotal-<%=item.PID%>'); var sst = result.value; if( !isNaN( sst )) {result.value++;total.value=result.value*<%=product.Price%>;}return false;" class="increase items-count" type="button"><i class="icon_plus"></i></button>
                                                         </div>
                                                     </div>
                                                 </td>

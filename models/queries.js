@@ -200,9 +200,11 @@ async function addProducttoCart(UID, PID, Amount){
 
     console.log(existed);
     if(existed.rowCount){
-        if(Amount > 0)
+        if (Amount > 0) {
+            console.log('amount > 0');
             var result = await db.result('UPDATE "CART" SET "Amount" = $3 WHERE "UID" = $1 AND "PID" = $2',[UID,PID,Amount]);
-        else{
+        } else {
+            console.log('amount <=  0');
             var result = await db.result('DELETE FROM "CART" WHERE "UID" = $1 AND "PID" = $2',[UID,PID]);
         }
     }else{

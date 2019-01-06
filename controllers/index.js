@@ -192,9 +192,8 @@ router.post('/create_account', async function(req, res,next) {
   // TODO: SQL script to insert new user
   req.body.uuid = shortid.generate();
   var data = await db.userCreate(req,res,next);
-  data = data + '';
-  console.log("In router: ",data);
-  if(data.split(":")[0] === 'FAIL'){
+
+  if(data.user_ins.split(":")[0] === 'FAIL'){
     // USER CREATION FAILED
     res.redirect('/login/failed');
   } else {
@@ -274,6 +273,12 @@ router.get('/cart/:uuid/remove', async (req, res) => {
   var pid = req.query.id;
   // TODO: Remove product from cart
   
+  var result = await db.addProducttoCart(uid,pid,0);
+
+  if(result.rowCount){
+    res.redirect('/cart');
+  } else{
+  };
 });
 
 router.get('/logout', (req, res) => {

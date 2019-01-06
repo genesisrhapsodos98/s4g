@@ -40,9 +40,14 @@ async function userLogin(req,res,next) {
 }
 
 async function userCreate(req,res,next){
+
+    if(req.body.password != req.body.repassword)
+        return "FAIL: Re Password doesn't match";
+
     var uid = req.body.uuid;
     var username = req.body.username;
     var password = req.body.password;
+
 
     try {
         password = await bcrypt.hash(password,10);
@@ -53,7 +58,7 @@ async function userCreate(req,res,next){
 
     console.log("queries.js: userCreate - Adding user ", [uid,username,password]);
     var result = await db.one('SELECT user_ins($1,$2,$3,$4)',[uid,username,password,"/images/avatar/default_avatar.png"]);
-
+    console.log(result);
     return result;
 }
 

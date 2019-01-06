@@ -270,8 +270,8 @@ router.get('/cart/:uuid/add', async (req, res) => {
 
 router.get('/cart/:uuid/remove', async (req, res) => {
   var uid = req.params.uuid;
-  var pid = req.query.id;
-  // TODO: Remove product from cart
+  var pid = req.query.pid;
+  // TODO: Remove produc t from cart
   
   var result = await db.addProducttoCart(uid,pid,0);
 

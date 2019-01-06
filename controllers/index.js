@@ -201,39 +201,43 @@ router.post('/create_account', async function(req, res,next) {
 
 // Cart page and its helper function
 var cart_sessionChecker = async (req, res, next) => {
-  if (req.session.user && req.cookies.s4g_session) {
-    var cartUID = req.params.uuid;
-    var userUID = req.session.user.UID;
-    console.log("Cart UID: ",cartUID,"\nUser UID: ",userUID);
-    if (cartUID != userUID) cartUID = userUID;
-    var cart; // TODO: = db.getUserCart(cartUID)
-    var products; 
-    cart.forEach(item => {
-      var product; // = TODO: = db.getProductByID(item.PID)
-      products.push(product);
-    });    
-
-    var categories = await db.getAllCategory();
-    res.render('cart', {
-      cart: cart,
-      products: products,
-      categories: categories.rows,
-      owner: req.session.user,
-      role: getRole(req),
-      page: 'cart',
-      breadcrumb: [
-        {"name": "Cart", "url": "#"}
-      ]
-    });
+  if (!(req.session.user && req.cookies.s4g_session)) {
+    res.redirect('/login/redirect?url=cart');
   } else {
     next();
   }
 }
 
-router.all('/cart/*', cart_sessionChecker);
+router.all('/cart*', cart_sessionChecker);
 
-router.get('/cart/:uuid?', (req, res) => {
-  res.redirect('/login/redirect?url=cart');
+router.get('/cart', async (req, res) => {
+  res.redirect('/cart/'+ req.session.user.UID);
+});
+
+router.get('/cart/:uuid', async (req, res) => {
+  var cartUID = req.params.uuid;
+  var userUID = req.session.user.UID;
+  console.log("Cart UID: ",cartUID,"\nUser UID: ",userUID);
+  if (cartUID != userUID) cartUID = userUID;
+  var cart = null; // TODO: = db.getUserCart(cartUID)
+  var products = null; 
+  if (cart) cart.forEach(item => {
+    var product; // = TODO: = db.getProductByID(item.PID)
+    products.push(product);
+  });    
+
+  var categories = await db.getAllCategory();
+  res.render('cart', {
+    cart: cart,
+    products: products,
+    categories: categories.rows,
+    owner: req.session.user,
+    role: getRole(req),
+    page: 'cart',
+    breadcrumb: [
+      {"name": "Cart", "url": "#"}
+    ]
+  });
 });
 
 router.get('/cart/:uuid/add', async (req, res) => {

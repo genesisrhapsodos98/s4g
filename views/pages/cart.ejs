@@ -26,8 +26,8 @@
                                 <table class="table">
                                     <tbody>
                                         <% var i = 0; %>
-                                        <% cart.forEach(item => { %>
-                                            <% product = products[i]; %>
+                                        <% if (cart) cart.forEach(item => { %>
+                                            <% if (products) product = products[i]; %>
                                             <tr>
                                                 <th scope="row">
                                                     <a href="/cart/<%=owner.UID%>/remove?pid=<%item.PID%>"
@@ -75,7 +75,7 @@
                                     </div>
                                     <div class="media-body">
                                         <% var total = 0; var i=0; %>
-                                        <% cart.forEach(item => { %>
+                                        <% if (cart) cart.forEach(item => { %>
                                             <% total += item.Amount * products[i].Price %>
                                         <% ++i; }); %>
                                         <h6><%=total%> VND;</h6>
@@ -86,7 +86,7 @@
                                         <h5>Shipping</h5>
                                     </div>
                                     <div class="media-body">
-                                        <p>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model tex</p>
+                                        <p>Free</p>
                                     </div>
                                 </div>                                
                             </div>

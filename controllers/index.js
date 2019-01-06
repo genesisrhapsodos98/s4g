@@ -275,6 +275,12 @@ router.get('/cart/:uuid/remove', async (req, res) => {
   var pid = req.query.id;
   // TODO: Remove product from cart
   
+  var result = await db.addProducttoCart(uid,pid,0);
+
+  if(result.rowCount){
+    res.redirect('/cart');
+  } else{
+  };
 });
 
 router.get('/logout', (req, res) => {

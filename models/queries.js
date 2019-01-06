@@ -40,9 +40,14 @@ async function userLogin(req,res,next) {
 }
 
 async function userCreate(req,res,next){
+
+    if(req.body.password != req.body.repassword)
+        return "FAIL: Re Password doesn't match";
+        
     var uid = req.body.uuid;
     var username = req.body.username;
     var password = req.body.password;
+
 
     try {
         password = await bcrypt.hash(password,10);

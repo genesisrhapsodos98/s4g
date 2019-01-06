@@ -181,11 +181,11 @@ router.post('/products/add/s4g', async(req, res) => {
 
   var addNewCategory = (req.body.product_category == "addnew" ? true : false);
   if (addNewCategory) {
-    var name = req.body.category_name;
+    var catname = req.body.category_name;
     var endpoint = req.body.category_endpoint;
     
     // TODO: Add new category to db
-    var newcategoryresult = await db.addNewCategory(name,endpoint);
+    var newcategoryresult = await db.addNewCategory(catname,endpoint);
 
     if(newcategoryresult === null){
       console.log('Can not create new category.');

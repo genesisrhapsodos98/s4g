@@ -131,14 +131,13 @@ async function createOrder(OID, UID, createDate) {
     if (order.rowCount) {
         return null;
     } else {
-        var result = await db.none('INSERT INTO "ORDER"("OID", "UID", "Created_Date") VALUES($1, $2, $3)', [OID, UID, createDate]);
+        var result = await db.result('INSERT INTO "ORDER"("OID", "UID", "Created_Date") VALUES($1, $2, $3)', [OID, UID, createDate]);
         return result;
     }
 }
 
 async function updateOrder(OID, Status, processDate) {
-    var result = await db.none('INSERT INTO "ORDER"("Status", "Processed_Date") VALUES($2, $3) WHERE "OID" = $1', [OID, Status, processDate]);
-
+    var result = await db.result('UPDATE "ORDER" SET "Status" = $2,"Processed_Date"=$3 WHERE "OID" = $1',[OID,Status,processDate]);
     return result;
 }
 
@@ -201,6 +200,17 @@ async function addProducttoCart(UID, PID, Amount){
     return result;
 }
 
+async function addNewCategory(name,endpoint){
+    var exist = await db.result('SELECT * FROM "CATEGORY" WHERE "Name" = $1',[name]);
+
+    if(exist) return null;
+
+    var result = await db.result('INSERT INTO "CATEGORY" VALUES ($1,$2)',[name,endpoint]);
+    return result;
+}
+
+
+
 // END OF QUERIES
 
 module.exports = {
@@ -224,4 +234,5 @@ module.exports = {
     getProductfromID: getProductfromID,
     getUserCart: getUserCart,
     addProducttoCart: addProducttoCart,
+    addNewCategory: addNewCategory,
 };

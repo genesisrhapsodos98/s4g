@@ -218,7 +218,7 @@ router.get('/cart/:uuid', async (req, res) => {
   var cartUID = req.params.uuid;
   var userUID = req.session.user.UID;
   console.log("Cart UID: ",cartUID,"\nUser UID: ",userUID);
-  if (cartUID != userUID) cartUID = userUID;
+  if (cartUID != userUID) res.redirect('/cart/'+userUID);
   var cart = null; // TODO: = db.getUserCart(cartUID)
   var products = null; 
   if (cart) cart.forEach(item => {

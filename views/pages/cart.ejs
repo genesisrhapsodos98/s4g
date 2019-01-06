@@ -44,14 +44,14 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td><p class="green"><%=product.Price%></p></td>
+                                                <td><p class="green"><%=product.Price*item.Amount%></p></td>
                                                 <td>
                                                     <div class="quantity">
                                                         <h6>Quantity</h6>
                                                         <div class="custom">
-                                                            <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;" class="reduced items-count" type="button"><i class="icon_minus-06"></i></button>
+                                                            <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) {result.value--;item.Amount--;}return false;" class="reduced items-count" type="button"><i class="icon_minus-06"></i></button>
                                                             <input type="text" name="qty" id="sst" maxlength="12" value="<%=item.Amount%>" title="Quantity:" class="input-text qty">
-                                                            <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;" class="increase items-count" type="button"><i class="icon_plus"></i></button>
+                                                            <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) {result.value++;item.Amount++;}return false;" class="increase items-count" type="button"><i class="icon_plus"></i></button>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -63,7 +63,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <form class="col-lg-4" action="/checkout" method="post" enctype="application/x-www-form-urlencoded">
+                        <input type="hidden" name="UID" value="req.session.user.UID">
+                        <input type="hidden" name="cart" value="<%=cart%>">
                         <div class="cart_totals_area">
                             <h4>Cart Totals</h4>
                             <div class="cart_t_list">
@@ -72,7 +74,11 @@
                                         <h5>Subtotal</h5>
                                     </div>
                                     <div class="media-body">
-                                        <h6>$14</h6>
+                                        <% var total = 0; var i=0; %>
+                                        <% cart.forEach(item => { %>
+                                            <% total += item.Amount * products[i].Price %>
+                                        <% ++i; }); %>
+                                        <h6><%=total%> VND;</h6>
                                     </div>
                                 </div>
                                 <div class="media">
@@ -89,12 +95,12 @@
                                     Total
                                 </div>
                                 <div class="float-right">
-                                    $400
+                                    <%=total%> VND;
                                 </div>
                             </div>
                         </div>
                         <button type="submit" value="submit" class="btn subs_btn form-control">Proceed to checkout</button>
-                    </div>
+                    </form>
                 </div>
             </div>
         </section>

@@ -163,6 +163,9 @@ router.post('/products/add/s4g', async(req, res) => {
   var isHot = req.body.product_ishot;
   var isNew = req.body.product_isnew;
 
+  isHot?isHot=true:isHot=false;
+  isNew = isNew?true:false;
+
   console.log([isHot,isNew]);
 
   try {

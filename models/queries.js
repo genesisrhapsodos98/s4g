@@ -193,7 +193,8 @@ async function getUserCart(UID){
 async function addProducttoCart(UID, PID, Amount){
     var existed = await db.result('SELECT * FROM "CART" WHERE "UID"=$1 AND "PID" = $2',[UID,PID]);
 
-    if(existed){
+    console.log(existed);
+    if(existed.rowCount){
         if(Amount > 0)
             var result = await db.result('UPDATE "CART" SET "Amount" = $3 WHERE "UID" = $1 AND "PID" = $2',[UID,PID,Amount]);
         else{
@@ -202,6 +203,7 @@ async function addProducttoCart(UID, PID, Amount){
     }else{
         var result = await db.result('INSERT INTO "CART" VALUES($1,$2,$3)',[UID,PID,Amount]);
     }
+    console.log(result);
 
     return result;
 }
@@ -215,9 +217,18 @@ async function addNewCategory(name,endpoint){
     return result;
 }
 
-async function createCart(UID){
+async function getHotProducts(){
+    var result = await db.result('SELECT * FROM "PRODUCT" WHERE "Hot" = true');
 
+    return result;
 }
+
+async function getNewProducts(){
+    var result = await db.result('SELECT * FROM "PRODUCT" WHERE "New" = true');
+
+    return result;
+}
+
 
 
 
@@ -245,4 +256,6 @@ module.exports = {
     getUserCart: getUserCart,
     addProducttoCart: addProducttoCart,
     addNewCategory: addNewCategory,
+    getNewProducts: getNewProducts,
+    getHotProducts: getHotProducts,
 };

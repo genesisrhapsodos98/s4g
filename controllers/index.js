@@ -244,6 +244,13 @@ router.get('/cart/:uuid/add', async (req, res) => {
   var uid = req.params.uuid;
   var pid = req.query.id;
   // TODO: Add product to cart
+
+  var result = await db.addProducttoCart(uid,pid,1);
+
+  if(result.rowCount){
+    res.redirect('/cart');
+  } else{
+  };
 });
 
 router.get('/cart/:uuid/remove', async (req, res) => {

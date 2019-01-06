@@ -5041,7 +5041,7 @@ i:before {
 }
 
 .payment_list {
-  background: #f5f5f5;
+  background: var(--bg-accent);
   padding: 60px 30px 35px 30px;
 }
 
@@ -5054,7 +5054,7 @@ i:before {
 .payment_list .price_single_cost h5 {
   display: block;
   font-size: 14px;
-  color: #666666;
+  color: var(--text-color);
   font-family: "Poppins", sans-serif;
   font-weight: normal;
   padding-bottom: 20px;
@@ -5068,13 +5068,13 @@ i:before {
   font-size: 18px;
   font-family: "Montserrat", sans-serif;
   font-weight: bold;
-  color: #333333;
+  color: var(--text-color);
   padding-bottom: 20px;
   margin-left: -30px;
   margin-right: -30px;
   padding-left: 30px;
   padding-right: 30px;
-  border-bottom: 1px solid #bdbdbd;
+  border-bottom: 1px solid var(--text-color-alt);
 }
 
 .payment_list .price_single_cost h4 span {
@@ -5094,7 +5094,7 @@ i:before {
 .payment_list .price_single_cost h3 .normal_text {
   float: none;
   font-size: 14px;
-  color: #666666;
+  color: var(--text-color);
   font-family: "Poppins", sans-serif;
   font-weight: normal;
   position: relative;
@@ -5104,7 +5104,7 @@ i:before {
 .payment_list .price_single_cost h3 span {
   float: right;
   font-weight: bold;
-  color: #d42421;
+  color: var(--primary-color);
   font-family: "Montserrat", sans-serif;
   font-size: 24px;
 }
@@ -5140,7 +5140,7 @@ i:before {
   font-family: "Montserrat", sans-serif;
   font-weight: bold;
   font-size: 14px;
-  color: #333333;
+  color: var(--primary-color-alt);
   position: relative;
 }
 
@@ -5162,7 +5162,7 @@ i:before {
   content: "";
   height: 10px;
   width: 10px;
-  background: #000;
+  background: var(--primary-color);
   border-radius: 50%;
   position: absolute;
   left: -61px;
@@ -5180,13 +5180,13 @@ i:before {
   padding: 10px 0px 0px 0px;
   font-size: 14px;
   line-height: 24px;
-  color: #959595;
+  color: var(--text-color-alt);
   font-family: "Poppins", sans-serif;
 }
 
 .reg_title {
   font-size: 24px;
-  color: #000;
+  color: var(--primary-color);
   font-family: "Poppins", sans-serif;
   font-weight: normal;
   padding-bottom: 35px;
@@ -5204,7 +5204,7 @@ i:before {
 .billing_details .billing_inner .form-group label {
   display: block;
   font-family: "Montserrat", sans-serif;
-  color: #666666;
+  color: var(--primary-color);
   font-weight: normal;
   font-size: 14px;
 }
@@ -5231,11 +5231,11 @@ i:before {
 .billing_details .billing_inner .form-group .bootstrap-select .dropdown-toggle span {
   font-size: 14px;
   font-family: "Poppins", sans-serif;
-  color: #666666;
+  color: var(--text-color);
 }
 
 .billing_details .billing_inner .form-group .bootstrap-select .dropdown-toggle:after {
-  border-top-color: #666666;
+  border-top-color: var(--text-color-alt);
   margin: 0px;
   position: relative;
   right: 6px;

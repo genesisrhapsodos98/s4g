@@ -290,4 +290,12 @@ router.get('/logout', (req, res) => {
   }
 });
 
+router.post('/checkout', async (req, res) => {
+  var UID = req.body.UID;
+  var cart; // TODO:
+  // TODO: create order, clear cart
+
+  res.redirect('/cart/'+UID+'?checkout=success');
+});
+
 module.exports = router;

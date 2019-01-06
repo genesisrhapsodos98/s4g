@@ -192,9 +192,8 @@ router.post('/create_account', async function(req, res,next) {
   // TODO: SQL script to insert new user
   req.body.uuid = shortid.generate();
   var data = await db.userCreate(req,res,next);
-  data = data + '';
-  console.log("In router: ",data);
-  if(data.split(":")[0] === 'FAIL'){
+
+  if(data.user_ins.split(":")[0] === 'FAIL'){
     // USER CREATION FAILED
     res.redirect('/login/failed');
   } else {

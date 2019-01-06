@@ -112,6 +112,7 @@ async function removeProduct(SteamID) {
 }
 
 async function searchProduct(Key) {
+    Key = "%" + Key + "%"; // pattern
     var result = await db.result('SELECT * FROM "PRODUCT" WHERE "Name" LIKE $1', [Key]);
 
     return result;
@@ -150,9 +151,19 @@ async function addOrderDetail(OID, UID, Price, Amount) {
 async function removeOrderDetail(OID) {
     var result = await db.result('DELETE FROM "ORDER_DETAIL" WHERE "OID" = $1', [OID]);
 
-    if (result.rowCount) {
-        return true;
-    } else return false;
+    return result.rowCount;
+}
+
+async function getProductfromCategory(Category){
+    var result = await db.result('SELECT * FROM "PRODUCT" WHERE "Category"=$1',Category);
+
+    return result;
+}
+
+async function getAllProduct(){
+    var result = await db.result('SELECT * FROM "PRODUCT"');
+
+    return result;
 }
 
 // END OF QUERIES
@@ -171,4 +182,8 @@ module.exports = {
     createOrder: createOrder,
     searchProduct: searchProduct,
     addOrderDetail: addOrderDetail,
+    removeOrderDetail: removeOrderDetail,
+    updateOrder: updateOrder,
+    getProductfromCategory: getProductfromCategory,
+    getAllProduct: getAllProduct,
 };

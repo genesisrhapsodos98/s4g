@@ -49,9 +49,22 @@ router.get('/products/category/:category', async (req, res) => {
   // TODO: Query games from selected category
   // var products = queryFunction(category);
 
+  if(category == 'all'){
+    var Products = await db.getAllProduct(); 
+  }else{
+    var Products = await db.getProductfromCategory(category);
+  }
+
+  console.log(Products);
+
+  if(Products.rowCount == 0){
+    Products.rows = null;
+  }
+
   // Render page
   res.render('products', {
     // products: products,
+    products: Products.rows,
     action: "categorize",
     category: category.charAt(0).toUpperCase() + category.slice(1),
     role: getRole(req),
@@ -68,10 +81,14 @@ router.get('/products/search', async (req, res) => {
   var q = req.query.q;
   // TODO: Query games from entered search key
   // var products = queryFunction(q);
+  var Product = await db.searchProduct(q);
 
+  console.log(Product);
+  
   // Render page
   res.render('products', {
     // products: products,
+    products: Product.rows,
     action: "search",
     q: q,
     role: getRole(req),
@@ -90,13 +107,6 @@ router.get('/contact', (req, res) => {
     role: getRole(req),
     page: 'contact',
     breadcrumb: [{"name": "Contact", "url": "#"}]
-  });
-});
-
-// Blog page
-router.get('/blog', (req, res) => {
-  res.render('blog', {
-    breadcrumb: [{"name": "Blog", "url": "#"}]
   });
 });
 

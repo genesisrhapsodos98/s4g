@@ -117,6 +117,44 @@ async function searchProduct(Key) {
     return result;
 }
 
+async function createOrder(OID, UID, createDate) {
+    var order = await db.oneOrNone('SELECT * FROM "ORDER" WHERE "OID" = $1', [OID0]);
+
+    if (order) {
+        return null;
+    } else {
+        var result = await db.none('INSERT INTO "ORDER"("OID", "UID", "Created_Date") VALUES($1, $2, $3)', [OID, UID, createDate]);
+        return result;
+    }
+}
+
+async function updateOrder(OID, Status, processDate) {
+    var result = await db.none('INSERT INTO "ORDER"("Status", "Processed_Date") VALUES($2, $3) WHERE "OID" = $1', [OID, Status, processDate]);
+
+    return result;
+}
+
+async function addOrderDetail(OID, UID, Price, Amount) {
+    var result = await db.result('INSERT INTO "ORDER_DETAIL"("OID", "UID", "Amount") VALUES($1, $2, $3)', [OID, UID, Amount]);
+
+    var result2 = await db.result('UPDATE "ORDER" SET "Total" = "Total" + $2*$3 WHERE "OID" = $1', [OID, Price, Amount]);
+
+    if(result.rowCount > 0 && result2.rowCount > 0)
+    {
+        return true;
+    }else{
+        return false;
+    }
+}
+
+async function removeOrderDetail(OID) {
+    var result = await db.result('DELETE FROM "ORDER_DETAIL" WHERE "OID" = $1', [OID]);
+
+    if (result.rowCount) {
+        return true;
+    } else return false;
+}
+
 // END OF QUERIES
 
 module.exports = {
@@ -130,4 +168,7 @@ module.exports = {
     changePassword: changePassword,
     addProduct: addProduct,
     getAllCategory: getAllCategory,
+    createOrder: createOrder,
+    searchProduct: searchProduct,
+    addOrderDetail: addOrderDetail,
 };

@@ -518,3 +518,7 @@ body {
 .page-content {
   background: var(--bg-accent);
 }
+
+.hidden {
+  display: none;
+}

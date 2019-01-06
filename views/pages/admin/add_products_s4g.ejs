@@ -24,7 +24,7 @@
           </div>
         </div>
 
-        <form class="login_form row" action="/admin/products/add/s4g" method="get">
+        <form class="login_form row" action="/admin/products/add/s4g" method="post">
           <!--1 entry-->
           <div class="col-md-1 col-lg-2">
             <label for="product_name">Product name:</label>
@@ -36,22 +36,48 @@
 
           <!--1 entry-->
           <div class="col-md-1 col-lg-2">
-            <label for="product_price">Price (<%=gameInfo.price_overview.currency%>):</label>
+            <label for="product_price">Price <% gameInfo.is_free ? "" : "(" + gameInfo.price_overview.currency + ")"%>:</label>
           </div>
           <div class="col-md-11 col-lg-10 form-group">
-            <input class="form-control" type="number" step="0.01" name="product_price" value="<%=gameInfo.price_overview.final/100%>">
+            <input class="form-control" type="number" name="product_price" value="<% gameInfo.is_free? 0 : gameInfo.price_overview.final/100%>">
           </div>
           <!--1 entry-->
 
           <!--1 entry-->
           <div class="col-md-1 col-lg-2">
-            <label for="product_name">Category:</label>
+            <label for="product_category">Category:</label>
           </div>
           <div class="col-md-11 col-lg-10 form-group">
-            <input class="form-control" type="text" name="product_category" value="">
+            <select id="product_category" name="product_category" onchange="checkAdd()">
+              <% categories.forEach(category => { %>
+                <option value="<%=category.Endpoint%>"><%=category.Name%></option>
+              <% }); %>
+              <option value="addnew">Add a new category</option>
+            </select>
           </div>
           <!--1 entry-->
+          <div id="newcat" class="col-12 hidden" style="margin-top: 1rem; margin-bottom: 1rem;">
+            <div class="row">
+              <!--1 entry-->
+              <div class="col-md-1 col-lg-2">
+                <label for="category_name">New category:</label>
+              </div>
+              <div class="col-md-11 col-lg-10 form-group">
+                <input class="form-control" type="text" name="category_name">
+              </div>
+              <!--1 entry-->
+              <!--1 entry-->
+              <div class="col-md-1 col-lg-2">
+                <label for="category_endpoint">HTML endpoint:</label>
+              </div>
+              <div class="col-md-11 col-lg-10 form-group">
+                <input class="form-control" type="text" name="category_endpoint">
+              </div>
+              <!--1 entry-->            
+            </div>            
+          </div>
           
+
           <!--1 entry-->
           <div class="col-12 col-lg-6">
             <div class="row">
@@ -76,6 +102,7 @@
             </div>
           </div>
           <!--1 entry-->
+          
         </form>         
       </div><!--/col-->
 
@@ -92,5 +119,21 @@
     <%- include ../../partials/scripts %>
     <script src="/js/admin.js"></script>
     <!--================End scripts=========================-->
+
+    <script>
+      function checkAdd() {
+        var select_category = document.getElementById("product_category");
+        console.log(select_category.value);
+        var form = document.getElementById("newcat");
+        if (select_category.value == "addnew") {
+          // Show form
+          form.classList.remove("hidden");
+        } else {
+          // Hide form
+          form.classList.add("hidden");          
+        }
+      }
+      
+    </script>
   </body>
 </html>

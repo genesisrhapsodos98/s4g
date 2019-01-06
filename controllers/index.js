@@ -8,7 +8,7 @@ var db = require('../models/queries');
 
 // Config router
 router.use(express.static(__dirname + '/public'));
-router.use('images', express.static(__dirname + '/public/images'));
+router.use('images', express.static(__dirname + '../public/images'));
 
 // Helper functions
 function getRole(req) {

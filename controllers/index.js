@@ -292,10 +292,34 @@ router.get('/logout', (req, res) => {
 
 router.post('/checkout', async (req, res) => {
   var UID = req.body.UID;
-  var cart; // TODO:
-  // TODO: create order, clear cart
+  var OID = shortid.generate();
+  var cart = await db.getUserCart(userUID);
+  var date = new Date();
+  var created_date = date.getDay() + '/' + date.getMonth() + '/' + date.getFullYear();
+  var order = await db.createOrder(OID, UID, created_date);
 
-  res.redirect('/cart/'+UID+'?checkout=success');
+  if(!order.rowCount){
+    res.redirect('/cart/'+UID+'?checkout=failed');
+  }
+
+  console.log(cart.rows);
+
+  var products = []; 
+  if (cart) for (item of cart.rows) {
+    var product = await db.getProductfromID(item.PID);
+    var add = await db.addOrderDetail(OID,product.rows[0].PID,product.rows[0].Price,product.rows[0].Amount);
+
+    if(!product.rowCount || !add.rowCount) res.redirect('/cart/'+UID+'?checkout=failed'); // failed
+  };
+
+  //added successfully
+  var result = await db.emptyCart(UID);
+
+  // TODO: create order, clear cart
+  if(result.rowCount > 0)
+    res.redirect('/cart/'+UID+'?checkout=success');
+  
+    res.redirect('/cart/'+UID+'?checkout=failed');
 });
 
 module.exports = router;

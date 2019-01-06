@@ -147,8 +147,8 @@ async function updateOrder(OID, Status, processDate) {
     return result;
 }
 
-async function addOrderDetail(OID, UID, Price, Amount) {
-    var result = await db.result('INSERT INTO "ORDER_DETAIL"("OID", "UID", "Amount") VALUES($1, $2, $3)', [OID, UID, Amount]);
+async function addOrderDetail(OID, PID, Price, Amount) {
+    var result = await db.result('INSERT INTO "ORDER_DETAIL"("OID", "UID", "Amount") VALUES($1, $2, $3)', [OID, PID, Amount]);
 
     var result2 = await db.result('UPDATE "ORDER" SET "Total" = "Total" + $2*$3 WHERE "OID" = $1', [OID, Price, Amount]);
 
@@ -235,8 +235,15 @@ async function getNewProducts(){
     return result;
 }
 
+async function emptyCart(UID){
+    var result = await db.result('DELETE FROM "CART" WHERE "UID" = $1',[UID]);
 
+    return result;
+}
 
+async function getAllOrders(){
+    var result = await db.result('SELECT * FROM "ORDER"');
+}
 
 // END OF QUERIES
 
@@ -264,4 +271,5 @@ module.exports = {
     addNewCategory: addNewCategory,
     getNewProducts: getNewProducts,
     getHotProducts: getHotProducts,
+    emptyCart: emptyCart,
 };

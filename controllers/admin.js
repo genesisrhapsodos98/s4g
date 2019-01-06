@@ -10,7 +10,6 @@ var router = express.Router();
 const steamAPIKey = '6C891DD6268C16383F1F819BEEA902AA';
 var steam = new SteamAPI(steamAPIKey);
 
-
 var db = require('../models/queries');
 
 // Config router

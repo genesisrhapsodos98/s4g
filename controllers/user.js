@@ -128,6 +128,7 @@ router.post('/change-avatar', async (req, res) => {
 
 // Change password
 router.get('/:uuid/change-password', async (req, res) => {
+  var status = req.query.status || null;
   var role = getRole(req);
   var currentUID = null;
   if (role != "GUEST") {
@@ -142,6 +143,7 @@ router.get('/:uuid/change-password', async (req, res) => {
   var isOwner = currentUID == pageUID ? true : false;
 
   res.render('user/change-password', {
+    status: status,
     role: role,
     uid: pageUID,
     isOwner: isOwner,
@@ -153,7 +155,19 @@ router.get('/:uuid/change-password', async (req, res) => {
       {"name": "Change password", "url": "#" }
     ]
   });
-})
+});
+
+router.post('/:uuid/change-password', async (req, res) => {
+  var oldPass = req.body.old_pass;
+  var newPass = req.body.new_pass;
+  var reNewPass = req.body.re_new_pass;
+  var uid = req.body.uid;
+  /* TODO:
+    Check if new pass == re new pass
+    If true, call query
+    If false, redirect to '/user/' + uid + '/change-password?status=failed'
+  */
+});
 
 router.post('/:uuid/change-password', async (req, res) => {
   // TODO: Validate input

@@ -219,16 +219,20 @@ router.get('/cart/:uuid', async (req, res) => {
   var userUID = req.session.user.UID;
   console.log("Cart UID: ",cartUID,"\nUser UID: ",userUID);
   if (cartUID != userUID) res.redirect('/cart/'+userUID);
-  var cart = null; // TODO: = db.getUserCart(cartUID)
-  var products = null; 
-  if (cart) cart.forEach(item => {
-    var product; // = TODO: = db.getProductByID(item.PID)
-    products.push(product);
+  var cart = await db.getUserCart(userUID);
+
+  console.log(cart.rows);
+
+  var products = []; 
+  if (cart) cart.rows.forEach(async item => {
+    var product = await db.getProductfromID(item.PID);
+    console.log(product.rows[0]); // = TODO: = db.getProductByID(item.PID)
+    products.push(product.rows[0]);
   });    
 
   var categories = await db.getAllCategory();
   res.render('cart', {
-    cart: cart,
+    cart: cart.rows,
     products: products,
     categories: categories.rows,
     owner: req.session.user,
@@ -257,6 +261,7 @@ router.get('/cart/:uuid/remove', async (req, res) => {
   var uid = req.params.uuid;
   var pid = req.query.id;
   // TODO: Remove product from cart
+  
 });
 
 router.get('/logout', (req, res) => {

@@ -179,13 +179,13 @@ async function getAllProduct(){
 }
 
 async function getProductfromID(PID){
-    var result = await db.result('SELECT * FROM "PRODUCT" WHERE "STEAMID"=$1',PID);
+    var result = await db.result('SELECT * FROM "PRODUCT" WHERE "STEAMID"=$1',[PID]);
 
     return result;
 }
 
 async function getUserCart(UID){
-    var result = await db.result('SELECT * FROM "CART" WHERE "UID"=$1',UID);
+    var result = await db.result('SELECT * FROM "CART" WHERE "UID"=$1',[UID]);
 
     return result;
 }
@@ -211,7 +211,7 @@ async function addProducttoCart(UID, PID, Amount){
 async function addNewCategory(name,endpoint){
     var exist = await db.result('SELECT * FROM "CATEGORY" WHERE "Name" = $1',[name]);
 
-    if(exist) return null;
+    if(exist.rowCount) return null;
 
     var result = await db.result('INSERT INTO "CATEGORY" VALUES ($1,$2)',[name,endpoint]);
     return result;

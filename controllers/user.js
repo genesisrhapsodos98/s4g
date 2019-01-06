@@ -88,6 +88,40 @@ router.get('/:uuid', async (req,res) => {
   });
 });
 
+router.get('/:uuid/orders', async (req, res) => {
+  var role = getRole(req);
+  var currentUID = null;
+  var categories = await db.getAllCategory();
+
+  if (role != "GUEST") {
+    currentUID = req.session.user.UID;
+  }
+  var pageUID = req.params.uuid;
+  if (currentUID != pageUID) {
+    res.redirect('/user');
+  }
+  
+  var owner = await db.findUserWithID(pageUID);
+  var isOwner = currentUID == pageUID ? true : false;
+
+  var categories = await db.getAllCategory();
+  var orders;  // TODO: Get this user's orders
+
+  res.render('user/orders', {
+    categories: categories.rows,
+    role: role,
+    uid: pageUID,
+    isOwner: isOwner,
+    owner: owner,
+    page: 'user-orders',
+    breadcrumb: [
+      {"name": "User", "url": "#"},
+      {"name": owner.Username, "url": "/user"},
+      {"name": "Orders", "url": "#"},
+    ]
+  });
+});
+
 router.post('/change-avatar', async (req, res) => {
   var uid = req.session.user.UID;
 

@@ -34,9 +34,10 @@
                 </div>
                 <div class="l_p_text">
                   <ul>
-                    <% var url = '/login?redirect?url=products'%>
-                    <% if (role != "GUEST") url = '/cart/' + user.UID + '/add?id=' + product.STEAMID; %>
-                    <li><a class="add_cart_btn" href="<%=url%>">Add To Cart</a></li>
+                    <% var url = '/login?redirect?url=products'; var btnText = 'Add to cart';%>
+                    <% if (role != "GUEST" && role != "ADMIN") url = '/cart/' + user.UID + '/add?id=' + product.STEAMID; %>
+                    <% if (role == "ADMIN") {url = '/products/edit?id=' + product.STEAMID; btnText = 'Edit product';} %>
+                    <li><a class="add_cart_btn" href="<%=url%>"><%=btnText%></a></li>
                   </ul>
                   <h4><%=product.Name%></h4>
                   <h5><%=product.Price%></h5>

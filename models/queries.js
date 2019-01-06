@@ -80,7 +80,7 @@ async function addProduct(steamid, name, price, cat, isnew, ishot){
 }
 
 async function getAllCategory() {
-    var result = await db.oneOrMany('SELECT DISTINCT * FROM "CATEGORY"');
+    var result = await db.result('SELECT DISTINCT * FROM "CATEGORY"');
 
     return result;
 }

@@ -117,6 +117,8 @@ router.get('/products/add/steamid', (req, res) => {
 
 router.get('/products/add/s4g', async (req, res) => {
   var steamid = req.query.steamid;
+  var categories = await db.getAllCategory();
+  categories = categories.rows;
   try {
     var gameInfo = await steam.getGameDetails(steamid);
   } catch (err) {
@@ -125,6 +127,7 @@ router.get('/products/add/s4g', async (req, res) => {
   }
 
   res.render('admin/add_products_s4g', {
+    categories: categories,
     gameInfo: gameInfo,
     owner: req.session.user,
     role: getRole(req),
@@ -139,9 +142,16 @@ router.get('/products/add/s4g', async (req, res) => {
 
 router.post('/products/add/s4g', async(req, res) => {
   // TODO: Get parameters from ejs
-
+  var addNewCategory = (req.body.product_category == "addnew" ? true : false);
+  if (addNewCategory) {
+    var name = req.body.category_name;
+    var endpoint = req.body.endpoint;
+    // TODO: Add new category to db
+  }
+  
+  var category = addNewCategory ? req.body.category_name : req.body.product_category;
   // TODO: Call function to add product to db
-})
+});
 
 router.get('/products/edit', async (req, res) => {
   res.render('admin/edit_products', {

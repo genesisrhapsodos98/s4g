@@ -36,7 +36,7 @@ function getRole(req) {
 
 var admin_sessionChecker = (req, res, next) => {
   if (!(req.session.user && req.cookies.s4g_session && req.session.user.Role == "ADMIN")) {
-    if (req.session.user.Role == "GUEST")
+    if (getRole(req) == "GUEST")
       res.redirect('/login/redirect?url=admin')
     else res.redirect('/');
   } else {
@@ -207,21 +207,6 @@ router.post('/products/add/s4g', async(req, res) => {
   };
 });
 
-router.get('/products/edit', async (req, res) => {
-  var steamid = req.query.id;
-  res.render('admin/edit_products', {
-    steamid: id,
-    owner: req.session.user,
-    role: getRole(req),
-    page: 'admin-products-edit',
-    tab: 'ecommerce',
-    breadcrumb: [
-      {"name": "Admin", "url": "/admin"},
-      {"name": "Products", "url": "#"}
-    ]
-  });
-});
-
 router.get('/products/remove', async (req, res) => {
   var products = await db.getAllProduct();
   if(products.rowCount == 0){
@@ -247,7 +232,10 @@ router.get('/product/removeItem', async (req, res) => {
 });
 
 router.get('/orders', (req, res) => {
+  var orders; // TODO: get all orders
+
   res.render('admin/orders', {
+    orders: orders,
     owner: req.session.user,
     role: getRole(req),
     page: 'admin-orders',

@@ -12,8 +12,52 @@
       <!-- page-content" -->
       <main class="page-content">
         <div class="container-fluid">
-
-          <h2>Content goes here</h2>
+          <h2 class="text-center text-primary-color">Change avatar</h2>
+          <div class="row align-self-center" style="margin-bottom: 2rem;"></div>  
+          <!-- Table header -->
+          <div class="row">
+          <div class="col-1 order-table order-header">
+            Order ID
+          </div>
+          <div class="col-2 order-table order-header">
+            User ID
+          </div>
+          <div class="col-1 order-table order-header">
+            Status
+          </div>
+          <div class="col-3 order-table order-header">
+            Created date
+          </div>
+          <div class="col-3 order-table order-header">
+            Processed date
+          </div>
+          <div class="col-2 order-table order-header">
+            Total amount
+          </div>
+        
+          <!-- Table content -->
+          <% if (orders) orders.forEach(order => { %>
+          <div class="col-1 order-table order-header">
+            <%=order.OID%>
+          </div>
+          <div class="col-2 order-table order-header">
+            <%=order.UID%>
+          </div>
+          <div class="col-1 order-table order-header">
+            <%=order.Status%>
+          </div>
+          <div class="col-3 order-table order-header">
+            <%=order.Created_Date%>
+          </div>
+          <div class="col-3 order-table order-header">
+            <%=order.Processed_Date%>
+          </div>
+          <div class="col-2 order-table order-header">
+            <%=order.Total%>
+          </div>
+          <% }); %>
+        <!-- End table content-->
+      </div>
 
           
           

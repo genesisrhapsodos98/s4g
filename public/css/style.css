@@ -7124,3 +7124,17 @@ i:before {
   padding-left: 2rem;
   padding-right: 2rem;
 }
+
+.order-table {
+  font-size: 0.75rem;
+  text-align: center;
+  border: 1px solid var(--text-color);
+  color: var(--text-color);
+}
+
+.order-header {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--text-color);
+}

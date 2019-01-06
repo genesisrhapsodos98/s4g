@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include ../../partials/head %>
+    <link href="/css/user-info.css" rel="stylesheet">
+</head>
+<body>
+    <!--================Menu Area =================-->
+    <header class="shop_header_area carousel_menu_area">            
+        <%- include ../../partials/navbar-small %>
+    </header>
+    <!--================End Menu Area =================-->
+    
+    <!--================Breadcrumb Area =================-->
+    <%- include ../../partials/breadcrumbs %>
+    <!--================End Breadcrumb Area =================-->    
+    
+    <div class="container page-wrapper">
+        <div class="row">
+            <div class="col-sm-3"><!--left col-->
+                <%- include ../../partials/user-info %>                
+            </div><!--/col-3-->
+            <div class="col-sm-9">
+                <!-- Page content -->
+                <!-- Table header -->
+                <div class="row">
+                  <div class="col-1 order-table order-header">
+                    Order ID
+                  </div>
+                  <div class="col-2 order-table order-header">
+                    User ID
+                  </div>
+                  <div class="col-1 order-table order-header">
+                    Status
+                  </div>
+                  <div class="col-3 order-table order-header">
+                    Created date
+                  </div>
+                  <div class="col-3 order-table order-header">
+                    Processed date
+                  </div>
+                  <div class="col-2 order-table order-header">
+                    Total amount
+                  </div>
+                
+                  <!-- Table content -->
+                  <% if (orders) orders.forEach(order => { %>
+                  <div class="col-1 order-table order-header">
+                    <%=order.OID%>
+                  </div>
+                  <div class="col-2 order-table order-header">
+                    <%=order.UID%>
+                  </div>
+                  <div class="col-1 order-table order-header">
+                    <%=order.Status%>
+                  </div>
+                  <div class="col-3 order-table order-header">
+                    <%=order.Created_Date%>
+                  </div>
+                  <div class="col-3 order-table order-header">
+                    <%=order.Processed_Date%>
+                  </div>
+                  <div class="col-2 order-table order-header">
+                    <%=order.Total%>
+                  </div>
+                  <% }); %>
+                <!-- End table content-->
+              </div>
+            </div><!--/col-9-->          
+        </div><!--/row-->
+    </div>
+    
+    <!--================Footer Area =================-->
+    <footer class="footer_area">
+        <%- include ../../partials/footer %>
+    </footer>
+    <!--================End Footer Area =================-->
+    
+    
+    <%- include ../../partials/scripts %>
+    <script src="/js/user-info.js"></script>
+</body>
+</html>

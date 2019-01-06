@@ -155,20 +155,44 @@ router.get('/products/add/s4g', async (req, res) => {
 
 router.post('/products/add/s4g', async(req, res) => {
   // Get parameters from ejs
+  var steamid = req.body.steamid;
   var name = req.body.product_name;
   var price = req.body.product_price;
   // TODO: Test if isHot and isNew are booleans
   var isHot = req.body.product_ishot;
   var isNew = req.body.product_isnew;
+  try {
+    var gameInfo = await steam.getGameDetails(steamid);
+  } catch (err) {
+    console.log('SteamID not found.');
+    res.redirect('/admin/products/add/steamid?status=failed');
+  }
+  
+  var header_image = gameInfo.header_image;
+
   var addNewCategory = (req.body.product_category == "addnew" ? true : false);
   if (addNewCategory) {
     var name = req.body.category_name;
     var endpoint = req.body.endpoint;
     // TODO: Add new category to db
+    var newcategoryresult = await db.addNewCategory(name,endpoint);
+
+    if(newcategoryresult === null){
+      console.log('Can not create new category.');
+      res.redirect('/admin/products/add/steamid?status=failed');
+    }
   }
   
   var category = addNewCategory ? req.body.category_name : req.body.product_category;
   // TODO: Call function to add product to db
+
+  var result = await db.addProduct(steamid,name,price,category,isNew,isHot,header_image);
+  
+  if(result.rowCount){
+    res.redirect('/admin/?add=success');
+  } else{
+    res.redirect('/admin/products/add/steamid?status=failed');
+  };
 });
 
 router.get('/products/edit', async (req, res) => {

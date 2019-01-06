@@ -25,6 +25,7 @@
         </div>
 
         <form class="login_form row" action="/admin/products/add/s4g" method="post">
+          <input type="hidden" value="<%=req.query.steamid%>" name="steamid">
           <!--1 entry-->
           <div class="col-md-1 col-lg-2">
             <label for="product_name">Product name:</label>

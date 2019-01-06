@@ -74,14 +74,13 @@ async function removeUserWithID(UID){
 }
 
 async function addProduct(steamid, name, price, cat, isnew, ishot){
-    var result = await db.one('SELECT prod_ins($1, $2, $3, $4, $5, $6)', [steamid, name, price, cat, isnew, ishot]);
+    var result = await db.result('SELECT prod_ins($1, $2, $3, $4, $5, $6)', [steamid, name, price, cat, isnew, ishot]);
 
     return result;
 }
 
 async function getAllCategory() {
     var result = await db.result('SELECT DISTINCT * FROM "CATEGORY"');
-
     return result;
 }
 
@@ -101,7 +100,7 @@ async function changePassword(Username, newPassword, oldPassword) {
 
     if (result) {
         var change_pw = await db.result('UPDATE "USER" SET "Password"=$1 WHERE "Username"=$2',[newPassword, Username]);
-        return change_pw.rowCount;
+        return change_pw;
     }
 }
 
@@ -119,9 +118,9 @@ async function searchProduct(Key) {
 }
 
 async function createOrder(OID, UID, createDate) {
-    var order = await db.oneOrNone('SELECT * FROM "ORDER" WHERE "OID" = $1', [OID0]);
+    var order = await db.result('SELECT * FROM "ORDER" WHERE "OID" = $1', [OID0]);
 
-    if (order) {
+    if (order.rowCount) {
         return null;
     } else {
         var result = await db.none('INSERT INTO "ORDER"("OID", "UID", "Created_Date") VALUES($1, $2, $3)', [OID, UID, createDate]);

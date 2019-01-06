@@ -167,6 +167,10 @@ router.post('/:uuid/change-password', async (req, res) => {
     If true, call query
     If false, redirect to '/user/' + uid + '/change-password?status=failed'
   */
+
+  if(newPass != reNewPass) res.redirect('/user' + uid + '/change-password?status=failed');
+
+  var result = await db.changePassword(uid,newPass,oldPass);
 });
 
 router.post('/:uuid/change-password', async (req, res) => {

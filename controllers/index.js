@@ -84,7 +84,7 @@ router.get('/products/search', async (req, res) => {
   var Product = await db.searchProduct(q);
 
   console.log(Product);
-  
+
   // Render page
   res.render('products', {
     // products: products,
@@ -180,11 +180,7 @@ var cart_sessionChecker = (req, res, next) => {
     var cartUID = req.params.uuid;
     var userUID = req.session.user.UID;
     if (cartUID != user.UID) cartUID = userUID;
-    res.render('cart/' + cartUID, {
-      role: getRole(req),
-      page: "cart",
-      breadcrumb: [{"name": "Cart", "url": "#"}]
-    });
+    res.redirect('cart/' + cartUID);
   } else {
     next();
   }
@@ -194,4 +190,5 @@ router.get('/cart/:uuid?', cart_sessionChecker, (req, res) => {
   res.redirect('/login/redirect?url=cart');
 });
 
+router.get('/cart/:uuid?')
 module.exports = router;

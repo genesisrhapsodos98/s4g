@@ -4615,6 +4615,8 @@ i:before {
   border: 1px solid var(--bg-accent);
   background-color: var(--bg-color);
   margin: 0px;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .cart_items .table tbody tr td .quantity h6 {
@@ -4640,6 +4642,17 @@ i:before {
   outline: none;
   -webkit-box-shadow: none;
   box-shadow: none;
+}
+
+.totalprice input {
+  border: none;
+  font-family: "Poppins", sans-serif;
+  color: var(--text-color);
+  background: transparent;
+  outline: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  font-weight: bold;
 }
 
 .cart_items .table tbody tr td .quantity input.placeholder {

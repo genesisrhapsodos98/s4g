@@ -237,11 +237,10 @@ router.get('/cart/:uuid', async (req, res) => {
   console.log(cart.rows);
 
   var products = []; 
-  if (cart) cart.rows.forEach(async item => {
+  if (cart) for (item of cart.rows) {
     var product = await db.getProductfromID(item.PID);
-    console.log(product.rows[0]); // = TODO: = db.getProductByID(item.PID)
     products.push(product.rows[0]);
-  });    
+  };
 
   var categories = await db.getAllCategory();
   res.render('cart', {
@@ -282,7 +281,7 @@ router.get('/logout', (req, res) => {
     res.clearCookie('s4g_session');
     res.redirect('/');
   } else {
-    res.redirect('/login');
+    res.redirect('/');
   }
 });
 

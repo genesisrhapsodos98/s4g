@@ -28,34 +28,34 @@
                                         <% var i = 0; %>
                                         <% if (cart) cart.forEach(item => { %>
                                             <% if (products) product = products[i]; %>
-                                            <tr>
-                                                <th scope="row">
+                                            <tr class="row">
+                                                <th class="col-2 col-lg-1" scope="row">
                                                     <a href="/cart/<%=owner.UID%>/remove?pid=<%item.PID%>"
                                                         <img src="/images/icon/close-icon.png" alt="">
                                                     </a>
                                                 </th>
-                                                <td>
+                                                <td class="col-10 col-lg-5">
                                                     <div class="media">
-                                                        <div class="d-flex">
-                                                            <img src="<%=product.header_image%>" alt="">
+                                                        <div class="col-6">
+                                                            <img class="img-fluid" src="<%=product.header_image%>" alt="">
                                                         </div>
-                                                        <div class="media-body">
+                                                        <div class="col-6 media-body">
                                                             <h4><%=product.Name%></h4>
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td><p class="green"><%=product.Price*item.Amount%></p></td>
-                                                <td>
+                                                <td class="col-2 col-lg-1"><p class="green"><%=product.Price%></p></td>
+                                                <td class="col-6 col-lg-3">
                                                     <div class="quantity">
                                                         <h6>Quantity</h6>
                                                         <div class="custom">
-                                                            <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) {result.value--;item.Amount--;}return false;" class="reduced items-count" type="button"><i class="icon_minus-06"></i></button>
-                                                            <input type="text" name="qty" id="sst" maxlength="12" value="<%=item.Amount%>" title="Quantity:" class="input-text qty">
-                                                            <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) {result.value++;item.Amount++;}return false;" class="increase items-count" type="button"><i class="icon_plus"></i></button>
+                                                            <button onclick="var result = document.getElementById('sst-<%=item.PID%>'); var total = document.getElementById('itemTotal-<%=item.PID%>'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) {result.value--;total.value=result.value*<%=product.Price%>;}return false;" class="reduced items-count" type="button"><i class="icon_minus-06"></i></button>
+                                                            <input type="text" name="qty" id="sst-<%=item.PID%>" maxlength="12" value="<%=item.Amount%>" title="Quantity:" class="input-text qty">
+                                                            <button onclick="var result = document.getElementById('sst-<%=item.PID%>'); var total = document.getElementById('itemTotal-<%=item.PID%>'); var sst = result.value; if( !isNaN( sst )) {result.value++;total.value=result.value*<%=product.Price%>;}return false;" class="increase items-count" type="button"><i class="icon_plus"></i></button>
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td><p><%=product.Price%></p></td>
+                                                <td class="totalprice col-3 col-lg-1"><input type="text" id="itemTotal-<%=item.PID%>" value="<%=product.Price*item.Amount%>"></td>
                                             </tr>
                                         <% ++i; }); %>                                                           
                                     </tbody>
@@ -78,7 +78,7 @@
                                         <% if (cart) cart.forEach(item => { %>
                                             <% total += item.Amount * products[i].Price %>
                                         <% ++i; }); %>
-                                        <h6><%=total%> VND;</h6>
+                                        <h6><%=total%> VND</h6>
                                     </div>
                                 </div>
                                 <div class="media">
@@ -95,7 +95,7 @@
                                     Total
                                 </div>
                                 <div class="float-right">
-                                    <%=total%> VND;
+                                    <%=total%> VND
                                 </div>
                             </div>
                         </div>

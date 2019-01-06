@@ -73,7 +73,7 @@ router.get('/products/category/:category', async (req, res) => {
   console.log("CATEGORIZE: ", Products.rows);
 
   if(Products.rowCount == 0){
-    Products.rows = null;w
+    Products.rows = null;
   }
 
   var categories = await db.getAllCategory();

@@ -36,7 +36,9 @@ function getRole(req) {
 
 var admin_sessionChecker = (req, res, next) => {
   if (!(req.session.user && req.cookies.s4g_session && req.session.user.Role == "ADMIN")) {
-    res.redirect('/login/redirect?url=admin');
+    if (req.session.user.Role == "GUEST")
+      res.redirect('/login/redirect?url=admin')
+    else res.redirect('/');
   } else {
     next();
   }

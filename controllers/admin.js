@@ -141,7 +141,12 @@ router.get('/products/add/s4g', async (req, res) => {
 });
 
 router.post('/products/add/s4g', async(req, res) => {
-  // TODO: Get parameters from ejs
+  // Get parameters from ejs
+  var name = req.body.product_name;
+  var price = req.body.product_price;
+  // TODO: Test if isHot and isNew are booleans
+  var isHot = req.body.product_ishot;
+  var isNew = req.body.product_isnew;
   var addNewCategory = (req.body.product_category == "addnew" ? true : false);
   if (addNewCategory) {
     var name = req.body.category_name;
